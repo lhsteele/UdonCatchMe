@@ -15,7 +15,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
     
-        backgroundColor = SKColor(red: 2.34, green: 2.32, blue: 2.32, alpha: 1.0)
+        backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
         
@@ -37,22 +37,33 @@ class GameScene: SKScene {
     }
     
     func addSquare() {
+     
+        var squares = [SKSpriteNode]()
         let sqOne = SKSpriteNode(imageNamed: "SquareOne")
         let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
         let sqFour = SKSpriteNode(imageNamed: "SquareFour")
-        let sqFive = SKSpriteNode(imageNamed: "SqaureFive")
+        let sqFive = SKSpriteNode(imageNamed: "SquareFive")
+        
+        squares.append(sqOne)
+        squares.append(sqTwo)
+        squares.append(sqThree)
+        squares.append(sqFour)
+        squares.append(sqFive)
+        
+        let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
+        let square = squares[randomSquareGenerator]
         
         let actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
         
-        sqOne.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
+        square.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
         
-        addChild(sqOne)
+        addChild(square)
         
         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
         
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -sqOne.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
-        sqOne.run(SKAction.sequence([actionMove, actionMoveDone]))
+        square.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
 }
