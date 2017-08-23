@@ -11,7 +11,9 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let player = SKSpriteNode(imageNamed: "Player")
+    var player = SKSpriteNode(imageNamed: "Player")
+    var isFingerOnPlayer = false
+    var touchedPlayerNode: SKNode!
     
     override func didMove(to view: SKView) {
     
@@ -60,10 +62,35 @@ class GameScene: SKScene {
         
         addChild(square)
         
-        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+        let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -sqOne.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         square.run(SKAction.sequence([actionMove, actionMoveDone]))
+    }
+   
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        for touch in touches {
+            let touch = touches.first
+            let location = touch!.location(in: self)
+            let previousLocation = touch!.previousLocation(in: self)
+            
+            player.position.x = location.x
+            player.position.y = size.height * 0.1
+            
+            var playerX = player.position.x + (location.x - previousLocation.x)
+            
+            playerX = max(playerX, player.size.width/2)
+            playerX = min(playerX, size.width - player.size.width/2)
+            
+            player.position = CGPoint(x: playerX, y: player.position.y)
+        }
+    
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        isFingerOnPlayer = false
     }
 }
