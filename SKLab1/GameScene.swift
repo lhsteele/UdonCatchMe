@@ -13,7 +13,7 @@ struct PhysicsCategory {
     static let None : UInt32 = 0
     static let All : UInt32 = UInt32.max
     static let Player : UInt32 = 0b1
-    static let square : UInt32 = 0b10
+    static let Square : UInt32 = 0b10
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -66,6 +66,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
         
+        square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
+        square.physicsBody?.isDynamic = true
+        square.physicsBody?.categoryBitMask = PhysicsCategory.Square
+        square.physicsBody?.contactTestBitMask = PhysicsCategory.Player
+        square.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
         var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
         actualX = max(actualX, square.size.width/2)
         actualX = min(actualX, size.width - square.size.width/2)
@@ -104,5 +110,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isFingerOnPlayer = false
+        
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.categoryBitMask = PhysicsCategory.Player
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.Square
+        player.physicsBody?.collisionBitMask = PhysicsCategory.None
+        player.physicsBody?.usesPreciseCollisionDetection = true
+    }
+    
+    func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
+        print ("hit")
+        square.removeFromParent()
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if ((firstBody.categoryBitMask & PhysicsCategory.Square != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.Player != 0)) {
+            if let square = firstBody.node as? SKSpriteNode, let
+                player = secondBody.node as? SKSpriteNode {
+                squareDidCollideWithPlayer(square: square, player: player)
+            }
+        }
     }
 }
