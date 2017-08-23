@@ -9,7 +9,14 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+struct PhysicsCategory {
+    static let None : UInt32 = 0
+    static let All : UInt32 = UInt32.max
+    static let Player : UInt32 = 0b1
+    static let square : UInt32 = 0b10
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "Player")
     var isFingerOnPlayer = false
@@ -20,6 +27,9 @@ class GameScene: SKScene {
         backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
+        
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
         
         run(SKAction.repeatForever(
             SKAction.sequence([
