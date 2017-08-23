@@ -56,7 +56,9 @@ class GameScene: SKScene {
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
         
-        let actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
+        var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
+        actualX = max(actualX, square.size.width/2)
+        actualX = min(actualX, size.width - square.size.width/2)
         
         square.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
         
