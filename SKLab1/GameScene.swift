@@ -12,8 +12,8 @@ import GameplayKit
 struct PhysicsCategory {
     static let None : UInt32 = 0
     static let All : UInt32 = UInt32.max
-    static let Square : UInt32 = 0b1
-    static let Player : UInt32 = 0b10
+    static let Player : UInt32 = 0b1
+    static let Square : UInt32 = 0b10
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -66,6 +66,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
         
+        square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
+        square.physicsBody?.isDynamic = true
+        square.physicsBody?.categoryBitMask = PhysicsCategory.Square
+        square.physicsBody?.contactTestBitMask = PhysicsCategory.Player
+        square.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
         var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
         actualX = max(actualX, square.size.width/2)
         actualX = min(actualX, size.width - square.size.width/2)
@@ -73,12 +79,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
         
         addChild(square)
-        
-        square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
-        square.physicsBody?.isDynamic = true
-        square.physicsBody?.categoryBitMask = PhysicsCategory.Square
-        square.physicsBody?.contactTestBitMask = PhysicsCategory.Player
-        square.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
@@ -104,20 +104,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerX = min(playerX, size.width - player.size.width/2)
             
             player.position = CGPoint(x: playerX, y: player.position.y)
-            
-            player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
-            player.physicsBody?.isDynamic = true
-            player.physicsBody?.categoryBitMask = PhysicsCategory.Player
-            player.physicsBody?.contactTestBitMask = PhysicsCategory.Square
-            player.physicsBody?.collisionBitMask = PhysicsCategory.None
-            player.physicsBody?.usesPreciseCollisionDetection = true
         }
     
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isFingerOnPlayer = false
-      
+        
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.categoryBitMask = PhysicsCategory.Player
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.Square
+        player.physicsBody?.collisionBitMask = PhysicsCategory.None
+        player.physicsBody?.usesPreciseCollisionDetection = true
     }
     
     func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
