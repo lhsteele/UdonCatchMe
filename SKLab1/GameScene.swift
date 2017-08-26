@@ -12,24 +12,42 @@ import GameplayKit
 struct PhysicsCategory {
     static let None : UInt32 = 0
     static let All : UInt32 = UInt32.max
-    static let Square : UInt32 = 0b1
-    static let Player : UInt32 = 0b10
+    static let Square : UInt32 = 0x1 << 0
+    static let Player : UInt32 = 0x1 << 1
+    static let Bottom : UInt32 = 0x1 << 2
 }
 
+var player = SKSpriteNode(imageNamed: "Player")
+var isFingerOnPlayer = false
+var touchedPlayerNode: SKNode!
+
+let sqFive = SKSpriteNode(imageNamed: "SquareFive")
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var player = SKSpriteNode(imageNamed: "Player")
-    var isFingerOnPlayer = false
-    var touchedPlayerNode: SKNode!
     
     override func didMove(to view: SKView) {
     
         backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         addChild(player)
+        
+        let bottomRect = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height : 1)
+        let bottom = SKNode()
+        bottom.physicsBody = SKPhysicsBody(edgeLoopFrom: bottomRect)
+        addChild(bottom)
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
+        
+        //let square = childNode(withName: ogSquare) as! SKSpriteNode
+        sqFive.physicsBody = SKPhysicsBody(rectangleOf: sqFive.size)
+        
+        bottom.physicsBody!.categoryBitMask = PhysicsCategory.Bottom
+        sqFive.physicsBody!.categoryBitMask = PhysicsCategory.Square
+        player.physicsBody!.categoryBitMask = PhysicsCategory.Player
+        
+        sqFive.physicsBody!.contactTestBitMask = PhysicsCategory.Bottom
         
         run(SKAction.repeatForever(
             SKAction.sequence([
@@ -49,19 +67,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addSquare() {
-     
+        
         var squares = [SKSpriteNode]()
         let sqOne = SKSpriteNode(imageNamed: "SquareOne")
         let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
         let sqFour = SKSpriteNode(imageNamed: "SquareFour")
-        let sqFive = SKSpriteNode(imageNamed: "SquareFive")
         
         squares.append(sqOne)
         squares.append(sqTwo)
         squares.append(sqThree)
         squares.append(sqFour)
-        squares.append(sqFive)
+        //squares.append(sqFive)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
@@ -144,5 +161,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 squareDidCollideWithPlayer(square: square, player: player)
             }
         }
+        
+        
+        if firstBody.categoryBitMask == PhysicsCategory.Square && secondBody.categoryBitMask == PhysicsCategory.Bottom {
+            print ("Hit bottom")
+        }
+        
     }
+    
+    
 }
