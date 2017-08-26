@@ -21,8 +21,6 @@ var player = SKSpriteNode(imageNamed: "Player")
 var isFingerOnPlayer = false
 var touchedPlayerNode: SKNode!
 
-let sqFive = SKSpriteNode(imageNamed: "SquareFive")
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
@@ -32,6 +30,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         addChild(player)
         
+        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        borderBody.friction = 0
+        self.physicsBody = borderBody
+        
         let bottomRect = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height : 1)
         let bottom = SKNode()
         bottom.physicsBody = SKPhysicsBody(edgeLoopFrom: bottomRect)
@@ -40,7 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         
-        //let square = childNode(withName: ogSquare) as! SKSpriteNode
+        let sqFive = childNode(withName: "SquareFive") as! SKSpriteNode
         sqFive.physicsBody = SKPhysicsBody(rectangleOf: sqFive.size)
         
         bottom.physicsBody!.categoryBitMask = PhysicsCategory.Bottom
