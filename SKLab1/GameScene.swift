@@ -28,14 +28,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lblScore.text = "Score: \(score)"
         }
     }
-    var lblCounter: SKLabelNode!
+    //var lblCounter: SKLabelNode!
     let hudNode = SKNode()
+    var levelTimerLabel = SKLabelNode(fontNamed: "HeitiSC-Bold")
+    var levelTimerValue: Int = 500
+       
     
-    
+    /*
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+    */
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
@@ -43,14 +46,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(player)
         
         lblScore = SKLabelNode(fontNamed: "HeitiSC-Bold")
-        lblScore.fontSize = 30
+        lblScore.fontSize = 50
         lblScore.fontColor = SKColor.darkGray
-        lblScore.position = CGPoint(x: self.size.width-20, y: self.size.height-40)
+        lblScore.position = CGPoint(x: self.size.width-40, y: self.size.height-60)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
         lblScore.text = "0"
         addChild(hudNode)
         hudNode.addChild(lblScore)
+        
+        levelTimerLabel.fontColor = SKColor.darkGray
+        levelTimerLabel.fontSize = 50
+        levelTimerLabel.position = CGPoint(x: size.width/2, y: size.height/2 + 350)
+        levelTimerLabel.text = "Time left: \(levelTimerValue)"
+        addChild(levelTimerLabel)
+        
+        let wait = SKAction.wait(forDuration: 0.5)
+        let block = SKAction.run({
+            [unowned self] in
+            if self.levelTimerValue > 0 {
+                self.levelTimerLabel
+            } else {
+                self.removeAction(forKey: "countdown")
+            }
+        })
+        let sequence = SKAction.sequence([wait, block])
+        run(SKAction.repeatForever(sequence), withKey: "countdown")
         
         
         physicsWorld.gravity = CGVector.zero
@@ -146,8 +167,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if action(forKey: "countdown") != nil {removeAction(forKey: "countdown")}
+    }
+    
     func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
         print ("hit")
+        let startingScore = 0
+        startingScore + 10 == score
+        print (score)
         square.removeFromParent()
     }
     
@@ -171,7 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
+    /*
     override init(size: CGSize) {
         super.init(size: size)
         
@@ -184,5 +212,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.text = "0"
         hudNode.addChild(lblScore)
     }
-    
+    */
 }
