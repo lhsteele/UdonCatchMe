@@ -172,10 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
-        print ("hit")
-        let startingScore = 0
-        startingScore + 10 == score
-        print (score)
+        score += 10
         square.removeFromParent()
     }
     
