@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 
+
 struct PhysicsCategory {
     static let None : UInt32 = 0
     static let All : UInt32 = UInt32.max
@@ -21,12 +22,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player = SKSpriteNode(imageNamed: "Player")
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
+    var lblScore: SKLabelNode!
+    var score : Int = 0 {
+        didSet {
+            lblScore.text = "Score: \(score)"
+        }
+    }
+    var lblCounter: SKLabelNode!
+    let hudNode = SKNode()
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
+        
+        lblScore = SKLabelNode(fontNamed: "HeitiSC-Bold")
+        lblScore.fontSize = 30
+        lblScore.fontColor = SKColor.darkGray
+        lblScore.position = CGPoint(x: self.size.width-20, y: self.size.height-40)
+        lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        
+        lblScore.text = "0"
+        addChild(hudNode)
+        hudNode.addChild(lblScore)
+        
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -37,6 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
+        
     }
     
     
@@ -145,4 +171,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    
+    override init(size: CGSize) {
+        super.init(size: size)
+        
+        lblScore = SKLabelNode(fontNamed: "HeitiSC-Bold")
+        lblScore.fontSize = 30
+        lblScore.fontColor = SKColor.darkGray
+        lblScore.position = CGPoint(x: self.size.width-20, y: self.size.height-40)
+        lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        
+        lblScore.text = "0"
+        hudNode.addChild(lblScore)
+    }
+    
 }
