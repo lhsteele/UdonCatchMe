@@ -28,39 +28,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lblScore.text = "Score: \(score)"
         }
     }
-    //var lblCounter: SKLabelNode!
-    let hudNode = SKNode()
-    var levelTimerLabel = SKLabelNode(fontNamed: "HeitiSC-Bold")
-    var levelTimerValue: Int = 500
-       
     
-    /*
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    var levelTimerLabel: SKLabelNode!
+    var levelTimerValue: Int = 0 {
+        didSet {
+            levelTimerLabel.text = "Time left: \(levelTimerValue)"
+        }
     }
-    */
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
         
-        lblScore = SKLabelNode(fontNamed: "HeitiSC-Bold")
-        lblScore.fontSize = 50
+        lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+        lblScore.fontSize = 20
         lblScore.fontColor = SKColor.darkGray
         lblScore.position = CGPoint(x: self.size.width-40, y: self.size.height-60)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
-        lblScore.text = "0"
-        addChild(hudNode)
-        hudNode.addChild(lblScore)
+        score = 0
+        addChild(lblScore)
         
+        levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+        levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
-        levelTimerLabel.fontSize = 50
-        levelTimerLabel.position = CGPoint(x: size.width/2, y: size.height/2 + 350)
-        levelTimerLabel.text = "Time left: \(levelTimerValue)"
+        levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
+        levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        
+        levelTimerValue = 500
         addChild(levelTimerLabel)
         
+        /*
         let wait = SKAction.wait(forDuration: 0.5)
         let block = SKAction.run({
             [unowned self] in
@@ -72,7 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         let sequence = SKAction.sequence([wait, block])
         run(SKAction.repeatForever(sequence), withKey: "countdown")
-        
+        */
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -199,18 +199,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    /*
-    override init(size: CGSize) {
-        super.init(size: size)
-        
-        lblScore = SKLabelNode(fontNamed: "HeitiSC-Bold")
-        lblScore.fontSize = 30
-        lblScore.fontColor = SKColor.darkGray
-        lblScore.position = CGPoint(x: self.size.width-20, y: self.size.height-40)
-        lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        
-        lblScore.text = "0"
-        hudNode.addChild(lblScore)
-    }
-    */
+ 
 }
