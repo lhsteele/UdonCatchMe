@@ -30,11 +30,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var levelTimerLabel: SKLabelNode!
-    var levelTimerValue: Int = 0 {
+    var levelTimerValue: Int = 500 {
         didSet {
-            levelTimerLabel.text = "Time left: \(levelTimerValue)"
+            let minutes = String(self.levelTimerValue / 60)
+            let seconds = String(self.levelTimerValue % 60)
+            self.levelTimerLabel.text = minutes + ":" + seconds
+            //levelTimerLabel.text = "Time left: \(levelTimerValue)"
         }
     }
+
+    
     
     override func didMove(to view: SKView) {
         
@@ -57,22 +62,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
-        levelTimerValue = 500
+        levelTimerValue = 100
         addChild(levelTimerLabel)
+
         
-        /*
         let wait = SKAction.wait(forDuration: 0.5)
         let block = SKAction.run({
             [unowned self] in
             if self.levelTimerValue > 0 {
-                self.levelTimerLabel
+                
+                self.levelTimerValue -= 1
             } else {
                 self.removeAction(forKey: "countdown")
             }
         })
         let sequence = SKAction.sequence([wait, block])
         run(SKAction.repeatForever(sequence), withKey: "countdown")
-        */
+ 
         
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -196,5 +202,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+
  
 }
