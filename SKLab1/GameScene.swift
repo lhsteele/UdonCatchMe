@@ -35,7 +35,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = SKColor(red: 1.89, green: 1.89, blue: 1.89, alpha: 1.0)
+        backgroundColor = SKColor.darkGray
+        self.addTopBackgroundLayer()
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
         
@@ -68,6 +69,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ])
         ))
         
+    }
+    
+    func addTopBackgroundLayer() {
+        let topLayerBackground = SKSpriteNode()
+        topLayerBackground.size = self.frame.size - 5
+        topLayerBackground.color = SKColor.white
+        addChild(topLayerBackground)
     }
 
     func updateTimer() {
@@ -164,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
-        score += 10
+        score += 5
         square.removeFromParent()
     }
     
