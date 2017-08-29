@@ -28,17 +28,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lblScore.text = "Score: \(score)"
         }
     }
-    
+   
     var levelTimerLabel: SKLabelNode!
-    var levelTimerValue: Int = 500 {
-        didSet {
-            let minutes = String(self.levelTimerValue / 60)
-            let seconds = String(self.levelTimerValue % 60)
-            self.levelTimerLabel.text = minutes + ":" + seconds
-            //levelTimerLabel.text = "Time left: \(levelTimerValue)"
-        }
-    }
-
+    var count = 60
     
     
     override func didMove(to view: SKView) {
@@ -56,30 +48,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         addChild(lblScore)
         
+        let _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+        
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
         levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
-        levelTimerValue = 100
         addChild(levelTimerLabel)
 
-        
-        let wait = SKAction.wait(forDuration: 0.5)
-        let block = SKAction.run({
-            [unowned self] in
-            if self.levelTimerValue > 0 {
-                
-                self.levelTimerValue -= 1
-            } else {
-                self.removeAction(forKey: "countdown")
-            }
-        })
-        let sequence = SKAction.sequence([wait, block])
-        run(SKAction.repeatForever(sequence), withKey: "countdown")
- 
-        
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
         
@@ -91,7 +69,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ))
         
     }
-    
+
+    func updateTimer() {
+        if (count > 0) {
+            count -= 1
+            let minutes = String(count / 60)
+            let seconds = String(count % 60)
+            levelTimerLabel.text = minutes + ":" + seconds
+        }
+    }
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -143,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch in touches {
+        for _ in touches {
             let touch = touches.first
             let location = touch!.location(in: self)
             let previousLocation = touch!.previousLocation(in: self)
