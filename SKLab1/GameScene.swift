@@ -20,25 +20,25 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "Player")
+    var topLayerBackground = SKSpriteNode()
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
-    var lblScore: SKLabelNode!
+    
     var score : Int = 0 {
         didSet {
             lblScore.text = "Score: \(score)"
         }
     }
-   
+    var lblScore: SKLabelNode!
     var levelTimerLabel: SKLabelNode!
     var count = 60
-    
+    let playableRect: CGRect
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = SKColor.darkGray
-        self.addTopBackgroundLayer()
-        player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
-        addChild(player)
+        backgroundColor = SKColor.white
+        debugDrawPlayableArea()
+        
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -58,6 +58,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
         addChild(levelTimerLabel)
+        
+        self.addPlayer()
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -71,13 +73,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    override init(size: CGSize) {
+        let maxAspectRatio: CGFloat = 16.0/9.0
+            let playableHeight = size.width / maxAspectRatio
+            let playableWidth = size.height / maxAspectRatio
+            //let playableMargin = (size.height - playableHeight) / 2.0
+            let playableMargin = (size.width - playableWidth) / 2.0
+        //playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
+        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addPlayer() {
+        player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
+        addChild(player)
+    }
+    
     func addTopBackgroundLayer() {
-        let topLayerBackground = SKSpriteNode()
-        topLayerBackground.size = self.frame.size - 5
+        topLayerBackground.size.height = self.size.height
+        topLayerBackground.size.width = self.size.width
         topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
     }
-
+ 
     func updateTimer() {
         if (count > 0) {
             count -= 1
@@ -102,13 +124,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
         let sqFour = SKSpriteNode(imageNamed: "SquareFour")
-        let sqFive = SKSpriteNode(imageNamed: "SquareFive")
+        //let sqFive = SKSpriteNode(imageNamed: "SquareFive")
         
         squares.append(sqOne)
         squares.append(sqTwo)
         squares.append(sqThree)
         squares.append(sqFour)
-        squares.append(sqFive)
+        //squares.append(sqFive)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
@@ -197,5 +219,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
- 
+    func debugDrawPlayableArea() {
+        let shape = SKShapeNode()
+        let path = CGMutablePath()
+        path.addRect(playableRect)
+        shape.path = path
+        shape.strokeColor = SKColor.red
+        shape.lineWidth = 10.0
+        addChild(shape)
+    }
 }
