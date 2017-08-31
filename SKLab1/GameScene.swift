@@ -32,18 +32,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lblScore: SKLabelNode!
     var levelTimerLabel: SKLabelNode!
     var count = 60
+    var deviceWidth = UIScreen.main.bounds.width
+    var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
     
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
-        debugDrawPlayableArea()
+        //debugDrawPlayableArea()
+        playableAreaBorder()
         
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.darkGray
-        lblScore.position = CGPoint(x: self.size.width-40, y: self.size.height-60)
+        //lblScore.position = CGPoint(x: self.size.width-40, y: self.size.height-60)
+        lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
         score = 0
@@ -54,7 +58,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
-        levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
+        //levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
+        levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
         addChild(levelTimerLabel)
@@ -72,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ))
         
     }
-    
+    /*
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = 16.0/9.0
             let playableHeight = size.width / maxAspectRatio
@@ -80,6 +85,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //let playableMargin = (size.height - playableHeight) / 2.0
             let playableMargin = (size.width - playableWidth) / 2.0
         //playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
+        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
+        super.init(size: size)
+    }
+    */
+    
+    override init(size: CGSize) {
+        let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
+        let playableWidth = size.height / maxAspectRatio
+        let playableMargin = (size.width - playableWidth) / 2.0
         playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
     }
@@ -135,9 +149,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
         
+        
         var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
         actualX = max(actualX, square.size.width/2)
         actualX = min(actualX, size.width - square.size.width/2)
+ 
         
         square.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
         
@@ -219,6 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    /*
     func debugDrawPlayableArea() {
         let shape = SKShapeNode()
         let path = CGMutablePath()
@@ -227,5 +244,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shape.strokeColor = SKColor.red
         shape.lineWidth = 10.0
         addChild(shape)
+    }
+    */
+    
+    func playableAreaBorder() {
+        let area = SKShapeNode(rect: playableRect)
+        area.lineWidth = 10
+        area.strokeColor = SKColor.red
+        addChild(area)
     }
 }
