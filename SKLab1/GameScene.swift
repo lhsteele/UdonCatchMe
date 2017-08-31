@@ -46,7 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.darkGray
-        //lblScore.position = CGPoint(x: self.size.width-40, y: self.size.height-60)
         lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
@@ -58,7 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
-        //levelTimerLabel.position = CGPoint(x: self.size.width-350, y: self.size.height-60)
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         
@@ -77,19 +75,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ))
         
     }
-    /*
-    override init(size: CGSize) {
-        let maxAspectRatio: CGFloat = 16.0/9.0
-            let playableHeight = size.width / maxAspectRatio
-            let playableWidth = size.height / maxAspectRatio
-            //let playableMargin = (size.height - playableHeight) / 2.0
-            let playableMargin = (size.width - playableWidth) / 2.0
-        //playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: playableHeight)
-        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
-        super.init(size: size)
-    }
-    */
-    
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
         let playableWidth = size.height / maxAspectRatio
@@ -234,18 +219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-
-    /*
-    func debugDrawPlayableArea() {
-        let shape = SKShapeNode()
-        let path = CGMutablePath()
-        path.addRect(playableRect)
-        shape.path = path
-        shape.strokeColor = SKColor.red
-        shape.lineWidth = 10.0
-        addChild(shape)
-    }
-    */
     
     func playableAreaBorder() {
         let area = SKShapeNode(rect: playableRect)
