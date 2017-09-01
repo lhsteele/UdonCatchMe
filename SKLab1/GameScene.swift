@@ -40,12 +40,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
     let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
     let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
+    var randomBorderColor = UIColor()
     
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
         //playableAreaBorder()
-        randomBorderColorChange()
+        randomBorderColorChange(fromColor: UIColor.white, toColor: randomBorderColor, duration: 0.1)
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -229,19 +230,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(area)
     }
     */
-    func randomBorderColorChange() {
+    func randomBorderColorChange(fromColor: UIColor, toColor: UIColor, duration: Double = 0.1) -> SKAction {
         var availableColors = [UIColor]()
         availableColors.append(sqOneColor)
         availableColors.append(sqTwoColor)
         availableColors.append(sqThreeColor)
         availableColors.append(sqFourColor)
         
-        let randomColorGenerator = Int(arc4random_uniform(UInt32(availableColors.count)))
-        let randomColor = availableColors[randomColorGenerator]
-        
-        let border = SKShapeNode(rect: playableRect)
-        border.lineWidth = 10
-        border.strokeColor = randomColor
-        addChild(border)
+        let cycle = SKAction.wait(forDuration: 0.2, withRange: 0.1)
+    
+        let customAction = SKAction.run({
+            
+            let randomColorGenerator = Int(arc4random_uniform(UInt32(availableColors.count)))
+            self.randomBorderColor = availableColors[randomColorGenerator]
+            
+            let border = SKShapeNode(rect: self.playableRect)
+            border.lineWidth = 10
+            border.strokeColor = self.randomBorderColor
+            self.addChild(border)
+        })
+        return SKAction.sequence([cycle, customAction])
     }
 }
