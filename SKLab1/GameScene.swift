@@ -36,12 +36,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
     
+    let sqOneColor = UIColor(red: 1.82, green: 1.39, blue: 0.27, alpha: 1)
+    let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
+    let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
+    let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
-        //debugDrawPlayableArea()
-        playableAreaBorder()
-        
+        //playableAreaBorder()
+        randomBorderColorChange()
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -123,13 +127,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
         let sqFour = SKSpriteNode(imageNamed: "SquareFour")
-        //let sqFive = SKSpriteNode(imageNamed: "SquareFive")
         
         squares.append(sqOne)
         squares.append(sqTwo)
         squares.append(sqThree)
         squares.append(sqFour)
-        //squares.append(sqFive)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
@@ -219,11 +221,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
+    /*
     func playableAreaBorder() {
         let area = SKShapeNode(rect: playableRect)
         area.lineWidth = 10
         area.strokeColor = SKColor.red
         addChild(area)
+    }
+    */
+    func randomBorderColorChange() {
+        var availableColors = [UIColor]()
+        availableColors.append(sqOneColor)
+        availableColors.append(sqTwoColor)
+        availableColors.append(sqThreeColor)
+        availableColors.append(sqFourColor)
+        
+        let randomColorGenerator = Int(arc4random_uniform(UInt32(availableColors.count)))
+        let randomColor = availableColors[randomColorGenerator]
+        
+        let border = SKShapeNode(rect: playableRect)
+        border.lineWidth = 10
+        border.strokeColor = randomColor
+        addChild(border)
     }
 }
