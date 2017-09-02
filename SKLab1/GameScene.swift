@@ -40,13 +40,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
     let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
     let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
-    var randomBorderColor = UIColor()
+   
+    
     
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
         //playableAreaBorder()
-        randomBorderColorChange()
+        randomBonusSquareColorChange()
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -230,27 +231,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(area)
     }
  */
-    func randomBorderColorChange() {
-        var availableColors = [UIColor]()
-        availableColors.append(sqOneColor)
-        availableColors.append(sqTwoColor)
-        availableColors.append(sqThreeColor)
-        availableColors.append(sqFourColor)
+    func randomBonusSquareColorChange() {
+        var bonusSquares = [SKSpriteNode]()
+        let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
+        let bonusSqTwo = SKSpriteNode(imageNamed: "BigSqTwo")
+        let bonusSqThree = SKSpriteNode(imageNamed: "BigSqThree")
+        let bonusSqFour = SKSpriteNode(imageNamed: "BigSqFour")
+        
+        bonusSquares.append(bonusSqOne)
+        bonusSquares.append(bonusSqTwo)
+        bonusSquares.append(bonusSqThree)
+        bonusSquares.append(bonusSqFour)
         
         let cycle = SKAction.wait(forDuration: 7, withRange: 3)
     
         let random = SKAction.run {
             
-            let randomColorGenerator = Int(arc4random_uniform(UInt32(availableColors.count)))
-            self.randomBorderColor = availableColors[randomColorGenerator]
+            let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
+            let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
             
-            let border = SKShapeNode(rect: self.playableRect)
-            border.lineWidth = 10
-            border.strokeColor = self.randomBorderColor
-            self.addChild(border)
+            randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
+            self.addChild(randomBonusSquare)
+            
+            //_ = SKAction.wait(forDuration: 7)
+            
+            //randomBonusSquare.removeFromParent()
         }
+        
         let sequence = SKAction.sequence([cycle, random])
-        let sequenceTwo = SKAction.sequence([cycle, SKAction.repeatForever(sequence)])
+        let sequenceTwo = SKAction.sequence([SKAction.repeatForever(sequence)])
         run(sequenceTwo)
     }
  
