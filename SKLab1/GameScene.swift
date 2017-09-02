@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         backgroundColor = SKColor.white
         //playableAreaBorder()
-        randomBorderColorChange(fromColor: UIColor.white, toColor: randomBorderColor, duration: 0.1)
+        randomBorderColorChange()
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -229,17 +229,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         area.strokeColor = SKColor.red
         addChild(area)
     }
-    */
-    func randomBorderColorChange(fromColor: UIColor, toColor: UIColor, duration: Double = 0.1) -> SKAction {
+ */
+    func randomBorderColorChange() {
         var availableColors = [UIColor]()
         availableColors.append(sqOneColor)
         availableColors.append(sqTwoColor)
         availableColors.append(sqThreeColor)
         availableColors.append(sqFourColor)
         
-        let cycle = SKAction.wait(forDuration: 0.2, withRange: 0.1)
+        let cycle = SKAction.wait(forDuration: 7, withRange: 3)
     
-        let customAction = SKAction.run({
+        let random = SKAction.run {
             
             let randomColorGenerator = Int(arc4random_uniform(UInt32(availableColors.count)))
             self.randomBorderColor = availableColors[randomColorGenerator]
@@ -248,7 +248,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             border.lineWidth = 10
             border.strokeColor = self.randomBorderColor
             self.addChild(border)
-        })
-        return SKAction.sequence([cycle, customAction])
+        }
+        let sequence = SKAction.sequence([cycle, random])
+        let sequenceTwo = SKAction.sequence([cycle, SKAction.repeatForever(sequence)])
+        run(sequenceTwo)
     }
+ 
 }
