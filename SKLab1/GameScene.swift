@@ -46,8 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
-        //playableAreaBorder()
-        randomBonusSquareColorChange()
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -77,6 +75,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             SKAction.sequence([
                 SKAction.run(addSquare),
                 SKAction.wait(forDuration: 1.0)
+                ])
+        ))
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run(randomBonusSquareColorChange),
+                SKAction.wait(forDuration: 10)
                 ])
         ))
         
@@ -243,24 +248,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusSquares.append(bonusSqThree)
         bonusSquares.append(bonusSqFour)
         
-        let cycle = SKAction.wait(forDuration: 7, withRange: 3)
+        let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
+        let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
+        
+        randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
+        addChild(randomBonusSquare)
+        
+        randomBonusSquare.run (
+            SKAction.sequence ([
+                SKAction.wait(forDuration: 7, withRange: 3),
+                SKAction.removeFromParent()
+                ])
+        )
+        
+        /*let cycle = SKAction.wait(forDuration: 7, withRange: 3)
     
         let random = SKAction.run {
-            
-            let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
-            let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
-            
             randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
+            randomBonusSquare.removeFromParent()
             self.addChild(randomBonusSquare)
-            
-            //_ = SKAction.wait(forDuration: 7)
-            
-            //randomBonusSquare.removeFromParent()
         }
+ 
+        let removeCycle = SKAction.wait(forDuration: 7)
+ 
         
-        let sequence = SKAction.sequence([cycle, random])
+        //let sequence = SKAction.sequence([cycle, random, removeCycle])
         let sequenceTwo = SKAction.sequence([SKAction.repeatForever(sequence)])
         run(sequenceTwo)
+        //randomBonusSquare.removeFromParent()
+ */
     }
  
 }
