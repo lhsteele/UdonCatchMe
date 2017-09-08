@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
+    var gameTimer = Timer()
     
     let sqOneColor = UIColor(red: 1.82, green: 1.39, blue: 0.27, alpha: 1)
     let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
@@ -56,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         addChild(lblScore)
         
-        let _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+        //self.validateTimer()
         
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
@@ -84,8 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
-        
     }
+    
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
         let playableWidth = size.height / maxAspectRatio
@@ -109,6 +110,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
     }
+    
+    func validateTimer() {
+        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+    }
  
     func updateTimer() {
         if (count > 0) {
@@ -117,6 +122,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let seconds = String(count % 60)
             levelTimerLabel.text = minutes + ":" + seconds
         }
+    }
+    
+    func pauseTimer() {
+        gameTimer.invalidate()
     }
     
     func random() -> CGFloat {
@@ -228,14 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    /*
-    func playableAreaBorder() {
-        let area = SKShapeNode(rect: playableRect)
-        area.lineWidth = 10
-        area.strokeColor = SKColor.red
-        addChild(area)
-    }
- */
+  
     func randomBonusSquareColorChange() {
         var bonusSquares = [SKSpriteNode]()
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
@@ -251,32 +253,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
         let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
         
+        self.validateTimer()
+        
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
+        
+        self.pauseTimer()
         
         randomBonusSquare.run (
             SKAction.sequence ([
                 SKAction.wait(forDuration: 7, withRange: 3),
-                SKAction.removeFromParent()
+                SKAction.removeFromParent(),
                 ])
         )
-        
-        /*let cycle = SKAction.wait(forDuration: 7, withRange: 3)
-    
-        let random = SKAction.run {
-            randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
-            randomBonusSquare.removeFromParent()
-            self.addChild(randomBonusSquare)
-        }
- 
-        let removeCycle = SKAction.wait(forDuration: 7)
- 
-        
-        //let sequence = SKAction.sequence([cycle, random, removeCycle])
-        let sequenceTwo = SKAction.sequence([SKAction.repeatForever(sequence)])
-        run(sequenceTwo)
-        //randomBonusSquare.removeFromParent()
- */
+        self.validateTimer()
     }
  
 }
