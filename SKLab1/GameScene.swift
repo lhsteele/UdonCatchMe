@@ -42,7 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
     let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
    
-    
+    var totalSeconds: Int = 60
     
     override func didMove(to view: SKView) {
         
@@ -58,6 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(lblScore)
         
         //self.validateTimer()
+        //restartTimer()
         
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
@@ -85,6 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
+        
     }
     
     override init(size: CGSize) {
@@ -116,10 +118,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
  
     func updateTimer() {
-        if (count > 0) {
-            count -= 1
-            let minutes = String(count / 60)
-            let seconds = String(count % 60)
+        if (totalSeconds > 0) {
+            totalSeconds -= 1
+            let minutes = String(totalSeconds / 60)
+            let seconds = String(totalSeconds % 60)
             levelTimerLabel.text = minutes + ":" + seconds
         }
     }
@@ -237,6 +239,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    
+    func restartTimer() {
+        let wait: SKAction = SKAction.wait(forDuration: 1)
+        let finishTimer: SKAction = SKAction.run {
+            self.updateTimer()
+            //self.restartTimer()
+        }
+        let seq:SKAction = SKAction.sequence([wait, finishTimer])
+        self.run(seq, withKey: "timer")
+        
+        if let action = levelTimerLabel.action(forKey: "timer") {
+            action.speed = 0
+        }
+    }
+ 
   
     func randomBonusSquareColorChange() {
         var bonusSquares = [SKSpriteNode]()
@@ -253,20 +270,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
         let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
         
-        self.validateTimer()
-        
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
+        /*
+        let addRandomSquare = SKAction.sequence([
+            SKAction.wait(forDuration: 7, withRange: 3),
+            SKAction.removeFromParent(),
+            ])
+        */
         
-        self.pauseTimer()
-        
-        randomBonusSquare.run (
-            SKAction.sequence ([
-                SKAction.wait(forDuration: 7, withRange: 3),
-                SKAction.removeFromParent(),
-                ])
+        let wait: SKAction = SKAction.wait(forDuration: 1)
+        let finishTimer: SKAction = SKAction.run {
+            self.updateTimer()
+            //self.restartTimer()
+        }
+        let seq:SKAction = SKAction.sequence([wait, finishTimer])
+        self.run(seq, withKey: "timer")
+        /*
+        if let action = levelTimerLabel.action(forKey: "timer") {
+            levelTimerLabel.isPaused = false
+        }
+        */
+        let gamePlay = run (
+            SKAction.repeatForever(
+                    SKAction.run({
+                        seq
+                        if self.levelTimerLabel.isPaused == false {
+                            SKAction.sequence([
+                                SKAction.wait(forDuration: 7, withRange: 3),
+                                SKAction.removeFromParent()])
+                        } else {
+                            SKAction.run {
+                                seq
+                            }
+                        }
+                    })
+            )
         )
-        self.validateTimer()
+        
     }
  
 }
