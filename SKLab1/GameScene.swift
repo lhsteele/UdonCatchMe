@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
    
     var totalSeconds: Int = 60
+    var randomSquareBool = false
     
     override func didMove(to view: SKView) {
         
@@ -79,14 +80,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        
+        /*
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run(randomBonusSquareColorChange),
                 SKAction.wait(forDuration: 10)
                 ])
         ))
-        
+        */
+        self.restartTimer()
     }
     
     override init(size: CGSize) {
@@ -239,22 +241,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
+   
     func restartTimer() {
         let wait: SKAction = SKAction.wait(forDuration: 1)
         let finishTimer: SKAction = SKAction.run {
             self.updateTimer()
-            //self.restartTimer()
+            self.restartTimer()
         }
         let seq:SKAction = SKAction.sequence([wait, finishTimer])
         self.run(seq, withKey: "timer")
-        
-        if let action = levelTimerLabel.action(forKey: "timer") {
-            action.speed = 0
-        }
+ 
     }
  
   
+    func changeBooleanToTrue() {
+        randomSquareBool = true
+    }
+    
+    func changeBooleanToFalse() {
+        randomSquareBool = false
+    }
+    
     func randomBonusSquareColorChange() {
         var bonusSquares = [SKSpriteNode]()
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
@@ -272,12 +279,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
-        /*
-        let addRandomSquare = SKAction.sequence([
-            SKAction.wait(forDuration: 7, withRange: 3),
-            SKAction.removeFromParent(),
-            ])
-        */
         
         let wait: SKAction = SKAction.wait(forDuration: 1)
         let finishTimer: SKAction = SKAction.run {
@@ -285,28 +286,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //self.restartTimer()
         }
         let seq:SKAction = SKAction.sequence([wait, finishTimer])
-        self.run(seq, withKey: "timer")
-        /*
-        if let action = levelTimerLabel.action(forKey: "timer") {
-            levelTimerLabel.isPaused = false
-        }
-        */
-        let gamePlay = run (
-            SKAction.repeatForever(
-                    SKAction.run({
-                        seq
-                        if self.levelTimerLabel.isPaused == false {
-                            SKAction.sequence([
-                                SKAction.wait(forDuration: 7, withRange: 3),
-                                SKAction.removeFromParent()])
-                        } else {
-                            SKAction.run {
-                                seq
-                            }
-                        }
-                    })
-            )
+        self.run(seq)
+        
+        randomBonusSquare.run (
+                SKAction.sequence ([
+                    SKAction.run {
+                        seq.speed = 0
+                        //self.changeBoolean()
+                    },
+                    SKAction.wait(forDuration: 7, withRange: 3),
+                    SKAction.removeFromParent(),
+                ])
         )
+        
+        seq.speed = 1
+    }
+    
+    func gamePlay() {
+        let wait: SKAction = SKAction.wait(forDuration: 1)
+        let finishTimer: SKAction = SKAction.run {
+            self.updateTimer()
+            //self.restartTimer()
+        }
+        let seq:SKAction = SKAction.sequence([wait, finishTimer])
+        self.run(seq, withKey: "timer")
+        
+        self.randomBonusSquareColorChange()
+        
+        if randomSquareBool == true {
+            if let action = levelTimerLabel.action(forKey: "timer") {
+                action.speed = 0
+            }
+        } else {
+            if let action = levelTimerLabel.action(forKey: "timer") {
+                action.speed = 1
+            }
+        }
         
     }
  
