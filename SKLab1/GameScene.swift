@@ -70,6 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(levelTimerLabel)
         
         self.addPlayer()
+        self.restartTimer()
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -80,30 +81,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        /*
+        
         run(SKAction.repeatForever(
             SKAction.sequence([
+                SKAction.wait(forDuration: 10),
                 SKAction.run(randomBonusSquareColorChange),
                 SKAction.wait(forDuration: 10)
                 ])
         ))
- */
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(gamePlay),
-                SKAction.wait(forDuration: 10)
-                ])
-        ))
- /*
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(restartTimer),
-                SKAction.wait(forDuration: 10),
-                SKAction.run(checkSpeed),
-                SKAction.wait(forDuration: 5)
-                ])
-        ))
-    */
+ 
     }
     
     override init(size: CGSize) {
@@ -267,22 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.run(seq, withKey: "timer")
         
     }
-    /*
-    func checkSpeed() {
-        let wait: SKAction = SKAction.wait(forDuration: 1)
-        let finishTimer: SKAction = SKAction.run {
-            self.updateTimer()
-            self.restartTimer()
-        }
-        let seq:SKAction = SKAction.sequence([wait, finishTimer])
-        levelTimerLabel.run(seq, withKey: "timer")
-        
-        if let action = levelTimerLabel.action(forKey: "timer") {
-            action.speed = 0
-        }
-    }
-    */
-  
+    
     func changeBooleanToTrue() {
         randomSquareBool = true
         if randomSquareBool == true {
@@ -319,41 +290,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
         
-        self.restartTimer()
-        
         randomBonusSquare.run (
                 SKAction.sequence ([
                     SKAction.run {
                         self.changeBooleanToTrue()
-                        if let action = self.levelTimerLabel.action(forKey: "timer") {
-                            action.speed = 0
-                        }
                     },
                     SKAction.wait(forDuration: 7, withRange: 3),
                     SKAction.removeFromParent(),
                     SKAction.run {
                         self.changeBooleanToFalse()
-                        if let action = self.levelTimerLabel.action(forKey: "timer") {
-                            action.speed = 1
-                        }
                     },
                 ])
         )
     }
     
-    func gamePlay() {
-        
-        self.randomBonusSquareColorChange()
-        
-        if randomSquareBool == true {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 0
-            }
-        } else {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 1
-            }
-        }
-        
-    }
 }
