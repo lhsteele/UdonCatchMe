@@ -58,8 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         addChild(lblScore)
         
-        //self.validateTimer()
-        //restartTimer()
+        self.restartTimer()
         
         levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
@@ -70,7 +69,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(levelTimerLabel)
         
         self.addPlayer()
-        self.restartTimer()
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
@@ -114,23 +112,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         topLayerBackground.size.width = self.size.width
         topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
-    }
-    
-    func validateTimer() {
-        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
-    }
- 
-    func updateTimer() {
-        if (totalSeconds > 0) {
-            totalSeconds -= 1
-            let minutes = String(totalSeconds / 60)
-            let seconds = String(totalSeconds % 60)
-            levelTimerLabel.text = minutes + ":" + seconds
-        }
-    }
-    
-    func pauseTimer() {
-        gameTimer.invalidate()
     }
     
     func random() -> CGFloat {
@@ -217,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if action(forKey: "countdown") != nil {removeAction(forKey: "countdown")}
     }
     
-    func squareDidCollideWithPlayer(square: SKSpriteNode, player: SKSpriteNode) {
+    func pointsForRegGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
         score += 5
         square.removeFromParent()
     }
@@ -238,7 +219,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (secondBody.categoryBitMask & PhysicsCategory.Player != 0)) {
             if let square = firstBody.node as? SKSpriteNode, let
                 player = secondBody.node as? SKSpriteNode {
-                squareDidCollideWithPlayer(square: square, player: player)
+                //here, need to add an IF
+                //if the random square is not showing, then run squareDidCollideWithPlayer
+                //if the random square is showing, then need to do another IF to see if the random square color
+                //and collision square color match.
+                //if they match, then
+                pointsForRegGamePlay(square: square, player: player)
             }
         }
     }
@@ -251,7 +237,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let seq:SKAction = SKAction.sequence([wait, finishTimer])
         levelTimerLabel.run(seq, withKey: "timer")
-        
+    }
+    
+    func updateTimer() {
+        if (totalSeconds > 0) {
+            totalSeconds -= 1
+            let minutes = String(totalSeconds / 60)
+            let seconds = String(totalSeconds % 60)
+            levelTimerLabel.text = minutes + ":" + seconds
+        }
     }
     
     func changeBooleanToTrue() {
