@@ -30,7 +30,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var lblScore: SKLabelNode!
-    var levelTimerLabel: SKLabelNode!
+    var levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+    
     var count = 60
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -44,10 +45,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     var totalSeconds: Int = 60
     var randomSquareBool = false
+    var bonusSquareMethodBool = false
     
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
+        
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -60,7 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.restartTimer()
         
-        levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+        //levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
@@ -203,6 +206,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.removeFromParent()
     }
     
+    func pointsForRandomSquareGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
+        //if the random square generated matches the color of the square colling with player, then add points. 
+        //if colors don't match, stop the randomBonusSquareColorChange method and restart clock.
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -220,10 +228,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let square = firstBody.node as? SKSpriteNode, let
                 player = secondBody.node as? SKSpriteNode {
                 //here, need to add an IF
-                //if the random square is not showing, then run squareDidCollideWithPlayer
+                //if the random square is not showing, then run pointsForRegGamePlay
                 //if the random square is showing, then need to do another IF to see if the random square color
                 //and collision square color match.
-                //if they match, then
+                //if they match, then need to call new method to calculate points.
+                if bonusSquareMethodBool == true {
+                    pointsForRegGamePlay(square: square, player: player)
+                } else {
+                    
+                }
+                
                 pointsForRegGamePlay(square: square, player: player)
             }
         }
@@ -267,11 +281,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func randomBonusSquareColorChange() {
+        bonusSquareMethodBool = true
+        
         var bonusSquares = [SKSpriteNode]()
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
         let bonusSqTwo = SKSpriteNode(imageNamed: "BigSqTwo")
         let bonusSqThree = SKSpriteNode(imageNamed: "BigSqThree")
         let bonusSqFour = SKSpriteNode(imageNamed: "BigSqFour")
+        
+        bonusSqOne.name = "bS1"
+        bonusSqTwo.name = "bS2"
+        bonusSqThree.name = "bS3"
+        bonusSqFour.name = "bS4"
         
         bonusSquares.append(bonusSqOne)
         bonusSquares.append(bonusSqTwo)
@@ -281,8 +302,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
         let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
         
+        
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
+        if let rBS = randomBonusSquare as SKSpriteNode! {
+            print (rBS.name)
+        }
+        
+        
         
         randomBonusSquare.run (
                 SKAction.sequence ([
