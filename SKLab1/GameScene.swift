@@ -47,6 +47,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomSquareBool = false
     var bonusSquareMethodBool = false
     
+    var randomGeneratedSquareColor: String = ""
+    var fallingSquareColor: String = ""
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
@@ -133,6 +136,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
         let sqFour = SKSpriteNode(imageNamed: "SquareFour")
         
+        sqOne.name = "mustard"
+        sqTwo.name = "pink"
+        sqThree.name = "turquoise"
+        sqFour.name = "blue"
+        
         squares.append(sqOne)
         squares.append(sqTwo)
         squares.append(sqThree)
@@ -140,7 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
         let square = squares[randomSquareGenerator]
-        
         
         var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
         actualX = max(actualX, square.size.width/2)
@@ -225,17 +232,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if ((firstBody.categoryBitMask & PhysicsCategory.Square != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.Player != 0)) {
+            
             if let square = firstBody.node as? SKSpriteNode, let
                 player = secondBody.node as? SKSpriteNode {
+            
+                if let sq = square as SKSpriteNode! {
+                    if let sqName = sq.name {
+                        fallingSquareColor = sqName
+                        //print (fallingSquareColor)
+                    }
+                }
+                
                 //here, need to add an IF
                 //if the random square is not showing, then run pointsForRegGamePlay
                 //if the random square is showing, then need to do another IF to see if the random square color
                 //and collision square color match.
                 //if they match, then need to call new method to calculate points.
-                if bonusSquareMethodBool == true {
+                if bonusSquareMethodBool == false {
                     pointsForRegGamePlay(square: square, player: player)
                 } else {
-                    
+                    if randomGeneratedSquareColor == fallingSquareColor {
+                        print ("match")
+                    }
                 }
                 
                 pointsForRegGamePlay(square: square, player: player)
@@ -281,7 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func randomBonusSquareColorChange() {
-        bonusSquareMethodBool = true
+        //bonusSquareMethodBool = true
         
         var bonusSquares = [SKSpriteNode]()
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
@@ -289,10 +307,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bonusSqThree = SKSpriteNode(imageNamed: "BigSqThree")
         let bonusSqFour = SKSpriteNode(imageNamed: "BigSqFour")
         
-        bonusSqOne.name = "bS1"
-        bonusSqTwo.name = "bS2"
-        bonusSqThree.name = "bS3"
-        bonusSqFour.name = "bS4"
+        bonusSqOne.name = "mustard"
+        bonusSqTwo.name = "pink"
+        bonusSqThree.name = "turquoise"
+        bonusSqFour.name = "blue"
         
         bonusSquares.append(bonusSqOne)
         bonusSquares.append(bonusSqTwo)
@@ -305,23 +323,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
+        
         if let rBS = randomBonusSquare as SKSpriteNode! {
             if let rBSName = rBS.name {
-                print (rBSName)
+                //print (rBSName)
+                randomGeneratedSquareColor = rBSName
             }
         }
         
+        print (randomGeneratedSquareColor)
         
         
         randomBonusSquare.run (
                 SKAction.sequence ([
                     SKAction.run {
                         self.changeBooleanToTrue()
+                        self.bonusSquareMethodBool = true
                     },
+                    
                     SKAction.wait(forDuration: 7, withRange: 3),
                     SKAction.removeFromParent(),
                     SKAction.run {
                         self.changeBooleanToFalse()
+                        self.bonusSquareMethodBool = false
                     },
                 ])
         )
