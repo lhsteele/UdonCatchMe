@@ -244,28 +244,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if let sq = square as SKSpriteNode! {
                     if let sqName = sq.name {
                         fallingSquareColor = sqName
-                        //print (fallingSquareColor)
                     }
                 }
                 
-                //here, need to add an IF
-                //if the random square is not showing, then run pointsForRegGamePlay
-                //if the random square is showing, then need to do another IF to see if the random square color
-                //and collision square color match.
-                //if they match, then need to call new method to calculate points.
-                if bonusSquareMethodBool == false {
-                    self.pointsForRegGamePlay(square: square, player: player)
-                } else {
+                if bonusSquareMethodBool == true {
                     if randomGeneratedSquareColor == fallingSquareColor {
-                        //print ("match")
                         self.pointsForMatchingColors(square: square, player: player)
                     } else {
                         print ("GAME OVER")
                     }
+                } else {
+                    self.pointsForRegGamePlay(square: square, player: player)
                 }
-                //When no random square is showing, points are added 10 at a time.
-                //When random square is showing, wrong color adds 5, correct color adds 15.
-                pointsForRegGamePlay(square: square, player: player)
             }
         }
     }
