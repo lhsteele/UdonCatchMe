@@ -306,7 +306,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
         addChild(randomBonusSquare)
         if let rBS = randomBonusSquare as SKSpriteNode! {
-            print (rBS.name)
+            if let rBSName = rBS.name {
+                print (rBSName)
+            }
         }
         
         
