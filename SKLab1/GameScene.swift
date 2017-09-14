@@ -213,6 +213,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.removeFromParent()
     }
     
+    func pointsForMatchingColors(square: SKSpriteNode, player: SKSpriteNode) {
+        score += 10
+        square.removeFromParent()
+    }
+    
     func pointsForRandomSquareGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
         //if the random square generated matches the color of the square colling with player, then add points. 
         //if colors don't match, stop the randomBonusSquareColorChange method and restart clock.
@@ -249,13 +254,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 //and collision square color match.
                 //if they match, then need to call new method to calculate points.
                 if bonusSquareMethodBool == false {
-                    pointsForRegGamePlay(square: square, player: player)
+                    self.pointsForRegGamePlay(square: square, player: player)
                 } else {
                     if randomGeneratedSquareColor == fallingSquareColor {
-                        print ("match")
+                        //print ("match")
+                        self.pointsForMatchingColors(square: square, player: player)
+                    } else {
+                        print ("GAME OVER")
                     }
                 }
-                
+                //When no random square is showing, points are added 10 at a time.
+                //When random square is showing, wrong color adds 5, correct color adds 15.
                 pointsForRegGamePlay(square: square, player: player)
             }
         }
@@ -298,6 +307,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func changeBonusSquareMethodBooleanToTrue() {
+        bonusSquareMethodBool = true
+    }
+    
+    func changeBonusSquareMethodBooleanToFalse() {
+        bonusSquareMethodBool = false
+    }
+    
     func randomBonusSquareColorChange() {
         //bonusSquareMethodBool = true
         
@@ -331,21 +348,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        print (randomGeneratedSquareColor)
+        //print (randomGeneratedSquareColor)
         
         
         randomBonusSquare.run (
                 SKAction.sequence ([
                     SKAction.run {
                         self.changeBooleanToTrue()
-                        self.bonusSquareMethodBool = true
+                        self.changeBonusSquareMethodBooleanToTrue()
                     },
                     
                     SKAction.wait(forDuration: 7, withRange: 3),
                     SKAction.removeFromParent(),
                     SKAction.run {
                         self.changeBooleanToFalse()
-                        self.bonusSquareMethodBool = false
+                        self.changeBonusSquareMethodBooleanToFalse()
                     },
                 ])
         )
