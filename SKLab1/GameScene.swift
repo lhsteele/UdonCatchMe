@@ -50,6 +50,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomGeneratedSquareColor: String = ""
     var fallingSquareColor: String = ""
     
+    var mustRunBonusSqMethodBoolean = false
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
@@ -85,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        
+        /*
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.wait(forDuration: 10),
@@ -93,7 +95,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
- 
+        */
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.wait(forDuration: 10),
+                SKAction.run(changeMustRunBonusSqMethodBooleanToTrue),
+                SKAction.run(runRandomBonusSquareColorChange),
+                SKAction.wait(forDuration: 10)
+                ])
+        ))
+        
+        
     }
     
     override init(size: CGSize) {
@@ -251,6 +263,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     if randomGeneratedSquareColor == fallingSquareColor {
                         self.pointsForMatchingColors(square: square, player: player)
                     } else {
+                        square.removeFromParent()
+                        changeRanSqBooleanToFalse()
+                        changeMustRunBonusSqMethodBooleanToFalse()
                         print ("GAME OVER")
                     }
                 } else {
@@ -279,30 +294,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func changeBooleanToTrue() {
-        randomSquareBool = true
-        if randomSquareBool == true {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 0
-            }
+    func runRandomBonusSquareColorChange() {
+        if mustRunBonusSqMethodBoolean == true {
+            self.randomBonusSquareColorChange()
+        } else {
+            return
         }
-    }
-    
-    func changeBooleanToFalse() {
-        randomSquareBool = false
-        if randomSquareBool == false {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 1
-            }
-        }
-    }
-    
-    func changeBonusSquareMethodBooleanToTrue() {
-        bonusSquareMethodBool = true
-    }
-    
-    func changeBonusSquareMethodBooleanToFalse() {
-        bonusSquareMethodBool = false
     }
     
     func randomBonusSquareColorChange() {
@@ -344,18 +341,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomBonusSquare.run (
                 SKAction.sequence ([
                     SKAction.run {
-                        self.changeBooleanToTrue()
-                        self.changeBonusSquareMethodBooleanToTrue()
+                        self.changeRanSqBooleanToTrue()
+                        self.changeBonusSqShowingBooleanToTrue()
                     },
-                    
                     SKAction.wait(forDuration: 7, withRange: 3),
                     SKAction.removeFromParent(),
                     SKAction.run {
-                        self.changeBooleanToFalse()
-                        self.changeBonusSquareMethodBooleanToFalse()
+                        self.changeRanSqBooleanToFalse()
+                        self.changeBonusSqShowingBooleanToFalse()
                     },
                 ])
         )
+    }
+    
+    func changeRanSqBooleanToTrue() {
+        randomSquareBool = true
+        if randomSquareBool == true {
+            if let action = levelTimerLabel.action(forKey: "timer") {
+                action.speed = 0
+            }
+        }
+    }
+    
+    func changeRanSqBooleanToFalse() {
+        randomSquareBool = false
+        if randomSquareBool == false {
+            if let action = levelTimerLabel.action(forKey: "timer") {
+                action.speed = 1
+            }
+        }
+    }
+    
+    func changeBonusSqShowingBooleanToTrue() {
+        bonusSquareMethodBool = true
+    }
+    
+    func changeBonusSqShowingBooleanToFalse() {
+        bonusSquareMethodBool = false
+    }
+    
+    func changeMustRunBonusSqMethodBooleanToTrue() {
+        mustRunBonusSqMethodBoolean = true
+    }
+    
+    func changeMustRunBonusSqMethodBooleanToFalse() {
+        mustRunBonusSqMethodBoolean = false
     }
     
 }
