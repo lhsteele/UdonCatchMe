@@ -52,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomGeneratedSquareColor: String = ""
     var fallingSquareColor: String = ""
     var mustRunBonusSqMethodBoolean = true
+ 
 
     override func didMove(to view: SKView) {
         
@@ -69,7 +70,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.restartTimer()
         
-        //levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
@@ -96,7 +96,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
- 
     }
     
     override init(size: CGSize) {
@@ -221,19 +220,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.removeFromParent()
     }
     
-    func pointsForRandomSquareGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
-        //if the random square generated matches the color of the square colling with player, then add points. 
-        //if colors don't match, stop the randomBonusSquareColorChange method and restart clock.
-    }
-    
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
-            secondBody = contact.bodyB
-        } else {
+            secondBody = contact.bodyB        } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
@@ -289,8 +282,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
    
     func randomBonusSquareColorChange() {
-        //bonusSquareMethodBool = true
-        
         var bonusSquares = [SKSpriteNode]()
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
         let bonusSqTwo = SKSpriteNode(imageNamed: "BigSqTwo")
@@ -316,28 +307,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if let rBS = randomBonusSquare as SKSpriteNode! {
             if let rBSName = rBS.name {
-                //print (rBSName)
                 randomGeneratedSquareColor = rBSName
             }
         }
         
-        //print (randomGeneratedSquareColor)
-        
-        
         randomBonusSquare.run  (
-                SKAction.sequence ([
-                    SKAction.run {
-                        self.changeRanSqBooleanToTrue()
-                        self.changeBonusSqShowingBooleanToTrue()
-                    },
-                    SKAction.wait(forDuration: 10, withRange: 1),
-                    SKAction.removeFromParent(),
-                    SKAction.run {
-                        self.changeRanSqBooleanToFalse()
-                        self.changeBonusSqShowingBooleanToFalse()
-                    },
+            SKAction.sequence ([
+                SKAction.run {
+                    self.changeRanSqBooleanToTrue()
+                    self.changeBonusSqShowingBooleanToTrue()
+                },
+                SKAction.wait(forDuration: 10, withRange: 1),
+                SKAction.removeFromParent(),
+                SKAction.run {
+                    self.changeRanSqBooleanToFalse()
+                    self.changeBonusSqShowingBooleanToFalse()
+                },
                 ])
         )
+        
     }
     
     func changeRanSqBooleanToTrue() {
@@ -365,15 +353,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func changeBonusSqShowingBooleanToFalse() {
         bonusSquareMethodBool = false
     }
-  /*
-    func changeMustRunBonusSqMethodBooleanToTrue() {
-        mustRunBonusSqMethodBoolean = true
-        print ("boolean true")
-    }
-    
-    func changeMustRunBonusSqMethodBooleanToFalse() {
-        mustRunBonusSqMethodBoolean = false
-        print ("boolean false")
-    }
- */
+ 
 }
