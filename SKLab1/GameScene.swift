@@ -17,6 +17,8 @@ struct PhysicsCategory {
     static let Player : UInt32 = 0b10
 }
 
+
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "Player")
@@ -49,9 +51,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var randomGeneratedSquareColor: String = ""
     var fallingSquareColor: String = ""
-    
-    var mustRunBonusSqMethodBoolean = false
-    
+    var mustRunBonusSqMethodBoolean = true
+
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.white
@@ -87,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        /*
+        
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.wait(forDuration: 10),
@@ -95,17 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
-        */
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.wait(forDuration: 10),
-                SKAction.run(changeMustRunBonusSqMethodBooleanToTrue),
-                SKAction.run(runRandomBonusSquareColorChange),
-                SKAction.wait(forDuration: 10)
-                ])
-        ))
-        
-        
+ 
     }
     
     override init(size: CGSize) {
@@ -259,22 +250,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                if bonusSquareMethodBool == true {
+                if bonusSquareMethodBool == false {
+                    //I'm in a normal game state. all collected squares give points. 
+                    self.pointsForRegGamePlay(square: square, player: player)
+                } else {
+                    //I'm in the bonusSq game state. colors have to match in order to be awarded points.
+                    //if the colors don't match, then I need to return to the normal game state.
+                    
                     if randomGeneratedSquareColor == fallingSquareColor {
                         self.pointsForMatchingColors(square: square, player: player)
                     } else {
-                        square.removeFromParent()
-                        changeRanSqBooleanToFalse()
-                        changeMustRunBonusSqMethodBooleanToFalse()
-                        print ("GAME OVER")
+                        //need to return to the normal game state.
+                        self.pointsForRegGamePlay(square: square, player: player)
                     }
-                } else {
-                    self.pointsForRegGamePlay(square: square, player: player)
                 }
+                
             }
         }
     }
-   
+    
     func restartTimer() {
         let wait: SKAction = SKAction.wait(forDuration: 1)
         let finishTimer: SKAction = SKAction.run {
@@ -293,15 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             levelTimerLabel.text = minutes + ":" + seconds
         }
     }
-    
-    func runRandomBonusSquareColorChange() {
-        if mustRunBonusSqMethodBoolean == true {
-            self.randomBonusSquareColorChange()
-        } else {
-            return
-        }
-    }
-    
+   
     func randomBonusSquareColorChange() {
         //bonusSquareMethodBool = true
         
@@ -338,13 +324,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //print (randomGeneratedSquareColor)
         
         
-        randomBonusSquare.run (
+        randomBonusSquare.run  (
                 SKAction.sequence ([
                     SKAction.run {
                         self.changeRanSqBooleanToTrue()
                         self.changeBonusSqShowingBooleanToTrue()
                     },
-                    SKAction.wait(forDuration: 7, withRange: 3),
+                    SKAction.wait(forDuration: 10, withRange: 1),
                     SKAction.removeFromParent(),
                     SKAction.run {
                         self.changeRanSqBooleanToFalse()
@@ -371,7 +357,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
+   
     func changeBonusSqShowingBooleanToTrue() {
         bonusSquareMethodBool = true
     }
@@ -379,13 +365,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func changeBonusSqShowingBooleanToFalse() {
         bonusSquareMethodBool = false
     }
-    
+  /*
     func changeMustRunBonusSqMethodBooleanToTrue() {
         mustRunBonusSqMethodBoolean = true
+        print ("boolean true")
     }
     
     func changeMustRunBonusSqMethodBooleanToFalse() {
         mustRunBonusSqMethodBoolean = false
+        print ("boolean false")
     }
-    
+ */
 }
