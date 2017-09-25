@@ -170,7 +170,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -sqOne.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
-        square.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
+        let loseAction = SKAction.run() {
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
+        square.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
     }
     
     
@@ -213,11 +219,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func pointsForRegGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
         score += 5
         square.removeFromParent()
+        
+        if (totalSeconds == 0) {
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: true)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
     }
     
     func pointsForMatchingColors(square: SKSpriteNode, player: SKSpriteNode) {
         score += 10
         square.removeFromParent()
+        
+        if (totalSeconds == 0) {
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: true)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

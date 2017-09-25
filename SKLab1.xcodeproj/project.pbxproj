@@ -14,6 +14,9 @@
 		EF0856271F4CC96E008AC1AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF0856261F4CC96E008AC1AB /* Assets.xcassets */; };
 		EF08562A1F4CC96E008AC1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF0856281F4CC96E008AC1AB /* LaunchScreen.storyboard */; };
 		EF0856321F52850E008AC1AB /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0856311F52850E008AC1AB /* GameState.swift */; };
+		EF67C2B01F7616BC0052B8BE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF67C2AF1F7616BB0052B8BE /* GameKit.framework */; };
+		EFB3B0F21F761A8700B92263 /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F11F761A8700B92263 /* Leaderboard.swift */; };
+		EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,10 @@
 		EF0856291F4CC96E008AC1AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF08562B1F4CC96E008AC1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF0856311F52850E008AC1AB /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		EF67C2AF1F7616BB0052B8BE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SKLab1.entitlements; sourceTree = "<group>"; };
+		EFB3B0F11F761A8700B92263 /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
+		EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF67C2B01F7616BC0052B8BE /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +52,7 @@
 			children = (
 				EF0856181F4CC96D008AC1AB /* SKLab1 */,
 				EF0856171F4CC96D008AC1AB /* Products */,
+				EF67C2AE1F7616BB0052B8BE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,7 +67,10 @@
 		EF0856181F4CC96D008AC1AB /* SKLab1 */ = {
 			isa = PBXGroup;
 			children = (
+				EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */,
 				EF0856191F4CC96D008AC1AB /* AppDelegate.swift */,
+				EFB3B0F11F761A8700B92263 /* Leaderboard.swift */,
+				EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */,
 				EF08561F1F4CC96E008AC1AB /* GameScene.swift */,
 				EF0856311F52850E008AC1AB /* GameState.swift */,
 				EF0856211F4CC96E008AC1AB /* GameViewController.swift */,
@@ -68,6 +80,14 @@
 				EF08562B1F4CC96E008AC1AB /* Info.plist */,
 			);
 			path = SKLab1;
+			sourceTree = "<group>";
+		};
+		EF67C2AE1F7616BB0052B8BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF67C2AF1F7616BB0052B8BE /* GameKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,6 +124,14 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 77F66T2364;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -147,6 +175,8 @@
 				EF0856321F52850E008AC1AB /* GameState.swift in Sources */,
 				EF0856221F4CC96E008AC1AB /* GameViewController.swift in Sources */,
 				EF08561A1F4CC96D008AC1AB /* AppDelegate.swift in Sources */,
+				EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */,
+				EFB3B0F21F761A8700B92263 /* Leaderboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +299,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SKLab1/SKLab1.entitlements;
 				DEVELOPMENT_TEAM = 77F66T2364;
 				INFOPLIST_FILE = SKLab1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -283,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SKLab1/SKLab1.entitlements;
 				DEVELOPMENT_TEAM = 77F66T2364;
 				INFOPLIST_FILE = SKLab1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
