@@ -32,9 +32,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var lblScore: SKLabelNode!
-    var levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+    let scoreKey = "SKLab_Highscore"
+    var highScore = 0
+    var showingHighScore = false
     
-    var count = 60
+    var levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+    var count = 10
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
@@ -58,6 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         backgroundColor = SKColor.white
         
+        let defaults = UserDefaults.standard
+        highScore = defaults.integer(forKey: scoreKey)
         
         lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
         lblScore.fontSize = 20
@@ -221,6 +226,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.removeFromParent()
         
         if (totalSeconds == 0) {
+            if score > highScore {
+                let defaults = UserDefaults.standard
+                defaults.set(score, forKey: scoreKey)
+            }
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             self.view?.presentScene(gameOverScene, transition: reveal)
@@ -232,6 +241,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         square.removeFromParent()
         
         if (totalSeconds == 0) {
+            if score > highScore {
+                let defaults = UserDefaults.standard
+                defaults.set(score, forKey: scoreKey)
+            }
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             self.view?.presentScene(gameOverScene, transition: reveal)
