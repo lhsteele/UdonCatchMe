@@ -33,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var lblScore: SKLabelNode!
     let scoreKey = "SKLab_Highscore"
-    var highScore = 0
+    var highScore = 10
     var showingHighScore = false
     
     var levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")

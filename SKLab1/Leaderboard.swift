@@ -5,7 +5,7 @@
 //  Created by Lisa Steele on 9/22/17.
 //  Copyright © 2017 lisahsteele. All rights reserved.
 //
-
+/*
 import Foundation
 import GameKit
 
@@ -48,3 +48,4 @@ class Leaderboard: UIViewController, GKGameCenterControllerDelegate {
     }
  
 }
+*/
