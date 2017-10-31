@@ -11,9 +11,9 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
-    let replayButtonTexture = SKTexture(imageNamed: "replayButton")
+    let replayButtonTexture = SKTexture(imageNamed: "ReplayButton")
     var replayButton : SKSpriteNode! = nil
-    let highScoreNode = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+    let highScoreNode = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
     let scoreKey = "SKLab_Highscore"
     
     override func sceneDidLoad() {
@@ -27,11 +27,12 @@ class GameOverScene: SKScene {
         let highScore = defaults.integer(forKey: scoreKey)
         print ("highScore\(highScore)")
         
-        highScoreNode.text = "\(highScore)"
-        highScoreNode.fontSize = 50
-        highScoreNode.fontColor = SKColor.black
+        highScoreNode.text = "High Score: \(highScore)"
+        highScoreNode.fontSize = 30
+        highScoreNode.fontColor = SKColor.darkGray
         highScoreNode.verticalAlignmentMode = .top
-        highScoreNode.position = CGPoint(x: size.width/2, y: replayButton.position.y - replayButton.size.height/2 - 50)
+        //highScoreNode.position = CGPoint(x: size.width/2, y: replayButton.position.y - replayButton.size.height/2 - 50)
+        highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
         highScoreNode.zPosition = 1
         
         addChild(highScoreNode)
@@ -44,13 +45,14 @@ class GameOverScene: SKScene {
         
         let message = won ? "You Won!" : "You Lost :("
         
-        let label = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+        let label = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
         label.text = message
         label.fontSize = 40
         label.fontColor = SKColor.darkGray
-        label.position = CGPoint(x: size.width/2, y: size.height/2)
+        label.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
         addChild(label)
         
+        /*
         run(SKAction.sequence([
             SKAction.wait(forDuration: 3),
             SKAction.run() {
@@ -59,7 +61,20 @@ class GameOverScene: SKScene {
                 self.view?.presentScene(scene, transition: reveal)
             }
         ]))
+        */
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if replayButton.contains(location) {
+                let reveal = SKTransition.flipHorizontal(withDuration: 1)
+                let scene = GameScene(size: size)
+                self.view?.presentScene(scene, transition: reveal)
+            }
+        }
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
