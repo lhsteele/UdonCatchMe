@@ -177,6 +177,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
+            if self.score > self.highScore {
+                let defaults = UserDefaults.standard
+                defaults.set(self.score, forKey: self.scoreKey)
+            }
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
