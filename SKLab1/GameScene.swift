@@ -239,6 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         ])
                 ))
                 self.restartTimer()
+                startButton.removeFromParent()
             }
         }
     }
