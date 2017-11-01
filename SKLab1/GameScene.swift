@@ -36,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore = 10
     var showingHighScore = false
     
-    var levelTimerLabel = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+    var levelTimerLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
     var count = 10
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -55,16 +55,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomGeneratedSquareColor: String = ""
     var fallingSquareColor: String = ""
     var mustRunBonusSqMethodBoolean = true
+    
+    let startButtonTexture = SKTexture(imageNamed: "StartButton")
+    var startButton : SKSpriteNode! = nil
  
 
-    override func didMove(to view: SKView) {
-        
+    override func sceneDidLoad() {
         backgroundColor = SKColor.white
+        
+        startButton = SKSpriteNode(texture: startButtonTexture)
+        startButton.position = CGPoint(x: size.width/2, y: size.height/2 - startButton.size.height/2)
+        addChild(startButton)
+    }
+    
+    override func didMove(to view: SKView) {
         
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         
-        lblScore = SKLabelNode(fontNamed: "MalayalamSangamMN-Bold")
+        lblScore = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.darkGray
         lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
@@ -73,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         addChild(lblScore)
         
-        self.restartTimer()
+        //self.restartTimer()
         
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.darkGray
@@ -86,14 +95,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-        
+        /*
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run(addSquare),
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        
+        */
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.wait(forDuration: 10),
@@ -102,6 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ])
         ))
     }
+    
     
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
@@ -219,6 +229,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isFingerOnPlayer = false
         
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if startButton.contains(location) {
+                run(SKAction.repeatForever(
+                    SKAction.sequence([
+                        SKAction.run(addSquare),
+                        SKAction.wait(forDuration: 1.0)
+                        ])
+                ))
+                self.restartTimer()
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
