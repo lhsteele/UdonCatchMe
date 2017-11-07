@@ -18,7 +18,6 @@ struct PhysicsCategory {
 }
 
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "Player")
@@ -59,7 +58,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
  
-
+    var gcEnabled = Bool()
+    var gcDefaultLeaderBoard = String()
+    
     override func sceneDidLoad() {
         backgroundColor = SKColor.white
         
