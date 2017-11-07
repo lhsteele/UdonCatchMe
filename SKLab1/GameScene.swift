@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-import GameplayKit
+import GameKit
 
 
 struct PhysicsCategory {
@@ -103,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
-        */
+ 
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.wait(forDuration: 10),
@@ -111,6 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: 10)
                 ])
         ))
+        */
     }
     
     
@@ -188,10 +189,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
-            if self.score > self.highScore {
+            
+            /*if self.score > self.highScore {
                 let defaults = UserDefaults.standard
                 defaults.set(self.score, forKey: self.scoreKey)
             }
+            */
+            self.overrideHighestScore(highScore: self.score)
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
@@ -237,6 +241,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     SKAction.sequence([
                         SKAction.run(addSquare),
                         SKAction.wait(forDuration: 1.0)
+                        ])
+                ))
+                run(SKAction.repeatForever(
+                    SKAction.sequence([
+                        SKAction.wait(forDuration: 10),
+                        SKAction.run(randomBonusSquareColorChange),
+                        SKAction.wait(forDuration: 10)
                         ])
                 ))
                 self.restartTimer()
@@ -386,6 +397,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         )
         
     }
+    
+    func overrideHighestScore(highScore: Int) {
+        let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
+        
+        if score > lastHighScore {
+            UserDefaults.standard.set(score, forKey: scoreKey)
+            UserDefaults.standard.synchronize()
+            
+            saveHighScore(score: score)
+        }
+    }
+    
+    func saveHighScore(score: Int) {
+        print ("Player has been authenticated.")
+        
+        if GKLocalPlayer.localPlayer().isAuthenticated {
+            let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.sklab1")
+            scoreReporter.value = Int64(score)
+            let scoreArray: [GKScore] = [scoreReporter]
+            
+            GKScore.report(scoreArray, withCompletionHandler: { (error) in
+                if error != nil {
+                    print ("An error has occured: \(error)")
+                }
+            })
+        }
+    }
+
     
     func changeRanSqBooleanToTrue() {
         randomSquareBool = true

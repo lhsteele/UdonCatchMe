@@ -12,6 +12,8 @@ import GameKit
 
 class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     
+    //let scoreKey = "SKLab_Highscore"
+    
     var gcEnabled = Bool()
     var gcDefaultLeaderBoard = String()
     
@@ -31,6 +33,9 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         skView.presentScene(scene)
         
         authenticateLocalPlayer()
+        
+        //let defaults = UserDefaults.standard
+        //defaults.removeObject(forKey: scoreKey)
     }
     
     func authenticateLocalPlayer() {
