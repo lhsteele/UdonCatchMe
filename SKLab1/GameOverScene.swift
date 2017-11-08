@@ -8,11 +8,15 @@
 
 import Foundation
 import SpriteKit
+import GameKit
 
-class GameOverScene: SKScene {
+class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     
     let replayButtonTexture = SKTexture(imageNamed: "ReplayButton")
     var replayButton : SKSpriteNode! = nil
+    let leaderboardButtonTexture = SKTexture(imageNamed: "LeaderboardButton")
+    var leaderboardButton : SKSpriteNode! = nil
+    let leaderBoard_ID = "com.leaderboard.sklab1"
     let highScoreNode = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
     let scoreKey = "SKLab_Highscore"
     
@@ -23,6 +27,10 @@ class GameOverScene: SKScene {
         replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
         addChild(replayButton)
         
+        leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton.size.height) - leaderboardButton.size.height/2)
+        addChild(leaderboardButton)
+        
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
         print ("highScore\(highScore)")
@@ -31,10 +39,8 @@ class GameOverScene: SKScene {
         highScoreNode.fontSize = 30
         highScoreNode.fontColor = SKColor.darkGray
         highScoreNode.verticalAlignmentMode = .top
-        //highScoreNode.position = CGPoint(x: size.width/2, y: replayButton.position.y - replayButton.size.height/2 - 50)
         highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
         highScoreNode.zPosition = 1
-        
         addChild(highScoreNode)
     }
     
@@ -52,16 +58,6 @@ class GameOverScene: SKScene {
         label.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
         addChild(label)
         
-        /*
-        run(SKAction.sequence([
-            SKAction.wait(forDuration: 3),
-            SKAction.run() {
-                let reveal = SKTransition.flipHorizontal(withDuration: 1)
-                let scene = GameScene(size: size)
-                self.view?.presentScene(scene, transition: reveal)
-            }
-        ]))
-        */
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,13 +67,26 @@ class GameOverScene: SKScene {
                 let reveal = SKTransition.flipHorizontal(withDuration: 1)
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
+            } else if leaderboardButton.contains(location) {
+                self.showLeaderboard()
             }
         }
     }
     
+    func showLeaderboard() {
+        let viewControllerVar = self.view?.window?.rootViewController
+        let gcViewController = GKGameCenterViewController()
+        gcViewController.gameCenterDelegate = self
+        viewControllerVar?.present(gcViewController, animated: true, completion: nil)
+    }
     
+        
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 
 }
