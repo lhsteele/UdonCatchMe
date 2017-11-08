@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
     var gameTimer = Timer()
-    
+   
     let sqOneColor = UIColor(red: 1.82, green: 1.39, blue: 0.27, alpha: 1)
     let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
     let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
@@ -96,22 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-        /*
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(addSquare),
-                SKAction.wait(forDuration: 1.0)
-                ])
-        ))
- 
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.wait(forDuration: 10),
-                SKAction.run(randomBonusSquareColorChange),
-                SKAction.wait(forDuration: 10)
-                ])
-        ))
-        */
+        
     }
     
     
@@ -148,8 +133,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addSquare() {
-        
         var squares = [SKSpriteNode]()
+        
         let sqOne = SKSpriteNode(imageNamed: "SquareOne")
         let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
         let sqThree = SKSpriteNode(imageNamed: "SquareThree")
@@ -296,7 +281,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
-            secondBody = contact.bodyB        } else {
+            secondBody = contact.bodyB
+        } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
@@ -353,6 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     func randomBonusSquareColorChange() {
         var bonusSquares = [SKSpriteNode]()
+        
         let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
         let bonusSqTwo = SKSpriteNode(imageNamed: "BigSqTwo")
         let bonusSqThree = SKSpriteNode(imageNamed: "BigSqThree")
