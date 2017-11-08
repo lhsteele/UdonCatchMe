@@ -12,6 +12,8 @@ import GameKit
 class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     
     var welcomeLabel: SKLabelNode!
+    let beginButtonTexture = SKTexture(imageNamed: "BeginButton")
+    var beginButton: SKSpriteNode! = nil
     
     override func didMove(to view: SKView) {
         welcomeLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
@@ -20,6 +22,10 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
         welcomeLabel.fontColor = SKColor.darkGray
         welcomeLabel.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(welcomeLabel)
+        
+        beginButton = SKSpriteNode(texture: beginButtonTexture)
+        beginButton.position = CGPoint(x: size.width/2, y: size.height/2 - beginButton.size.height/2)
+        addChild(beginButton)
     }
     
     override func sceneDidLoad() {
@@ -29,6 +35,17 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     override init(size: CGSize) {
         super.init(size: size)
         name = "WelcomeScene"
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if beginButton.contains(location) {
+                let reveal = SKTransition.doorway(withDuration: 1)
+                let scene = GameScene(size: size)
+                self.view?.presentScene(scene, transition: reveal)
+            } 
+        }
     }
  
     required init?(coder aDecoder: NSCoder) {
