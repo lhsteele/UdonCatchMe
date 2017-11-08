@@ -13,6 +13,7 @@
 		EF0856271F4CC96E008AC1AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF0856261F4CC96E008AC1AB /* Assets.xcassets */; };
 		EF08562A1F4CC96E008AC1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF0856281F4CC96E008AC1AB /* LaunchScreen.storyboard */; };
 		EF3CDE841FB3A40B00C66109 /* Sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EF3CDE831FB3A40B00C66109 /* Sprites.atlas */; };
+		EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */; };
 		EF67C2B01F7616BC0052B8BE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF67C2AF1F7616BB0052B8BE /* GameKit.framework */; };
 		EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */; };
 		EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08561F1F4CC96E008AC1AB /* GameScene.swift */; };
@@ -28,6 +29,7 @@
 		EF0856291F4CC96E008AC1AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF08562B1F4CC96E008AC1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF3CDE831FB3A40B00C66109 /* Sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Sprites.atlas; path = Assets.xcassets/Sprites.atlas; sourceTree = "<group>"; };
+		EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
 		EF67C2AF1F7616BB0052B8BE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SKLab1.entitlements; sourceTree = "<group>"; };
 		EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 			children = (
 				EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */,
 				EF0856191F4CC96D008AC1AB /* AppDelegate.swift */,
+				EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */,
 				EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */,
 				EF08561F1F4CC96E008AC1AB /* GameScene.swift */,
 				EF0856211F4CC96E008AC1AB /* GameViewController.swift */,
@@ -171,6 +174,7 @@
 			files = (
 				EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */,
 				EF0856221F4CC96E008AC1AB /* GameViewController.swift in Sources */,
+				EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */,
 				EF08561A1F4CC96D008AC1AB /* AppDelegate.swift in Sources */,
 				EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */,
 			);

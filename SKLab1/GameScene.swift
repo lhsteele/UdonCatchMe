@@ -406,7 +406,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             GKScore.report(scoreArray, withCompletionHandler: { (error) in
                 if error != nil {
-                    print ("An error has occured: \(error)")
+                    print ("An error has occured: \(String(describing: error))")
                 }
             })
         }

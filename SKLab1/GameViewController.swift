@@ -23,6 +23,18 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let view = self.view as! SKView? {
+            let scene = WelcomeScene(size: view.bounds.size)
+            scene.scaleMode = .aspectFill
+            view.presentScene(scene)
+            
+            view.ignoresSiblingOrder = true
+            view.showsFPS = true
+            view.showsNodeCount = true
+        }
+
+        /*
         let skView = self.view as! SKView
         let scene = GameScene(size: skView.bounds.size)
         
@@ -31,7 +43,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = SKSceneScaleMode.aspectFit
         skView.presentScene(scene)
-        
+        */
         authenticateLocalPlayer()
         
         //let defaults = UserDefaults.standard
@@ -48,7 +60,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
                 self.gcEnabled = true
                 
                 localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifier, error) in
-                    if error != nil { print (error)
+                    if error != nil { print (error as Any)
                     } else {
                         self.gcDefaultLeaderBoard = leaderboardIdentifier!
                     }
@@ -56,7 +68,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             } else {
                 self.gcEnabled = false
                 print ("Local player could not be authenticated!")
-                print (error)
+                print (error as Any)
             }
         }
     }
