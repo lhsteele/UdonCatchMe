@@ -60,7 +60,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             if replayButton.contains(location) {
@@ -68,7 +68,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             } else if leaderboardButton.contains(location) {
-                self.showLeaderboard()
+            self.showLeaderboard()
             }
         }
     }

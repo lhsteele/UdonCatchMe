@@ -37,17 +37,17 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
         name = "WelcomeScene"
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             if beginButton.contains(location) {
                 let reveal = SKTransition.doorway(withDuration: 1)
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
-            } 
+            }
         }
     }
- 
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
