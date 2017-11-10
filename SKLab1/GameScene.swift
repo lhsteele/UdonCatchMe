@@ -13,7 +13,7 @@ import GameKit
 struct PhysicsCategory {
     static let None : UInt32 = 0
     static let All : UInt32 = UInt32.max
-    static let Square : UInt32 = 0b1
+    static let Food : UInt32 = 0b1
     static let Player : UInt32 = 0b10
 }
 
@@ -41,12 +41,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
     var gameTimer = Timer()
-   
+   /*
     let sqOneColor = UIColor(red: 1.82, green: 1.39, blue: 0.27, alpha: 1)
     let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
     let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
     let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
-   
+   */
     var totalSeconds: Int = 60
     var randomSquareBool = false
     var bonusSquareMethodBool = false
@@ -133,44 +133,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addSquare() {
-        var squares = [SKSpriteNode]()
+        var foods = [SKSpriteNode]()
         
-        let sqOne = SKSpriteNode(imageNamed: "SquareOne")
-        let sqTwo = SKSpriteNode(imageNamed: "SquareTwo")
-        let sqThree = SKSpriteNode(imageNamed: "SquareThree")
-        let sqFour = SKSpriteNode(imageNamed: "SquareFour")
+        let apple = SKSpriteNode(imageNamed: "Apple")
+        let bread = SKSpriteNode(imageNamed: "Bread")
+        let broccoli = SKSpriteNode(imageNamed: "Broccoli")
+        let coconut = SKSpriteNode(imageNamed: "Coconut")
+        let flower = SKSpriteNode(imageNamed: "Flower")
+        let milk = SKSpriteNode(imageNamed: "Milk")
+        let orange = SKSpriteNode(imageNamed: "Orange")
         
-        sqOne.name = "mustard"
-        sqTwo.name = "pink"
-        sqThree.name = "turquoise"
-        sqFour.name = "blue"
+        apple.name = "apple"
+        bread.name = "bread"
+        broccoli.name = "broccoli"
+        coconut.name = "coconut"
+        flower.name = "flower"
+        milk.name = "milk"
+        orange.name = "orange"
         
-        squares.append(sqOne)
-        squares.append(sqTwo)
-        squares.append(sqThree)
-        squares.append(sqFour)
+        foods.append(apple)
+        foods.append(bread)
+        foods.append(broccoli)
+        foods.append(coconut)
+        foods.append(flower)
+        foods.append(milk)
+        foods.append(orange)
         
-        let randomSquareGenerator = Int(arc4random_uniform(UInt32(squares.count)))
-        let square = squares[randomSquareGenerator]
+        let randomSquareGenerator = Int(arc4random_uniform(UInt32(foods.count)))
+        let food = foods[randomSquareGenerator]
         
-        var actualX = random(min: sqOne.size.height/2, max: size.height - sqOne.size.height/2)
-        actualX = max(actualX, square.size.width/2)
-        actualX = min(actualX, size.width - square.size.width/2)
+        var actualX = random(min: apple.size.height/2, max: size.height - apple.size.height/2)
+        actualX = max(actualX, apple.size.width/2)
+        actualX = min(actualX, size.width - apple.size.width/2)
  
         
-        square.position = CGPoint(x: actualX, y: size.height + sqOne.size.height)
+        food.position = CGPoint(x: actualX, y: size.height + apple.size.height)
         
-        addChild(square)
+        addChild(food)
         
-        square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
-        square.physicsBody?.isDynamic = true
-        square.physicsBody?.categoryBitMask = PhysicsCategory.Square
-        square.physicsBody?.contactTestBitMask = PhysicsCategory.Player
-        square.physicsBody?.collisionBitMask = PhysicsCategory.None
+        food.physicsBody = SKPhysicsBody(rectangleOf: food.size)
+        food.physicsBody?.isDynamic = true
+        food.physicsBody?.categoryBitMask = PhysicsCategory.Food
+        food.physicsBody?.contactTestBitMask = PhysicsCategory.Player
+        food.physicsBody?.collisionBitMask = PhysicsCategory.None
         
         let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -sqOne.size.width/2), duration: TimeInterval(actualDuration))
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -apple.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
@@ -185,7 +194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
-        square.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+        food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
     }
     
     
@@ -209,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
             player.physicsBody?.isDynamic = true
             player.physicsBody?.categoryBitMask = PhysicsCategory.Player
-            player.physicsBody?.contactTestBitMask = PhysicsCategory.Square
+            player.physicsBody?.contactTestBitMask = PhysicsCategory.Food
             player.physicsBody?.collisionBitMask = PhysicsCategory.None
             player.physicsBody?.usesPreciseCollisionDetection = true
         }
@@ -245,9 +254,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if action(forKey: "countdown") != nil {removeAction(forKey: "countdown")}
     }
     
-    func pointsForRegGamePlay(square: SKSpriteNode, player: SKSpriteNode) {
+    func pointsForRegGamePlay(food: SKSpriteNode, player: SKSpriteNode) {
         score += 5
-        square.removeFromParent()
+        food.removeFromParent()
         
         if (totalSeconds == 0) {
             if score > highScore {
@@ -260,9 +269,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func pointsForMatchingColors(square: SKSpriteNode, player: SKSpriteNode) {
+    func pointsForMatchingColors(food: SKSpriteNode, player: SKSpriteNode) {
         score += 10
-        square.removeFromParent()
+        food.removeFromParent()
         
         if (totalSeconds == 0) {
             if score > highScore {
@@ -287,13 +296,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if ((firstBody.categoryBitMask & PhysicsCategory.Square != 0) &&
+        if ((firstBody.categoryBitMask & PhysicsCategory.Food != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.Player != 0)) {
             
-            if let square = firstBody.node as? SKSpriteNode, let
+            if let food = firstBody.node as? SKSpriteNode, let
                 player = secondBody.node as? SKSpriteNode {
             
-                if let sq = square as SKSpriteNode! {
+                if let sq = food as SKSpriteNode! {
                     if let sqName = sq.name {
                         fallingSquareColor = sqName
                     }
@@ -301,16 +310,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if bonusSquareMethodBool == false {
                     //I'm in a normal game state. all collected squares give points. 
-                    self.pointsForRegGamePlay(square: square, player: player)
+                    self.pointsForRegGamePlay(food: food, player: player)
                 } else {
                     //I'm in the bonusSq game state. colors have to match in order to be awarded points.
                     //if the colors don't match, then I need to return to the normal game state.
                     
                     if randomGeneratedSquareColor == fallingSquareColor {
-                        self.pointsForMatchingColors(square: square, player: player)
+                        self.pointsForMatchingColors(food: food, player: player)
                     } else {
                         //need to return to the normal game state.
-                        self.pointsForRegGamePlay(square: square, player: player)
+                        self.pointsForRegGamePlay(food: food, player: player)
                     }
                 }
                 
@@ -338,37 +347,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
    
     func randomBonusSquareColorChange() {
-        var bonusSquares = [SKSpriteNode]()
+        var bonusFoods = [SKSpriteNode]()
         
-        let bonusSqOne = SKSpriteNode(imageNamed: "BigSqOne")
-        let bonusSqTwo = SKSpriteNode(imageNamed: "BigSqTwo")
-        let bonusSqThree = SKSpriteNode(imageNamed: "BigSqThree")
-        let bonusSqFour = SKSpriteNode(imageNamed: "BigSqFour")
+        let bonusApple = SKSpriteNode(imageNamed: "Apple")
+        let bonusBread = SKSpriteNode(imageNamed: "Bread")
+        let bonusBroccoli = SKSpriteNode(imageNamed: "Broccoli")
+        let bonusCoconut = SKSpriteNode(imageNamed: "Coconut")
+        let bonusFlower = SKSpriteNode(imageNamed: "Flower")
+        let bonusMilk = SKSpriteNode(imageNamed: "Milk")
+        let bonusOrange = SKSpriteNode(imageNamed: "Orange")
         
-        bonusSqOne.name = "mustard"
-        bonusSqTwo.name = "pink"
-        bonusSqThree.name = "turquoise"
-        bonusSqFour.name = "blue"
+        bonusApple.name = "apple"
+        bonusBread.name = "bread"
+        bonusBroccoli.name = "broccoli"
+        bonusCoconut.name = "coconut"
+        bonusFlower.name = "flower"
+        bonusMilk.name = "milk"
+        bonusOrange.name = "orange"
         
-        bonusSquares.append(bonusSqOne)
-        bonusSquares.append(bonusSqTwo)
-        bonusSquares.append(bonusSqThree)
-        bonusSquares.append(bonusSqFour)
+        bonusFoods.append(bonusApple)
+        bonusFoods.append(bonusBread)
+        bonusFoods.append(bonusBroccoli)
+        bonusFoods.append(bonusCoconut)
+        bonusFoods.append(bonusFlower)
+        bonusFoods.append(bonusMilk)
+        bonusFoods.append(bonusOrange)
         
-        let randomBonusSquareGenerator = Int(arc4random_uniform(UInt32(bonusSquares.count)))
-        let randomBonusSquare = bonusSquares[randomBonusSquareGenerator]
+        let randomBonusFoodGenerator = Int(arc4random_uniform(UInt32(bonusFoods.count)))
+        let randomBonusFood = bonusFoods[randomBonusFoodGenerator]
         
         
-        randomBonusSquare.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
-        addChild(randomBonusSquare)
+        randomBonusFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
+        addChild(randomBonusFood)
         
-        if let rBS = randomBonusSquare as SKSpriteNode! {
-            if let rBSName = rBS.name {
-                randomGeneratedSquareColor = rBSName
+        if let rBF = randomBonusFood as SKSpriteNode! {
+            if let rBFName = rBF.name {
+                randomGeneratedSquareColor = rBFName
             }
         }
         
-        randomBonusSquare.run  (
+        randomBonusFood.run  (
             SKAction.sequence ([
                 SKAction.run {
                     self.changeRanSqBooleanToTrue()
