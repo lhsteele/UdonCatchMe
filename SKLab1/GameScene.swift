@@ -20,7 +20,7 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var player = SKSpriteNode(imageNamed: "Player")
+    var player = SKSpriteNode(imageNamed: "Bowl")
     var topLayerBackground = SKSpriteNode()
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
@@ -349,13 +349,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func randomBonusSquareColorChange() {
         var bonusFoods = [SKSpriteNode]()
         
-        let bonusApple = SKSpriteNode(imageNamed: "Apple")
-        let bonusBread = SKSpriteNode(imageNamed: "Bread")
-        let bonusBroccoli = SKSpriteNode(imageNamed: "Broccoli")
-        let bonusCoconut = SKSpriteNode(imageNamed: "Coconut")
-        let bonusFlower = SKSpriteNode(imageNamed: "Flower")
-        let bonusMilk = SKSpriteNode(imageNamed: "Milk")
-        let bonusOrange = SKSpriteNode(imageNamed: "Orange")
+        let bonusApple = SKSpriteNode(imageNamed: "BigApple")
+        let bonusBread = SKSpriteNode(imageNamed: "BigBread")
+        let bonusBroccoli = SKSpriteNode(imageNamed: "BigBroccoli")
+        let bonusCoconut = SKSpriteNode(imageNamed: "BigCoconut")
+        let bonusFlower = SKSpriteNode(imageNamed: "BigFlower")
+        let bonusMilk = SKSpriteNode(imageNamed: "BigMilk")
+        let bonusOrange = SKSpriteNode(imageNamed: "BigOrange")
         
         bonusApple.name = "apple"
         bonusBread.name = "bread"
