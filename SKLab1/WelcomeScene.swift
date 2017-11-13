@@ -41,7 +41,7 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             if beginButton.contains(location) {
-                let reveal = SKTransition.doorway(withDuration: 1)
+                let reveal = SKTransition.flipHorizontal(withDuration: 1)
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             }
