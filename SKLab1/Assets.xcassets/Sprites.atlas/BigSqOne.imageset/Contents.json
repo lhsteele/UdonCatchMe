@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "BigSqOne@1x.png",
       "scale" : "1x"
     },
     {
@@ -11,7 +12,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "BigSqOne.png",
+      "filename" : "BigSqOne@3x.png",
       "scale" : "3x"
     }
   ],
