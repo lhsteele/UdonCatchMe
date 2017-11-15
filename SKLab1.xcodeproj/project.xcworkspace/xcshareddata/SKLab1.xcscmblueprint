@@ -4,13 +4,11 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "6D04004801B7DE1849A1F15EB5DCEBEFE6344407" : 9223372036854775807,
-    "E134516EAB417556BEA2B530D433697B5E74FDFE" : 9223372036854775807
+    "6D04004801B7DE1849A1F15EB5DCEBEFE6344407" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "666AB42A-6044-4F84-AE30-C2FA121B2B24",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "6D04004801B7DE1849A1F15EB5DCEBEFE6344407" : "SKLab1\/",
-    "E134516EAB417556BEA2B530D433697B5E74FDFE" : ""
+    "6D04004801B7DE1849A1F15EB5DCEBEFE6344407" : "SKLab1\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "SKLab1",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -20,11 +18,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lhsteele\/SKLab1.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6D04004801B7DE1849A1F15EB5DCEBEFE6344407"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lhsteele\/SpriteKitLabs",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E134516EAB417556BEA2B530D433697B5E74FDFE"
     }
   ]
 }
