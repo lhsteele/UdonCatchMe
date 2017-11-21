@@ -164,16 +164,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let ebiTempura = SKSpriteNode(imageNamed: "EbiTempura")
         let enoki = SKSpriteNode(imageNamed: "Enoki")
         let kamaboko = SKSpriteNode(imageNamed: "Kamaboko")
+        let bokChoi = SKSpriteNode(imageNamed: "BokChoi")
         
         egg.name = "egg"
         ebiTempura.name = "ebiTempura"
         enoki.name = "enoki"
         kamaboko.name = "kamaboko"
+        bokChoi.name = "bokChoi"
         
         foods.append(egg)
         foods.append(ebiTempura)
         foods.append(enoki)
         foods.append(kamaboko)
+        foods.append(bokChoi)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(foods.count)))
         let food = foods[randomSquareGenerator]
