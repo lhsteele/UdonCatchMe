@@ -20,7 +20,8 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var player = SKSpriteNode(imageNamed: "Bowl")
+    //var player = SKSpriteNode(imageNamed: "Bowl")
+    var player = SKSpriteNode(imageNamed: "UdonBowl")
     var topLayerBackground = SKSpriteNode()
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
