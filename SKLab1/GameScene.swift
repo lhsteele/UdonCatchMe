@@ -135,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addSquare() {
         var foods = [SKSpriteNode]()
-        
+        /*
         let apple = SKSpriteNode(imageNamed: "Apple")
         let bread = SKSpriteNode(imageNamed: "Bread")
         let broccoli = SKSpriteNode(imageNamed: "Broccoli")
@@ -159,16 +159,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         foods.append(flower)
         foods.append(milk)
         foods.append(orange)
+        */
+        let egg = SKSpriteNode(imageNamed: "Egg")
+        let ebiTempura = SKSpriteNode(imageNamed: "EbiTempura")
+        let enoki = SKSpriteNode(imageNamed: "Enoki")
+        let kamaboko = SKSpriteNode(imageNamed: "Kamaboko")
+        
+        egg.name = "egg"
+        ebiTempura.name = "ebiTempura"
+        enoki.name = "enoki"
+        kamaboko.name = "kamaboko"
+        
+        foods.append(egg)
+        foods.append(ebiTempura)
+        foods.append(enoki)
+        foods.append(kamaboko)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(foods.count)))
         let food = foods[randomSquareGenerator]
         
-        var actualX = random(min: apple.size.height/2, max: size.height - apple.size.height/2)
-        actualX = max(actualX, apple.size.width/2)
-        actualX = min(actualX, size.width - apple.size.width/2)
+        var actualX = random(min: egg.size.height/2, max: size.height - egg.size.height/2)
+        actualX = max(actualX, egg.size.width/2)
+        actualX = min(actualX, size.width - egg.size.width/2)
  
         
-        food.position = CGPoint(x: actualX, y: size.height + apple.size.height)
+        food.position = CGPoint(x: actualX, y: size.height + egg.size.height)
         
         addChild(food)
         
@@ -180,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -apple.size.width/2), duration: TimeInterval(actualDuration))
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -egg.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
