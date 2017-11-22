@@ -22,7 +22,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //var player = SKSpriteNode(imageNamed: "Bowl")
     var player = SKSpriteNode(imageNamed: "UdonBowl")
-    var topLayerBackground = SKSpriteNode()
+    var topLayerBackground = SKSpriteNode(imageNamed: "Background")
+    //var topLayerBackground = SKSpriteNode()
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
     
@@ -65,9 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var background = SKSpriteNode(imageNamed: "Background")
     
     override func sceneDidLoad() {
-        //backgroundColor = SKColor.white
-        background.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-        addChild(background)
+        backgroundColor = SKColor.white
+        
     }
     
     override func didMove(to view: SKView) {
@@ -75,8 +75,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.zPosition = -1
+        addChild(background)
+        
         startButton = SKSpriteNode(texture: startButtonTexture)
         startButton.position = CGPoint(x: size.width/2, y: size.height/2 - startButton.size.height/2)
+        startButton.zPosition = 1
         addChild(startButton)
         
         lblScore = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
@@ -86,6 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
         score = 0
+        lblScore.zPosition = 2
         addChild(lblScore)
         
         //self.restartTimer()
@@ -94,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.fontColor = SKColor.darkGray
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        
+        levelTimerLabel.zPosition = 3
         addChild(levelTimerLabel)
         
         self.addPlayer()
@@ -121,14 +128,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
     }
-    /*
+    
     func addTopBackgroundLayer() {
         topLayerBackground.size.height = self.size.height
         topLayerBackground.size.width = self.size.width
-        topLayerBackground.color = SKColor.white
+        //topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
     }
-    */
+    
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
