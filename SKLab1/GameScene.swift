@@ -62,18 +62,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gcEnabled = Bool()
     var gcDefaultLeaderBoard = String()
     
+    var background = SKSpriteNode(imageNamed: "Background")
+    
     override func sceneDidLoad() {
-        backgroundColor = SKColor.white
-        
-        startButton = SKSpriteNode(texture: startButtonTexture)
-        startButton.position = CGPoint(x: size.width/2, y: size.height/2 - startButton.size.height/2)
-        addChild(startButton)
+        //backgroundColor = SKColor.white
+        background.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        addChild(background)
     }
     
     override func didMove(to view: SKView) {
         
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
+        
+        startButton = SKSpriteNode(texture: startButtonTexture)
+        startButton.position = CGPoint(x: size.width/2, y: size.height/2 - startButton.size.height/2)
+        addChild(startButton)
         
         lblScore = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
         lblScore.fontSize = 20
@@ -117,14 +121,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position = CGPoint(x: size.width * 0.5, y: size.height * 0.1)
         addChild(player)
     }
-    
+    /*
     func addTopBackgroundLayer() {
         topLayerBackground.size.height = self.size.height
         topLayerBackground.size.width = self.size.width
         topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
     }
-    
+    */
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
