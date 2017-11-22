@@ -159,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         foods.append(flower)
         foods.append(milk)
         foods.append(orange)
-        */
+ */
         let egg = SKSpriteNode(imageNamed: "Egg")
         let ebiTempura = SKSpriteNode(imageNamed: "EbiTempura")
         let enoki = SKSpriteNode(imageNamed: "Enoki")
@@ -181,12 +181,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(foods.count)))
         let food = foods[randomSquareGenerator]
         
-        var actualX = random(min: egg.size.height/2, max: size.height - egg.size.height/2)
-        actualX = max(actualX, egg.size.width/2)
-        actualX = min(actualX, size.width - egg.size.width/2)
+        var actualX = random(min: ebiTempura.size.height/2, max: size.height - ebiTempura.size.height/2)
+        actualX = max(actualX, ebiTempura.size.width/2)
+        actualX = min(actualX, size.width - ebiTempura.size.width/2)
  
         
-        food.position = CGPoint(x: actualX, y: size.height + egg.size.height)
+        food.position = CGPoint(x: actualX, y: size.height + ebiTempura.size.height)
         
         addChild(food)
         
@@ -198,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -egg.size.width/2), duration: TimeInterval(actualDuration))
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -ebiTempura.size.width/2), duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
@@ -367,7 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     func randomBonusSquareColorChange() {
         var bonusFoods = [SKSpriteNode]()
-        
+        /*
         let bonusApple = SKSpriteNode(imageNamed: "BigApple")
         let bonusBread = SKSpriteNode(imageNamed: "BigBread")
         let bonusBroccoli = SKSpriteNode(imageNamed: "BigBroccoli")
@@ -391,6 +391,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusFoods.append(bonusFlower)
         bonusFoods.append(bonusMilk)
         bonusFoods.append(bonusOrange)
+        */
+        
+        let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
+        let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
+        let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
+        let bonusKamaboko = SKSpriteNode(imageNamed: "BigKamaboko")
+        let bonusBokChoi = SKSpriteNode(imageNamed: "BigBokChoi")
+        
+        bonusEgg.name = "egg"
+        bonusEbiTempura.name = "ebiTempura"
+        bonusEnoki.name = "enoki"
+        bonusKamaboko.name = "kamaboko"
+        bonusBokChoi.name = "bokChoi"
+        
+        bonusFoods.append(bonusEgg)
+        bonusFoods.append(bonusEbiTempura)
+        bonusFoods.append(bonusEnoki)
+        bonusFoods.append(bonusKamaboko)
+        bonusFoods.append(bonusBokChoi)
         
         let randomBonusFoodGenerator = Int(arc4random_uniform(UInt32(bonusFoods.count)))
         let randomBonusFood = bonusFoods[randomBonusFoodGenerator]
