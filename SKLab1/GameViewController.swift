@@ -26,28 +26,15 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         
         if let view = self.view as! SKView? {
             let scene = WelcomeScene(size: view.bounds.size)
-            scene.scaleMode = .aspectFill
+            //scene.scaleMode = .aspectFill
+            scene.scaleMode = .resizeFill
             view.presentScene(scene)
             
             view.ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
         }
-
-        /*
-        let skView = self.view as! SKView
-        let scene = GameScene(size: skView.bounds.size)
-        
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        skView.ignoresSiblingOrder = true
-        scene.scaleMode = SKSceneScaleMode.aspectFit
-        skView.presentScene(scene)
-        */
         authenticateLocalPlayer()
-        
-        //let defaults = UserDefaults.standard
-        //defaults.removeObject(forKey: scoreKey)
     }
     
     func authenticateLocalPlayer() {

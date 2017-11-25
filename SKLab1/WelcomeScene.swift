@@ -14,6 +14,7 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     var welcomeLabel: SKLabelNode!
     let beginButtonTexture = SKTexture(imageNamed: "BeginButton")
     var beginButton: SKSpriteNode! = nil
+    var background = SKSpriteNode(imageNamed: "Background")
     
     override func didMove(to view: SKView) {
         //welcomeLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
@@ -30,7 +31,10 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     }
     
     override func sceneDidLoad() {
-        backgroundColor = SKColor.white
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.zPosition = -1
+        addChild(background)
     }
     
     override init(size: CGSize) {

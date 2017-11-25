@@ -65,8 +65,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var background = SKSpriteNode(imageNamed: "Background")
     
+    
     override func sceneDidLoad() {
-        backgroundColor = SKColor.white
+        //backgroundColor = SKColor.white
         
     }
     
@@ -87,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         lblScore = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
         lblScore.fontSize = 20
-        lblScore.fontColor = SKColor.darkGray
+        lblScore.fontColor = SKColor.white
         lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
@@ -98,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //self.restartTimer()
         
         levelTimerLabel.fontSize = 20
-        levelTimerLabel.fontColor = SKColor.darkGray
+        levelTimerLabel.fontColor = SKColor.white
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         levelTimerLabel.zPosition = 3
