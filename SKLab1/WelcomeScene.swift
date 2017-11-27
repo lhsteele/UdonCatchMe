@@ -14,17 +14,18 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     var welcomeLabel: SKLabelNode!
     let beginButtonTexture = SKTexture(imageNamed: "BeginButton")
     var beginButton: SKSpriteNode! = nil
-    var background = SKSpriteNode(imageNamed: "Background")
+    var background = SKSpriteNode(imageNamed: "WelcomeBackground")
     
     override func didMove(to view: SKView) {
-        //welcomeLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+        /*
+        welcomeLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
         welcomeLabel = SKLabelNode(fontNamed: "Menlo-Regular")
         welcomeLabel.text = "Udon Catch Me!"
         welcomeLabel.fontSize = 40
         welcomeLabel.fontColor = SKColor.darkGray
         welcomeLabel.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(welcomeLabel)
-        
+        */
         beginButton = SKSpriteNode(texture: beginButtonTexture)
         beginButton.position = CGPoint(x: size.width/2, y: size.height/2 - beginButton.size.height/2)
         addChild(beginButton)

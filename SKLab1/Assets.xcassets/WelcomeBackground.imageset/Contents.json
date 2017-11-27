@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "LetsEatButton.png",
+      "filename" : "WelcomeBackground@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "LetsEatButton@2x.png",
+      "filename" : "WelcomeBackground@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "LetsEatButton@3x.png",
+      "filename" : "WelcomeBackground@3x.png",
       "scale" : "3x"
     }
   ],
