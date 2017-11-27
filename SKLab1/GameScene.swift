@@ -37,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScore = 10
     var showingHighScore = false
     
-    var levelTimerLabel = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+    var levelTimerLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     var count = 10
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -86,7 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startButton.zPosition = 1
         addChild(startButton)
         
-        lblScore = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+        lblScore = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.white
         lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
