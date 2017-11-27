@@ -17,18 +17,28 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     let leaderboardButtonTexture = SKTexture(imageNamed: "LeaderboardButton")
     var leaderboardButton : SKSpriteNode! = nil
     let leaderBoard_ID = "com.leaderboard.sklab1"
-    let highScoreNode = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+    let highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let scoreKey = "SKLab_Highscore"
+    var gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground")
+    var playableRect: CGRect
+    var deviceWidth = UIScreen.main.bounds.width
+    var deviceHeight = UIScreen.main.bounds.height
     
     override func sceneDidLoad() {
-        backgroundColor = SKColor.white
+        //backgroundColor = SKColor.white
+        gameOverBackground.position = CGPoint(x: size.width/2, y: size.height/2)
+        gameOverBackground.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        gameOverBackground.zPosition = -1
+        addChild(gameOverBackground)
         
         replayButton = SKSpriteNode(texture: replayButtonTexture)
-        replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
+        //replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
+        replayButton.position = CGPoint(x: playableRect.minX + 100, y: playableRect.maxY - 175)
         addChild(replayButton)
         
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
-        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton.size.height) - leaderboardButton.size.height/2)
+        //leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton.size.height) - leaderboardButton.size.height/2)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: size.height/2 - leaderboardButton.size.height/2)
         addChild(leaderboardButton)
         
         let defaults = UserDefaults.standard
@@ -45,19 +55,20 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     }
     
     init(size: CGSize, won: Bool) {
+        let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
+        let playableWidth = size.height / maxAspectRatio
+        let playableMargin = (size.width - playableWidth) / 2.0
+        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
-        
-        backgroundColor = SKColor.white
         
         let message = won ? "You Won!" : "You Lost :("
         
-        let label = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+        let label = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         label.text = message
         label.fontSize = 40
         label.fontColor = SKColor.darkGray
         label.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
         addChild(label)
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
