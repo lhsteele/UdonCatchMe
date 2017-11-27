@@ -24,6 +24,8 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
     
+    let replayButton2 = SKSpriteNode(imageNamed: "Replay2")
+    
     override func sceneDidLoad() {
         //backgroundColor = SKColor.white
         gameOverBackground.position = CGPoint(x: size.width/2, y: size.height/2)
@@ -33,12 +35,15 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         
         replayButton = SKSpriteNode(texture: replayButtonTexture)
         //replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
-        replayButton.position = CGPoint(x: playableRect.minX + 100, y: playableRect.maxY - 175)
+        replayButton.position = CGPoint(x: playableRect.minX + 60, y: playableRect.maxY - 160)
         addChild(replayButton)
         
+        replayButton2.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton2.size.height/2)
+        addChild(replayButton2)
+        
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
-        //leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton.size.height) - leaderboardButton.size.height/2)
-        leaderboardButton.position = CGPoint(x: size.width/2, y: size.height/2 - leaderboardButton.size.height/2)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton2.size.height) - leaderboardButton.size.height/2)
+        //leaderboardButton.position = CGPoint(x: size.width/2, y: size.height/2 - leaderboardButton.size.height/2)
         addChild(leaderboardButton)
         
         let defaults = UserDefaults.standard
