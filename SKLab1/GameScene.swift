@@ -66,6 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var background = SKSpriteNode(imageNamed: "Background")
     
     static var currentScore = 0
+    var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
     
     override func sceneDidLoad() {
         //backgroundColor = SKColor.white
@@ -87,6 +88,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startButton.zPosition = 1
         addChild(startButton)
         
+        highScoreNode.text = "High Score: \(highScore)"
+        highScoreNode.fontSize = 20
+        highScoreNode.fontColor = SKColor.black
+        highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 25)
+        highScoreNode.zPosition = 2
+        addChild(highScoreNode)
+        
         lblScore = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.white
@@ -94,7 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
         score = 0
-        lblScore.zPosition = 2
+        lblScore.zPosition = 3
         addChild(lblScore)
         
         //self.restartTimer()
@@ -103,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.fontColor = SKColor.white
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        levelTimerLabel.zPosition = 3
+        levelTimerLabel.zPosition = 4
         addChild(levelTimerLabel)
         
         self.addPlayer()
@@ -278,6 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 ))
                 self.restartTimer()
                 startButton.removeFromParent()
+                highScoreNode.removeFromParent()
             }
         }
     }
