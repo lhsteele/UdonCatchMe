@@ -35,6 +35,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             view.showsNodeCount = true
         }
         authenticateLocalPlayer()
+        
     }
     
     func authenticateLocalPlayer() {

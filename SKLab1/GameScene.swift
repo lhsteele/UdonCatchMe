@@ -65,6 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var background = SKSpriteNode(imageNamed: "Background")
     
+    static var currentScore = 0
     
     override func sceneDidLoad() {
         //backgroundColor = SKColor.white
@@ -461,6 +462,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             UserDefaults.standard.synchronize()
             
             saveHighScore(score: score)
+        } else {
+            //save the current score as a variable, which is passed to next screen.
+            GameScene.currentScore = score 
+            //next screen will print it.
         }
     }
     
