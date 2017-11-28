@@ -66,7 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var background = SKSpriteNode(imageNamed: "Background")
     
     static var currentScore = 0
-    var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-UltraLight")
+    var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     
     override func sceneDidLoad() {
         //backgroundColor = SKColor.white
@@ -90,7 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         highScoreNode.text = "High Score: \(highScore)"
         highScoreNode.fontSize = 20
-        highScoreNode.fontColor = SKColor.black
+        highScoreNode.fontColor = SKColor.darkGray
         highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 25)
         highScoreNode.zPosition = 2
         addChild(highScoreNode)
