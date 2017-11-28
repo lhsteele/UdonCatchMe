@@ -32,12 +32,12 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         gameOverBackground.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         gameOverBackground.zPosition = -1
         addChild(gameOverBackground)
-        
+        /*
         replayButton = SKSpriteNode(texture: replayButtonTexture)
         //replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
         replayButton.position = CGPoint(x: playableRect.minX + 60, y: playableRect.maxY - 160)
         addChild(replayButton)
-        
+        */
         replayButton2.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton2.size.height/2)
         addChild(replayButton2)
         
@@ -79,7 +79,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
-            if replayButton.contains(location) {
+            if replayButton2.contains(location) {
                 let reveal = SKTransition.flipHorizontal(withDuration: 1)
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
