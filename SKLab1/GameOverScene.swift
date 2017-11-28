@@ -58,6 +58,9 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         highScoreNode.zPosition = 1
         addChild(highScoreNode)
     }
+    //need to have logic which determines if the current score is higher than old high score
+    //if higher, then print "New High Score"
+    //if lower, then along with You Lose text, print current losing score, along with old High Score.
     
     init(size: CGSize, won: Bool) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
