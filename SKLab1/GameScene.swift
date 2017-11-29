@@ -70,6 +70,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func sceneDidLoad() {
         //backgroundColor = SKColor.white
+        //let defaults = UserDefaults.standard
+        //highScore = defaults.integer(forKey: scoreKey)
+        //defaults.removeObject(forKey: scoreKey)
         
     }
     
@@ -77,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
+        //defaults.removeObject(forKey: scoreKey)
+        print ("userDefaultScore: \(highScore)")
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -230,9 +235,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             */
             self.overrideHighestScore(highScore: self.score)
+            /*
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
+            */
         }
         food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
         
@@ -319,9 +326,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
+            /*
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             self.view?.presentScene(gameOverScene, transition: reveal)
+            */
         }
     }
     
@@ -334,9 +343,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
+            /*
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             self.view?.presentScene(gameOverScene, transition: reveal)
+            */
         }
     }
     
@@ -486,12 +497,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
-            
             saveHighScore(score: score)
+            print ("score \(score)")
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: true)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+            
         } else {
             //save the current score as a variable, which is passed to next screen.
-            GameScene.currentScore = score 
-            //next screen will print it.
+            GameScene.currentScore = score
+            print ("losingScore \(lastHighScore)")
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     

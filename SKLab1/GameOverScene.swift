@@ -95,6 +95,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
         
+        
         if GameScene.currentScore > highScore {
             print ("highScore\(highScore)")
             newHighScoreNode.text = "New High Score: \(highScore)"
@@ -104,8 +105,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
             newHighScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
             addChild(newHighScoreNode)
            
-        }
-        else {
+        } else {
             print ("Score: \(GameScene.currentScore) High Score: \(highScore)")
             scoreNode.text = "Score: \(GameScene.currentScore)"
             scoreNode.fontSize = 20
