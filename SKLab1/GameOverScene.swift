@@ -92,10 +92,12 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     }
     
     func showCurrentOrHighScore() {
+        
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
-        
-        
+        print ("GameSceneCurrentScore\(GameScene.currentScore)")
+        print ("GameSceneHighScore\(highScore)")
+        /*
         if GameScene.currentScore > highScore {
             print ("highScore\(highScore)")
             newHighScoreNode.text = "New High Score: \(highScore)"
@@ -121,7 +123,30 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
             highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 75)
             addChild(highScoreNode)
         }
- 
+        */
+        if GameScene.gameWonBoolean == true {
+            newHighScoreNode.text = "New High Score: \(highScore)"
+            newHighScoreNode.fontSize = 20
+            newHighScoreNode.fontColor = SKColor.darkGray
+            newHighScoreNode.verticalAlignmentMode = .top
+            newHighScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
+            addChild(newHighScoreNode)
+        } else {
+            print ("Score: \(GameScene.currentScore) High Score: \(highScore)")
+            scoreNode.text = "Score: \(GameScene.currentScore)"
+            scoreNode.fontSize = 20
+            scoreNode.fontColor = SKColor.darkGray
+            scoreNode.verticalAlignmentMode = .top
+            scoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
+            addChild(scoreNode)
+            
+            highScoreNode.text = "High Score: \(highScore)"
+            highScoreNode.fontSize = 20
+            highScoreNode.fontColor = SKColor.darkGray
+            highScoreNode.verticalAlignmentMode = .top
+            highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 75)
+            addChild(highScoreNode)
+        }
     }
     
         

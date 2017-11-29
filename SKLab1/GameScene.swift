@@ -68,13 +68,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var currentScore = 0
     var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     
+    static var gameWonBoolean = true
+    
     override func sceneDidLoad() {
         /*
         backgroundColor = SKColor.white
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
-        */
+ */
     }
     
     override func didMove(to view: SKView) {
@@ -501,6 +503,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             saveHighScore(score: score)
+            GameScene.gameWonBoolean = true
             
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
@@ -510,6 +513,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //save the current score as a variable, which is passed to next screen.
             //GameScene.currentScore = score
             print ("losingScore \(score)")
+            GameScene.gameWonBoolean = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
