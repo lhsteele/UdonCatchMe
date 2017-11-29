@@ -469,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.changeRanSqBooleanToTrue()
                     self.changeBonusSqShowingBooleanToTrue()
                 },
-                SKAction.wait(forDuration: 10, withRange: 1),
+                SKAction.wait(forDuration: 10, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.changeRanSqBooleanToFalse()
