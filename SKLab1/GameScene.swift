@@ -235,7 +235,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
         food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+        
+        switch score {
+        case 0...75:
+            food.speed = 1
+        case 76...150:
+            food.speed = 1.1
+        case 151...225:
+            food.speed = 1.2
+        case 226...300:
+            food.speed = 1.3
+        case 301...375:
+            food.speed = 1.4
+        default: speed = 1.5
+        }
     }
+    
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -377,7 +392,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let seq:SKAction = SKAction.sequence([wait, finishTimer])
         levelTimerLabel.run(seq, withKey: "timer")
     }
-    
+ 
+
     func updateTimer() {
         if (totalSeconds > 0) {
             totalSeconds -= 1
@@ -385,8 +401,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let seconds = String(totalSeconds % 60)
             levelTimerLabel.text = minutes + ":" + seconds
         }
+        
     }
-   
+    
     func randomBonusSquareColorChange() {
         var bonusFoods = [SKSpriteNode]()
         /*
