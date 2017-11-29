@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     
     static var gameWonBoolean = true
+    static var itsADraw = false
     
     override func sceneDidLoad() {
         /*
@@ -499,23 +500,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print ("lastHighScore \(lastHighScore)")
         GameScene.currentScore = score
         
-        if score > lastHighScore {
+        if score == lastHighScore {
+            GameScene.itsADraw = true
+            GameScene.gameWonBoolean = false
+            print ("it's a draw")
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        } else if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             saveHighScore(score: score)
             GameScene.gameWonBoolean = true
             
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: true)
+            let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
-            
         } else {
-            //save the current score as a variable, which is passed to next screen.
-            //GameScene.currentScore = score
-            print ("losingScore \(score)")
             GameScene.gameWonBoolean = false
+            
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: false)
+            let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }

@@ -20,6 +20,8 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     let newHighScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let scoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+    let drawScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+    let playerStatusLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let scoreKey = "SKLab_Highscore"
     var gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground")
     var playableRect: CGRect
@@ -50,25 +52,14 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         
         self.showCurrentOrHighScore()
     }
-    //need to have logic which determines if the current score is higher than old high score
-    //if higher, then print "New High Score"
-    //if lower, then along with You Lose text, print current losing score, along with old High Score.
     
-    init(size: CGSize, won: Bool) {
+    override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
         let playableWidth = size.height / maxAspectRatio
         let playableMargin = (size.width - playableWidth) / 2.0
         playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
-        
-        let message = won ? "You Won!" : "You Lost :("
-        
-        let label = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
-        label.text = message
-        label.fontSize = 40
-        label.fontColor = SKColor.darkGray
-        label.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
-        addChild(label)
+       
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,54 +88,62 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         let highScore = defaults.integer(forKey: scoreKey)
         print ("GameSceneCurrentScore\(GameScene.currentScore)")
         print ("GameSceneHighScore\(highScore)")
-        /*
-        if GameScene.currentScore > highScore {
-            print ("highScore\(highScore)")
-            newHighScoreNode.text = "New High Score: \(highScore)"
-            newHighScoreNode.fontSize = 20
-            newHighScoreNode.fontColor = SKColor.darkGray
-            newHighScoreNode.verticalAlignmentMode = .top
-            newHighScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
-            addChild(newHighScoreNode)
-           
-        } else {
-            print ("Score: \(GameScene.currentScore) High Score: \(highScore)")
-            scoreNode.text = "Score: \(GameScene.currentScore)"
-            scoreNode.fontSize = 20
-            scoreNode.fontColor = SKColor.darkGray
-            scoreNode.verticalAlignmentMode = .top
-            scoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
-            addChild(scoreNode)
-            
-            highScoreNode.text = "High Score: \(highScore)"
-            highScoreNode.fontSize = 20
-            highScoreNode.fontColor = SKColor.darkGray
-            highScoreNode.verticalAlignmentMode = .top
-            highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 75)
-            addChild(highScoreNode)
-        }
-        */
+       
         if GameScene.gameWonBoolean == true {
+            playerStatusLabel.text = "You Won!"
+            playerStatusLabel.fontSize = 40
+            playerStatusLabel.fontColor = SKColor.darkGray
+            playerStatusLabel.verticalAlignmentMode = .top
+            playerStatusLabel.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
+            addChild(playerStatusLabel)
+            
             newHighScoreNode.text = "New High Score: \(highScore)"
             newHighScoreNode.fontSize = 20
             newHighScoreNode.fontColor = SKColor.darkGray
             newHighScoreNode.verticalAlignmentMode = .top
             newHighScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
             addChild(newHighScoreNode)
-        } else {
-            print ("Score: \(GameScene.currentScore) High Score: \(highScore)")
+        } else if GameScene.itsADraw == true {
+            playerStatusLabel.text = "It's a draw!"
+            playerStatusLabel.fontSize = 40
+            playerStatusLabel.fontColor = SKColor.darkGray
+            playerStatusLabel.verticalAlignmentMode = .top
+            playerStatusLabel.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
+            addChild(playerStatusLabel)
+            
             scoreNode.text = "Score: \(GameScene.currentScore)"
             scoreNode.fontSize = 20
             scoreNode.fontColor = SKColor.darkGray
             scoreNode.verticalAlignmentMode = .top
-            scoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
+            scoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 25)
             addChild(scoreNode)
             
             highScoreNode.text = "High Score: \(highScore)"
             highScoreNode.fontSize = 20
             highScoreNode.fontColor = SKColor.darkGray
             highScoreNode.verticalAlignmentMode = .top
-            highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 75)
+            highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
+            addChild(highScoreNode)
+        } else if GameScene.gameWonBoolean == false {
+            playerStatusLabel.text = "You Lost :("
+            playerStatusLabel.fontSize = 40
+            playerStatusLabel.fontColor = SKColor.darkGray
+            playerStatusLabel.verticalAlignmentMode = .top
+            playerStatusLabel.position = CGPoint(x: size.width/2, y: size.height/2 + 100)
+            addChild(playerStatusLabel)
+            
+            scoreNode.text = "Score: \(GameScene.currentScore)"
+            scoreNode.fontSize = 20
+            scoreNode.fontColor = SKColor.darkGray
+            scoreNode.verticalAlignmentMode = .top
+            scoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 25)
+            addChild(scoreNode)
+            
+            highScoreNode.text = "High Score: \(highScore)"
+            highScoreNode.fontSize = 20
+            highScoreNode.fontColor = SKColor.darkGray
+            highScoreNode.verticalAlignmentMode = .top
+            highScoreNode.position = CGPoint(x: size.width/2, y: size.height/2 + 50)
             addChild(highScoreNode)
         }
     }
