@@ -72,12 +72,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var itsADraw = false
     
     override func sceneDidLoad() {
-        /*
+        
         backgroundColor = SKColor.white
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
- */
+ 
     }
     
     override func didMove(to view: SKView) {
@@ -340,7 +340,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func pointsForMatchingColors(food: SKSpriteNode, player: SKSpriteNode) {
         score += 10
-        food.removeFromParent()
         
         if (totalSeconds == 0) {
             if score > highScore {
@@ -358,6 +357,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
+        let firstSprite = firstBody
+        let secondSprite = secondBody
         
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
@@ -388,6 +389,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     if randomGeneratedSquareColor == fallingSquareColor {
                         self.pointsForMatchingColors(food: food, player: player)
+                        
+                        let centerPosition = CGPoint(x: (firstSprite.position.x + secondSprite.position.x)/2, y:(firstSprite.position.y + secondSprite.position.y)/2 - 8)
+                        
+                        let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+                        bonusScoreLabel.fontSize = 10
+                        bonusScoreLabel.color = SKColor.darkGray
+                        bonusScoreLabel.text = "+10!"
+                        bonusScoreLabel.position = centerPosition
+                        bonusScoreLabel.zPosition = 300
+                        addChild(bonusScoreLabel)
+                        
+                        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+                        moveAction.timingMode = .easeOut
+                        bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
+                        
+                        food.removeFromParent()
                     } else {
                         //need to return to the normal game state.
                         self.pointsForRegGamePlay(food: food, player: player)
