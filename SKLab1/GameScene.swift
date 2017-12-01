@@ -330,24 +330,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
-            /*
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: true)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-            */
         }
     }
     
     func pointsForMatchingColors(food: SKSpriteNode, player: SKSpriteNode) {
         score += 10
         food.removeFromParent()
-        //let centerPosition = (x: player.position, y:food.position)
+        let centerPosition = CGPoint(x: (player.position.x + food.position.x)/2, y: (player.position.y + food.position.y)/2 - 8)
         
         let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         bonusScoreLabel.fontSize = 40
         bonusScoreLabel.fontColor = SKColor.orange
         bonusScoreLabel.text = "+10!"
-        bonusScoreLabel.position = CGPoint(x: (player.position.x + food.position.x)/2, y: (player.position.y + food.position.y)/2 - 8)
+        bonusScoreLabel.position = centerPosition
         bonusScoreLabel.zPosition = 300
         addChild(bonusScoreLabel)
         
@@ -355,18 +350,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
-        
-        
         if (totalSeconds == 0) {
             if score > highScore {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
-            /*
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: true)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-            */
         }
     }
     
