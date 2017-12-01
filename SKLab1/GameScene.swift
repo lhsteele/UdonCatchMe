@@ -29,9 +29,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var score : Int = 0 {
         didSet {
-            lblScore.text = "Score: \(score)"
+            lblScore.text = "\(score)"
         }
     }
+    var scoreText: SKLabelNode!
     var lblScore: SKLabelNode!
     let scoreKey = "SKLab_Highscore"
     var highScore = 10
@@ -72,12 +73,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var itsADraw = false
     
     override func sceneDidLoad() {
-        
+        /*
         backgroundColor = SKColor.white
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
- 
+        */
     }
     
     override func didMove(to view: SKView) {
@@ -104,23 +105,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highScoreNode.zPosition = 2
         addChild(highScoreNode)
         
+        scoreText = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+        scoreText.text = "Score:"
+        scoreText.fontSize = 20
+        scoreText.fontColor = SKColor.white
+        scoreText.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY - 60)
+        scoreText.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        scoreText.zPosition = 3
+        addChild(scoreText)
+        
         lblScore = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         lblScore.fontSize = 20
         lblScore.fontColor = SKColor.white
-        lblScore.position = CGPoint(x: playableRect.maxX - 35, y: playableRect.maxY-60)
+        lblScore.position = CGPoint(x: scoreText.position.x, y: scoreText.position.y - 25)
         lblScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         
         score = 0
-        lblScore.zPosition = 3
+        lblScore.zPosition = 4
         addChild(lblScore)
         
         //self.restartTimer()
         
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.white
-        levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY-60)
+        levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY - 60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        levelTimerLabel.zPosition = 4
+        levelTimerLabel.zPosition = 5
         addChild(levelTimerLabel)
         
         self.addPlayer()
