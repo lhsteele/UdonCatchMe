@@ -46,7 +46,7 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         addChild(replayButton2)
         
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
-        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton2.size.height) - leaderboardButton.size.height/2)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton2.size.height) - leaderboardButton.size.height)
         //leaderboardButton.position = CGPoint(x: size.width/2, y: size.height/2 - leaderboardButton.size.height/2)
         addChild(leaderboardButton)
         
