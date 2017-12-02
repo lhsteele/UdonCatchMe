@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EF0856151F4CC96D008AC1AB"
-               BuildableName = "SKLab1.app"
+               BuildableName = "Udon Catch Me!.app"
                BlueprintName = "SKLab1"
                ReferencedContainer = "container:SKLab1.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF0856151F4CC96D008AC1AB"
-            BuildableName = "SKLab1.app"
+            BuildableName = "Udon Catch Me!.app"
             BlueprintName = "SKLab1"
             ReferencedContainer = "container:SKLab1.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF0856151F4CC96D008AC1AB"
-            BuildableName = "SKLab1.app"
+            BuildableName = "Udon Catch Me!.app"
             BlueprintName = "SKLab1"
             ReferencedContainer = "container:SKLab1.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EF0856151F4CC96D008AC1AB"
-            BuildableName = "SKLab1.app"
+            BuildableName = "Udon Catch Me!.app"
             BlueprintName = "SKLab1"
             ReferencedContainer = "container:SKLab1.xcodeproj">
          </BuildableReference>
