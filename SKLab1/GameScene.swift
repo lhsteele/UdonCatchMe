@@ -204,8 +204,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
-            
             self.overrideHighestScore(highScore: self.score)
+            
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
             
         }
         food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
@@ -434,8 +437,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         print ("lastHighScore \(lastHighScore)")
         GameScene.currentScore = score
-        //score == 0 not working 
-        if score > lastHighScore {
+        
+        if score == 0 {
+            GameScene.gameWonBoolean = false
+            print ("score 0")
+            GameScene.itsADraw = false
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        } else if score == lastHighScore {
+            print ("draw")
+            GameScene.itsADraw = true
+            GameScene.gameWonBoolean = false
+            print ("it's a draw")
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        } else if score > lastHighScore {
+            print ("high score")
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             saveHighScore(score: score)
@@ -444,20 +463,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
-        } else if score == lastHighScore {
-            GameScene.itsADraw = true
-            GameScene.gameWonBoolean = false
-            print ("it's a draw")
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        } else if score == 0 {
-            GameScene.gameWonBoolean = false
-            GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        } else {
+        } else if score < lastHighScore {
+            print ("lost")
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
