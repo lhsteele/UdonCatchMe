@@ -434,7 +434,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         print ("lastHighScore \(lastHighScore)")
         GameScene.currentScore = score
-        
+        //score == 0 not working 
         if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
