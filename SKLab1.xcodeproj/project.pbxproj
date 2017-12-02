@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EF0856161F4CC96D008AC1AB /* SKLab1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKLab1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF0856161F4CC96D008AC1AB /* Udon Catch Me!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Udon Catch Me!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF0856191F4CC96D008AC1AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF08561F1F4CC96E008AC1AB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		EF0856211F4CC96E008AC1AB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		EF0856171F4CC96D008AC1AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EF0856161F4CC96D008AC1AB /* SKLab1.app */,
+				EF0856161F4CC96D008AC1AB /* Udon Catch Me!.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,7 +107,7 @@
 			);
 			name = SKLab1;
 			productName = SKLab1;
-			productReference = EF0856161F4CC96D008AC1AB /* SKLab1.app */;
+			productReference = EF0856161F4CC96D008AC1AB /* Udon Catch Me!.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -305,7 +305,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lisahsteele.SKLab1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Udon Catch Me!";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -320,7 +320,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lisahsteele.SKLab1;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Udon Catch Me!";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
