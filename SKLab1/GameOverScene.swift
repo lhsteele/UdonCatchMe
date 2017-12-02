@@ -31,23 +31,16 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
     let replayButton2 = SKSpriteNode(imageNamed: "Replay2")
     
     override func sceneDidLoad() {
-        //backgroundColor = SKColor.white
         gameOverBackground.position = CGPoint(x: size.width/2, y: size.height/2)
         gameOverBackground.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         gameOverBackground.zPosition = -1
         addChild(gameOverBackground)
-        /*
-        replayButton = SKSpriteNode(texture: replayButtonTexture)
-        //replayButton.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton.size.height/2)
-        replayButton.position = CGPoint(x: playableRect.minX + 60, y: playableRect.maxY - 160)
-        addChild(replayButton)
-        */
+    
         replayButton2.position = CGPoint(x: size.width/2, y: size.height/2 - replayButton2.size.height/2)
         addChild(replayButton2)
         
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
         leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - replayButton2.size.height) - leaderboardButton.size.height)
-        //leaderboardButton.position = CGPoint(x: size.width/2, y: size.height/2 - leaderboardButton.size.height/2)
         addChild(leaderboardButton)
         
         self.showCurrentOrHighScore()

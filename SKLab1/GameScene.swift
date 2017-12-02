@@ -20,10 +20,8 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    //var player = SKSpriteNode(imageNamed: "Bowl")
     var player = SKSpriteNode(imageNamed: "UdonBowl")
     var topLayerBackground = SKSpriteNode(imageNamed: "Background")
-    //var topLayerBackground = SKSpriteNode()
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
     
@@ -44,12 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deviceHeight = UIScreen.main.bounds.height
     let playableRect: CGRect
     var gameTimer = Timer()
-   /*
-    let sqOneColor = UIColor(red: 1.82, green: 1.39, blue: 0.27, alpha: 1)
-    let sqTwoColor = UIColor(red: 1.82, green: 0.27, blue: 1.12, alpha: 1)
-    let sqThreeColor = UIColor(red: 0.27, green: 1.82, blue: 1.64, alpha: 1)
-    let sqFourColor = UIColor(red: 0.27, green: 0.45, blue: 1.82, alpha: 1)
-   */
+   
     var totalSeconds: Int = 60
     var randomSquareBool = false
     var bonusSquareMethodBool = false
@@ -74,7 +67,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func sceneDidLoad() {
         /*
-        backgroundColor = SKColor.white
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
@@ -85,8 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
-        //defaults.removeObject(forKey: scoreKey)
-        print ("userDefaultScore: \(highScore)")
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -124,8 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.zPosition = 4
         addChild(lblScore)
         
-        //self.restartTimer()
-        
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.white
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY - 60)
@@ -161,7 +149,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addTopBackgroundLayer() {
         topLayerBackground.size.height = self.size.height
         topLayerBackground.size.width = self.size.width
-        //topLayerBackground.color = SKColor.white
         addChild(topLayerBackground)
     }
     
@@ -175,31 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addSquare() {
         var foods = [SKSpriteNode]()
-        /*
-        let apple = SKSpriteNode(imageNamed: "Apple")
-        let bread = SKSpriteNode(imageNamed: "Bread")
-        let broccoli = SKSpriteNode(imageNamed: "Broccoli")
-        let coconut = SKSpriteNode(imageNamed: "Coconut")
-        let flower = SKSpriteNode(imageNamed: "Flower")
-        let milk = SKSpriteNode(imageNamed: "Milk")
-        let orange = SKSpriteNode(imageNamed: "Orange")
-        
-        apple.name = "apple"
-        bread.name = "bread"
-        broccoli.name = "broccoli"
-        coconut.name = "coconut"
-        flower.name = "flower"
-        milk.name = "milk"
-        orange.name = "orange"
-        
-        foods.append(apple)
-        foods.append(bread)
-        foods.append(broccoli)
-        foods.append(coconut)
-        foods.append(flower)
-        foods.append(milk)
-        foods.append(orange)
- */
         let egg = SKSpriteNode(imageNamed: "Egg")
         let ebiTempura = SKSpriteNode(imageNamed: "EbiTempura")
         let enoki = SKSpriteNode(imageNamed: "Enoki")
@@ -243,17 +205,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let loseAction = SKAction.run() {
             
-            /*if self.score > self.highScore {
-                let defaults = UserDefaults.standard
-                defaults.set(self.score, forKey: self.scoreKey)
-            }
-            */
             self.overrideHighestScore(highScore: self.score)
-            /*
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size, won: false)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-            */
+            
         }
         food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
         
@@ -393,16 +346,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 
                 if bonusSquareMethodBool == false {
-                    //I'm in a normal game state. all collected squares give points. 
                     self.pointsForRegGamePlay(food: food, player: player)
                 } else {
-                    //I'm in the bonusSq game state. colors have to match in order to be awarded points.
-                    //if the colors don't match, then I need to return to the normal game state.
-                    
                     if randomGeneratedSquareColor == fallingSquareColor {
                         self.pointsForMatchingColors(food: food, player: player)
                     } else {
-                        //need to return to the normal game state.
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
                 }
@@ -434,32 +382,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func randomBonusSquareColorChange() {
         var bonusFoods = [SKSpriteNode]()
-        /*
-        let bonusApple = SKSpriteNode(imageNamed: "BigApple")
-        let bonusBread = SKSpriteNode(imageNamed: "BigBread")
-        let bonusBroccoli = SKSpriteNode(imageNamed: "BigBroccoli")
-        let bonusCoconut = SKSpriteNode(imageNamed: "BigCoconut")
-        let bonusFlower = SKSpriteNode(imageNamed: "BigFlower")
-        let bonusMilk = SKSpriteNode(imageNamed: "BigMilk")
-        let bonusOrange = SKSpriteNode(imageNamed: "BigOrange")
-        
-        bonusApple.name = "apple"
-        bonusBread.name = "bread"
-        bonusBroccoli.name = "broccoli"
-        bonusCoconut.name = "coconut"
-        bonusFlower.name = "flower"
-        bonusMilk.name = "milk"
-        bonusOrange.name = "orange"
-        
-        bonusFoods.append(bonusApple)
-        bonusFoods.append(bonusBread)
-        bonusFoods.append(bonusBroccoli)
-        bonusFoods.append(bonusCoconut)
-        bonusFoods.append(bonusFlower)
-        bonusFoods.append(bonusMilk)
-        bonusFoods.append(bonusOrange)
-        */
-        
         let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
         let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
         let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
