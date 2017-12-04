@@ -31,8 +31,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             view.presentScene(scene)
             
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+            view.showsFPS = false
+            view.showsNodeCount = false
         }
         authenticateLocalPlayer()
         
@@ -77,5 +77,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil) 
     }
+    
  
 }
