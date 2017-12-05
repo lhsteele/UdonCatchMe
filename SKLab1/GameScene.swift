@@ -471,31 +471,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
-        /*
-        if score == lastHighScore {
-            GameScene.itsADraw = true
-            GameScene.gameWonBoolean = false
-            print ("it's a draw")
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        } else if score > lastHighScore {
-            UserDefaults.standard.set(score, forKey: scoreKey)
-            UserDefaults.standard.synchronize()
-            saveHighScore(score: score)
-            GameScene.gameWonBoolean = true
-            
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        } else {
-            GameScene.gameWonBoolean = false
-            
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
-        }
-        */
     }
     
     func saveHighScore(score: Int) {
