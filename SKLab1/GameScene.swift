@@ -46,7 +46,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var totalSeconds: Int = 60
     var randomVegBool = false
     var bonusVegMethodBool = false
-    var noVegShowingBool = false
+    var noVegBool = false
+    var noVegMethodBool = false
     
     var randomGeneratedVeg: String = ""
     var randomGeneratedNoVeg: String = ""
@@ -271,25 +272,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         SKAction.wait(forDuration: 1.0)
                         ])
                 ))
-                run(SKAction.repeatForever(
-                    SKAction.sequence([
-                        SKAction.wait(forDuration: 10),
-                        SKAction.run(randomNoVegChange),
-                        //SKAction.run(randomBonusVegChange),
-                        SKAction.wait(forDuration: 10)
-                        ])
-                ))
-                /*
-                if score > 20 {
+                if score < 20 {
                     run(SKAction.repeatForever(
                     SKAction.sequence([
                         SKAction.wait(forDuration: 10),
                         SKAction.run(randomNoVegChange),
-                        SKAction.wait(forDuration: 10)
+                        //SKAction.run(randomBonusVegChange),
+                        SKAction.wait(forDuration: 10),
                         ])
                     ))
+                } else {
+                    //run both the bonus and noVeg random functions.
                 }
-                */
                 self.restartTimer()
                 startButton.removeFromParent()
                 highScoreNode.removeFromParent()
@@ -394,14 +388,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
-                } else if noVegShowingBool == true {
+                } else if noVegBool == true {
                     if randomGeneratedNoVeg == fallingVeg {
                         self.losePointsForNoVeg(food: food, player: player)
                         print ("losePoints")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
-                } else if bonusVegMethodBool == false && noVegShowingBool == false {
+                } else if bonusVegMethodBool == false && noVegBool == false {
                     self.pointsForRegGamePlay(food: food, player: player)
                 }
             }
@@ -484,7 +478,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func randomNoVegChange() {
         print ("randomNoVegChangeRunning")
-        noVegShowingBool = true
+        noVegBool = true
         
         var noFoods = [SKSpriteNode]()
         let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
@@ -514,6 +508,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let rBF = randomNoFood as SKSpriteNode! {
             if let rBFName = rBF.name {
                 randomGeneratedNoVeg = rBFName
+                switch randomNoFood {
+                case bonusEggNo:
+                    noVegBool = true
+                    print (bonusEggNo.name as Any)
+                case bonusEbiTempuraNo:
+                    noVegBool = true
+                    print (bonusEbiTempuraNo.name as Any)
+                case bonusEnokiNo:
+                    noVegBool = true
+                    print (bonusEnokiNo.name as Any)
+                case bonusKamabokoNo:
+                    noVegBool = true
+                    print (bonusKamabokoNo.name as Any)
+                case bonusBokChoiNo:
+                    noVegBool = true
+                    print (bonusBokChoiNo.name as Any)
+                default:
+                    noVegBool = false
+                }
             }
         }
         
@@ -522,9 +535,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.run {
                     self.changeRandomVegBooleanToFalse()
                     self.changeBonusVegShowingBooleanToFalse()
+                    self.noVegMethodBool = true
                 },
                 SKAction.wait(forDuration: 7, withRange: 5),
-                SKAction.removeFromParent()
+                SKAction.removeFromParent(),
+                SKAction.run {
+                    self.noVegBool = false
+                }
                 ])
         )
         
