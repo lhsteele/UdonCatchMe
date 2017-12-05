@@ -501,8 +501,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func saveHighScore(score: Int) {
         print ("Player has been authenticated.")
         
+        let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.udonCatchMe")
+        scoreReporter.value = Int64(score)
+        let scoreArray: [GKScore] = [scoreReporter]
+        
+        GKScore.report(scoreArray, withCompletionHandler: { (error) in
+            if error != nil {
+                print ("An error has occured: \(String(describing: error))")
+            }
+        })
+
+        /*
         if GKLocalPlayer.localPlayer().isAuthenticated {
-            let scoreReporter = GKScore(leaderboardIdentifier: "udonCatchMe")
+            let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.udonCatchMe")
             scoreReporter.value = Int64(score)
             let scoreArray: [GKScore] = [scoreReporter]
             
@@ -512,6 +523,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             })
         }
+        */
     }
 
     
