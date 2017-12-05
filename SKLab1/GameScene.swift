@@ -44,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameTimer = Timer()
    
     var totalSeconds: Int = 60
+    var pauseTimerBool = false
     var randomVegBool = false
     var bonusVegMethodBool = false
     var noVegBool = false
@@ -276,7 +277,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     run(SKAction.repeatForever(
                     SKAction.sequence([
                         SKAction.wait(forDuration: 10),
-                        SKAction.run(randomNoVegChange),
+                        SKAction.run(randomAllFoodChange),
                         //SKAction.run(randomBonusVegChange),
                         SKAction.wait(forDuration: 10),
                         ])
@@ -460,15 +461,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomBonusFood.run  (
             SKAction.sequence ([
                 SKAction.run {
-                    self.changeRandomVegBooleanToTrue()
-                    self.changeBonusVegShowingBooleanToTrue()
+                    self.pauseTimer()
+                    self.bonusVegMethodBool = true
                     print ("randomVegShowing")
                 },
                 SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
-                    self.changeRandomVegBooleanToFalse()
-                    self.changeBonusVegShowingBooleanToFalse()
+                    self.unpauseTimer()
+                    self.bonusVegMethodBool = false
                     print ("randomVegNotShowing")
                 },
                 ])
@@ -476,7 +477,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func randomNoVegChange() {
+    func randomAllFoodChange() {
         //noVegBool = true
         
         var bonusAndNoFoods = [SKSpriteNode]()
@@ -524,67 +525,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 randomGeneratedNoVeg = rBFName
                 switch randomFood {
                 case bonusEgg:
-                    changeRandomVegBooleanToTrue()
-                    changeBonusVegShowingBooleanToTrue()
+                    noVegBool = false
+                    pauseTimer()
+                    bonusVegMethodBool = true
+                    print (bonusEgg.name as Any)
+                    print (bonusVegMethodBool)
                 case bonusEbiTempura:
-                    changeRandomVegBooleanToTrue()
-                    changeBonusVegShowingBooleanToTrue()
+                    noVegBool = false
+                    pauseTimer()
+                    bonusVegMethodBool = true
+                    print (bonusEbiTempura.name as Any)
+                    print (bonusVegMethodBool)
                 case bonusEnoki:
-                    changeRandomVegBooleanToTrue()
-                    changeBonusVegShowingBooleanToTrue()
+                    noVegBool = false
+                    pauseTimer()
+                    bonusVegMethodBool = true
+                    print (bonusEnoki.name as Any)
+                    print (bonusVegMethodBool)
                 case bonusKamaboko:
-                    changeRandomVegBooleanToTrue()
-                    changeBonusVegShowingBooleanToTrue()
+                    noVegBool = false
+                    pauseTimer()
+                    bonusVegMethodBool = true
+                    print (bonusKamaboko.name as Any)
+                    print (bonusVegMethodBool)
                 case bonusBokChoi:
-                    changeRandomVegBooleanToTrue()
-                    changeBonusVegShowingBooleanToTrue()
+                    noVegBool = false
+                    pauseTimer()
+                    bonusVegMethodBool = true
+                    print (bonusBokChoi.name as Any)
+                    print (bonusVegMethodBool)
                 case bonusEggNo:
                     noVegBool = true
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                     print (bonusEggNo.name as Any)
+                    print ("no\(noVegBool)")
                 case bonusEbiTempuraNo:
                     noVegBool = true
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                     print (bonusEbiTempuraNo.name as Any)
+                    print ("no\(noVegBool)")
                 case bonusEnokiNo:
                     noVegBool = true
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                     print (bonusEnokiNo.name as Any)
+                    print ("no\(noVegBool)")
                 case bonusKamabokoNo:
                     noVegBool = true
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                     print (bonusKamabokoNo.name as Any)
+                    print ("no\(noVegBool)")
                 case bonusBokChoiNo:
                     noVegBool = true
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                     print (bonusBokChoiNo.name as Any)
+                    print ("no\(noVegBool)")
                 default:
                     noVegBool = false
-                    changeRandomVegBooleanToFalse()
-                    changeBonusVegShowingBooleanToFalse()
+                    unpauseTimer()
+                    bonusVegMethodBool = false
                 }
             }
         }
         
         randomFood.run (
             SKAction.sequence([
-                SKAction.run {
-                    //self.changeRandomVegBooleanToFalse()
-                    //self.changeBonusVegShowingBooleanToFalse()
-                    self.changeRandomVegBooleanToTrue()
-                    self.changeBonusVegShowingBooleanToTrue()
-                },
+
                 SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.noVegBool = false
-                    self.changeRandomVegBooleanToFalse()
-                    self.changeBonusVegShowingBooleanToFalse()
+                    self.unpauseTimer()
+                    self.bonusVegMethodBool = false
                 }
                 ])
         )
@@ -659,6 +675,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         */
     }
     
+    func pauseTimer() {
+        pauseTimerBool = true
+        if let action = levelTimerLabel.action(forKey: "timer") {
+            action.speed = 0
+        }
+    }
+    
+    func unpauseTimer() {
+        pauseTimerBool = false
+        if let action = levelTimerLabel.action(forKey: "timer") {
+            action.speed = 1
+        }
+    }
+    /*
     func changeRandomVegBooleanToTrue() {
         randomVegBool = true
         if randomVegBool == true {
@@ -676,7 +706,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-   
+    */
     func changeBonusVegShowingBooleanToTrue() {
         bonusVegMethodBool = true
     }
