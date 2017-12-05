@@ -274,10 +274,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 run(SKAction.repeatForever(
                     SKAction.sequence([
                         SKAction.wait(forDuration: 10),
-                        SKAction.run(randomBonusVegChange),
+                        SKAction.run(randomNoVegChange),
+                        //SKAction.run(randomBonusVegChange),
                         SKAction.wait(forDuration: 10)
                         ])
                 ))
+                /*
                 if score > 20 {
                     run(SKAction.repeatForever(
                     SKAction.sequence([
@@ -287,6 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         ])
                     ))
                 }
+                */
                 self.restartTimer()
                 startButton.removeFromParent()
                 highScoreNode.removeFromParent()
@@ -342,7 +345,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
         bonusScoreLabel.fontSize = 40
-        bonusScoreLabel.fontColor = SKColor.orange
+        bonusScoreLabel.fontColor = SKColor.red
         bonusScoreLabel.text = "-10!"
         bonusScoreLabel.position = centerPosition
         bonusScoreLabel.zPosition = 300
@@ -384,20 +387,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 
-                if bonusVegMethodBool == false {
-                    self.pointsForRegGamePlay(food: food, player: player)
-                } else {
+                if bonusVegMethodBool == true {
                     if randomGeneratedVeg == fallingVeg {
                         self.pointsForMatchingColors(food: food, player: player)
                         print ("pointsForMatchingColors")
-                    } else if noVegShowingBool == true {
+                    } else {
+                        self.pointsForRegGamePlay(food: food, player: player)
+                    }
+                } else if noVegShowingBool == true {
+                    if randomGeneratedNoVeg == fallingVeg {
                         self.losePointsForNoVeg(food: food, player: player)
                         print ("losePoints")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
+                } else if bonusVegMethodBool == false && noVegShowingBool == false {
+                    self.pointsForRegGamePlay(food: food, player: player)
                 }
-                
             }
         }
     }
@@ -464,7 +470,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.changeBonusVegShowingBooleanToTrue()
                     print ("randomVegShowing")
                 },
-                SKAction.wait(forDuration: 2, withRange: 2),
+                SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.changeRandomVegBooleanToFalse()
@@ -478,6 +484,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func randomNoVegChange() {
         print ("randomNoVegChangeRunning")
+        noVegShowingBool = true
+        
         var noFoods = [SKSpriteNode]()
         let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
         let bonusEbiTempuraNo = SKSpriteNode(imageNamed: "BigEbiTempuraNo")
@@ -506,27 +514,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let rBF = randomNoFood as SKSpriteNode! {
             if let rBFName = rBF.name {
                 randomGeneratedNoVeg = rBFName
-                
-                switch randomGeneratedNoVeg {
-                case "bonusEggNo":
-                    noVegShowingBool = true
-                case "bonusEbiTempuraNo":
-                    noVegShowingBool = true
-                case "bonusEnokiNo":
-                    noVegShowingBool = true
-                case "bonusKamabokoNo":
-                    noVegShowingBool = true
-                case "bonusBokChoiNo":
-                    noVegShowingBool = true
-                default:
-                    return
-                }
             }
         }
         
         randomNoFood.run (
             SKAction.sequence([
-                SKAction.wait(forDuration: 2, withRange: 2),
+                SKAction.run {
+                    self.changeRandomVegBooleanToFalse()
+                    self.changeBonusVegShowingBooleanToFalse()
+                },
+                SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent()
                 ])
         )
