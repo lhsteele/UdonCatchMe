@@ -502,7 +502,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print ("Player has been authenticated.")
         
         if GKLocalPlayer.localPlayer().isAuthenticated {
-            let scoreReporter = GKScore(leaderboardIdentifier: "SKLab1Leaderboard")
+            let scoreReporter = GKScore(leaderboardIdentifier: "udonCatchMe")
             scoreReporter.value = Int64(score)
             let scoreArray: [GKScore] = [scoreReporter]
             
