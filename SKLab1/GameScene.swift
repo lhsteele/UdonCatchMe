@@ -44,11 +44,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameTimer = Timer()
    
     var totalSeconds: Int = 60
-    var randomSquareBool = false
-    var bonusSquareMethodBool = false
+    var randomVegBool = false
+    var bonusVegMethodBool = false
+    var noVegShowingBool = false
     
-    var randomGeneratedSquareColor: String = ""
-    var fallingSquareColor: String = ""
+    var randomGeneratedVeg: String = ""
+    var randomGeneratedNoVeg: String = ""
+    var fallingVeg: String = ""
     var mustRunBonusSqMethodBoolean = true
     
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
@@ -272,10 +274,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 run(SKAction.repeatForever(
                     SKAction.sequence([
                         SKAction.wait(forDuration: 10),
-                        SKAction.run(randomBonusSquareColorChange),
+                        SKAction.run(randomBonusVegChange),
                         SKAction.wait(forDuration: 10)
                         ])
                 ))
+                if score > 20 {
+                    run(SKAction.repeatForever(
+                    SKAction.sequence([
+                        SKAction.wait(forDuration: 10),
+                        SKAction.run(randomNoVegChange),
+                        SKAction.wait(forDuration: 10)
+                        ])
+                    ))
+                }
                 self.restartTimer()
                 startButton.removeFromParent()
                 highScoreNode.removeFromParent()
@@ -324,6 +335,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func losePointsForNoVeg(food: SKSpriteNode, player: SKSpriteNode) {
+        score -= 10
+        food.removeFromParent()
+        let centerPosition = CGPoint(x: (player.position.x + food.position.x)/2, y: (player.position.y + food.position.y)/2 - 8)
+        
+        let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+        bonusScoreLabel.fontSize = 40
+        bonusScoreLabel.fontColor = SKColor.orange
+        bonusScoreLabel.text = "-10!"
+        bonusScoreLabel.position = centerPosition
+        bonusScoreLabel.zPosition = 300
+        addChild(bonusScoreLabel)
+        
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+        moveAction.timingMode = .easeOut
+        bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
+        
+        if (totalSeconds == 0) {
+            if score > highScore {
+                let defaults = UserDefaults.standard
+                defaults.set(score, forKey: scoreKey)
+            }
+        }
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -342,17 +378,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let food = firstBody.node as? SKSpriteNode, let
                 player = secondBody.node as? SKSpriteNode {
             
-                if let sq = food as SKSpriteNode! {
-                    if let sqName = sq.name {
-                        fallingSquareColor = sqName
+                if let veg = food as SKSpriteNode! {
+                    if let vegName = veg.name {
+                        fallingVeg = vegName
                     }
                 }
                 
-                if bonusSquareMethodBool == false {
+                if bonusVegMethodBool == false {
                     self.pointsForRegGamePlay(food: food, player: player)
                 } else {
-                    if randomGeneratedSquareColor == fallingSquareColor {
+                    if randomGeneratedVeg == fallingVeg {
                         self.pointsForMatchingColors(food: food, player: player)
+                        print ("pointsForMatchingColors")
+                    } else if noVegShowingBool == true {
+                        self.losePointsForNoVeg(food: food, player: player)
+                        print ("losePoints")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
@@ -383,7 +423,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func randomBonusSquareColorChange() {
+    func randomBonusVegChange() {
         var bonusFoods = [SKSpriteNode]()
         let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
         let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
@@ -396,38 +436,98 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusEnoki.name = "enoki"
         bonusKamaboko.name = "kamaboko"
         bonusBokChoi.name = "bokChoi"
-        
+       
         bonusFoods.append(bonusEgg)
         bonusFoods.append(bonusEbiTempura)
         bonusFoods.append(bonusEnoki)
         bonusFoods.append(bonusKamaboko)
         bonusFoods.append(bonusBokChoi)
+      
         
         let randomBonusFoodGenerator = Int(arc4random_uniform(UInt32(bonusFoods.count)))
         let randomBonusFood = bonusFoods[randomBonusFoodGenerator]
         
         
-        randomBonusFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 50)
+        randomBonusFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
         addChild(randomBonusFood)
         
         if let rBF = randomBonusFood as SKSpriteNode! {
             if let rBFName = rBF.name {
-                randomGeneratedSquareColor = rBFName
+                randomGeneratedVeg = rBFName
             }
         }
         
         randomBonusFood.run  (
             SKAction.sequence ([
                 SKAction.run {
-                    self.changeRanSqBooleanToTrue()
-                    self.changeBonusSqShowingBooleanToTrue()
+                    self.changeRandomVegBooleanToTrue()
+                    self.changeBonusVegShowingBooleanToTrue()
+                    print ("randomVegShowing")
                 },
-                SKAction.wait(forDuration: 10, withRange: 5),
+                SKAction.wait(forDuration: 2, withRange: 2),
                 SKAction.removeFromParent(),
                 SKAction.run {
-                    self.changeRanSqBooleanToFalse()
-                    self.changeBonusSqShowingBooleanToFalse()
+                    self.changeRandomVegBooleanToFalse()
+                    self.changeBonusVegShowingBooleanToFalse()
+                    print ("randomVegNotShowing")
                 },
+                ])
+        )
+        
+    }
+    
+    func randomNoVegChange() {
+        print ("randomNoVegChangeRunning")
+        var noFoods = [SKSpriteNode]()
+        let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
+        let bonusEbiTempuraNo = SKSpriteNode(imageNamed: "BigEbiTempuraNo")
+        let bonusEnokiNo = SKSpriteNode(imageNamed: "BigEnokiNo")
+        let bonusKamabokoNo = SKSpriteNode(imageNamed: "BigKamabokoNo")
+        let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
+        
+        bonusEggNo.name = "egg"
+        bonusEbiTempuraNo.name = "ebiTempura"
+        bonusEnokiNo.name = "enoki"
+        bonusKamabokoNo.name = "kamaboko"
+        bonusBokChoiNo.name = "bokChoi"
+        
+        noFoods.append(bonusEggNo)
+        noFoods.append(bonusEbiTempuraNo)
+        noFoods.append(bonusEnokiNo)
+        noFoods.append(bonusKamabokoNo)
+        noFoods.append(bonusBokChoiNo)
+        
+        let randomNoFoodsGenerator = Int(arc4random_uniform(UInt32(noFoods.count)))
+        let randomNoFood = noFoods[randomNoFoodsGenerator]
+        
+        randomNoFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
+        addChild(randomNoFood)
+        
+        if let rBF = randomNoFood as SKSpriteNode! {
+            if let rBFName = rBF.name {
+                randomGeneratedNoVeg = rBFName
+                
+                switch randomGeneratedNoVeg {
+                case "bonusEggNo":
+                    noVegShowingBool = true
+                case "bonusEbiTempuraNo":
+                    noVegShowingBool = true
+                case "bonusEnokiNo":
+                    noVegShowingBool = true
+                case "bonusKamabokoNo":
+                    noVegShowingBool = true
+                case "bonusBokChoiNo":
+                    noVegShowingBool = true
+                default:
+                    return
+                }
+            }
+        }
+        
+        randomNoFood.run (
+            SKAction.sequence([
+                SKAction.wait(forDuration: 2, withRange: 2),
+                SKAction.removeFromParent()
                 ])
         )
         
@@ -500,32 +600,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         */
     }
-
     
-    func changeRanSqBooleanToTrue() {
-        randomSquareBool = true
-        if randomSquareBool == true {
+    func changeRandomVegBooleanToTrue() {
+        randomVegBool = true
+        if randomVegBool == true {
             if let action = levelTimerLabel.action(forKey: "timer") {
                 action.speed = 0
             }
         }
     }
     
-    func changeRanSqBooleanToFalse() {
-        randomSquareBool = false
-        if randomSquareBool == false {
+    func changeRandomVegBooleanToFalse() {
+        randomVegBool = false
+        if randomVegBool == false {
             if let action = levelTimerLabel.action(forKey: "timer") {
                 action.speed = 1
             }
         }
     }
    
-    func changeBonusSqShowingBooleanToTrue() {
-        bonusSquareMethodBool = true
+    func changeBonusVegShowingBooleanToTrue() {
+        bonusVegMethodBool = true
     }
     
-    func changeBonusSqShowingBooleanToFalse() {
-        bonusSquareMethodBool = false
+    func changeBonusVegShowingBooleanToFalse() {
+        bonusVegMethodBool = false
     }
  
 }
