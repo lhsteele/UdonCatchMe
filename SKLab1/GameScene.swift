@@ -477,70 +477,114 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func randomNoVegChange() {
-        print ("randomNoVegChangeRunning")
-        noVegBool = true
+        //noVegBool = true
         
-        var noFoods = [SKSpriteNode]()
+        var bonusAndNoFoods = [SKSpriteNode]()
+        let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
+        let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
+        let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
+        let bonusKamaboko = SKSpriteNode(imageNamed: "BigKamaboko")
+        let bonusBokChoi = SKSpriteNode(imageNamed: "BigBokChoi")
         let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
         let bonusEbiTempuraNo = SKSpriteNode(imageNamed: "BigEbiTempuraNo")
         let bonusEnokiNo = SKSpriteNode(imageNamed: "BigEnokiNo")
         let bonusKamabokoNo = SKSpriteNode(imageNamed: "BigKamabokoNo")
         let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
         
+        bonusEgg.name = "egg"
+        bonusEbiTempura.name = "ebiTempura"
+        bonusEnoki.name = "enoki"
+        bonusKamaboko.name = "kamaboko"
+        bonusBokChoi.name = "bokChoi"
         bonusEggNo.name = "egg"
         bonusEbiTempuraNo.name = "ebiTempura"
         bonusEnokiNo.name = "enoki"
         bonusKamabokoNo.name = "kamaboko"
         bonusBokChoiNo.name = "bokChoi"
         
-        noFoods.append(bonusEggNo)
-        noFoods.append(bonusEbiTempuraNo)
-        noFoods.append(bonusEnokiNo)
-        noFoods.append(bonusKamabokoNo)
-        noFoods.append(bonusBokChoiNo)
+        bonusAndNoFoods.append(bonusEgg)
+        bonusAndNoFoods.append(bonusEbiTempura)
+        bonusAndNoFoods.append(bonusEnoki)
+        bonusAndNoFoods.append(bonusKamaboko)
+        bonusAndNoFoods.append(bonusBokChoi)
+        bonusAndNoFoods.append(bonusEggNo)
+        bonusAndNoFoods.append(bonusEbiTempuraNo)
+        bonusAndNoFoods.append(bonusEnokiNo)
+        bonusAndNoFoods.append(bonusKamabokoNo)
+        bonusAndNoFoods.append(bonusBokChoiNo)
         
-        let randomNoFoodsGenerator = Int(arc4random_uniform(UInt32(noFoods.count)))
-        let randomNoFood = noFoods[randomNoFoodsGenerator]
+        let randomFoodsGenerator = Int(arc4random_uniform(UInt32(bonusAndNoFoods.count)))
+        let randomFood = bonusAndNoFoods[randomFoodsGenerator]
         
-        randomNoFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
-        addChild(randomNoFood)
+        randomFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
+        addChild(randomFood)
         
-        if let rBF = randomNoFood as SKSpriteNode! {
+        if let rBF = randomFood as SKSpriteNode! {
             if let rBFName = rBF.name {
                 randomGeneratedNoVeg = rBFName
-                switch randomNoFood {
+                switch randomFood {
+                case bonusEgg:
+                    changeRandomVegBooleanToTrue()
+                    changeBonusVegShowingBooleanToTrue()
+                case bonusEbiTempura:
+                    changeRandomVegBooleanToTrue()
+                    changeBonusVegShowingBooleanToTrue()
+                case bonusEnoki:
+                    changeRandomVegBooleanToTrue()
+                    changeBonusVegShowingBooleanToTrue()
+                case bonusKamaboko:
+                    changeRandomVegBooleanToTrue()
+                    changeBonusVegShowingBooleanToTrue()
+                case bonusBokChoi:
+                    changeRandomVegBooleanToTrue()
+                    changeBonusVegShowingBooleanToTrue()
                 case bonusEggNo:
                     noVegBool = true
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                     print (bonusEggNo.name as Any)
                 case bonusEbiTempuraNo:
                     noVegBool = true
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                     print (bonusEbiTempuraNo.name as Any)
                 case bonusEnokiNo:
                     noVegBool = true
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                     print (bonusEnokiNo.name as Any)
                 case bonusKamabokoNo:
                     noVegBool = true
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                     print (bonusKamabokoNo.name as Any)
                 case bonusBokChoiNo:
                     noVegBool = true
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                     print (bonusBokChoiNo.name as Any)
                 default:
                     noVegBool = false
+                    changeRandomVegBooleanToFalse()
+                    changeBonusVegShowingBooleanToFalse()
                 }
             }
         }
         
-        randomNoFood.run (
+        randomFood.run (
             SKAction.sequence([
                 SKAction.run {
-                    self.changeRandomVegBooleanToFalse()
-                    self.changeBonusVegShowingBooleanToFalse()
-                    self.noVegMethodBool = true
+                    //self.changeRandomVegBooleanToFalse()
+                    //self.changeBonusVegShowingBooleanToFalse()
+                    self.changeRandomVegBooleanToTrue()
+                    self.changeBonusVegShowingBooleanToTrue()
                 },
                 SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.noVegBool = false
+                    self.changeRandomVegBooleanToFalse()
+                    self.changeBonusVegShowingBooleanToFalse()
                 }
                 ])
         )
