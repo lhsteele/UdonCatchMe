@@ -306,10 +306,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         food.removeFromParent()
         
         if (totalSeconds == 0) {
+            /*
             if score > highScore {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
+            */
+            overrideHighestScore(highScore: self.score)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -331,10 +337,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
+            /*
             if score > highScore {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
+            */
+            overrideHighestScore(highScore: self.score)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -356,10 +368,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
+            /*
             if score > highScore {
                 let defaults = UserDefaults.standard
                 defaults.set(score, forKey: scoreKey)
             }
+            */
+            overrideHighestScore(highScore: self.score)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
