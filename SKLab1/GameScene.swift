@@ -53,6 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomGeneratedVeg: String = ""
     //var randomGeneratedNoVeg: String = ""
     var fallingVeg: String = ""
+    var currentFallingVegName: String = ""
     var mustRunBonusSqMethodBoolean = true
     
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
@@ -221,6 +222,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(food)
         
+        var current = food as SKSpriteNode
+        if let cFVN = current.name {
+            currentFallingVegName = cFVN
+            print (currentFallingVegName)
+        }
+
         food.physicsBody = SKPhysicsBody(rectangleOf: food.size)
         food.physicsBody?.isDynamic = true
         food.physicsBody?.categoryBitMask = PhysicsCategory.Food
@@ -243,6 +250,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if noVegBool == true {
+            if randomGeneratedVeg == currentFallingVegName {
+                print ("match")
+                food.run(SKAction.sequence([actionMove, actionMoveDone]))
+            } else {
+                food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+            }
+            /*
                 if let veg = food as SKSpriteNode! {
                     if let vegName = veg.name {
                         fallingVeg = vegName
@@ -254,24 +268,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         }
                     }
                 }
-                /*
-                if randomGeneratedVeg == bonusEggNo.name {
-                    print ("EggOfScreen")
-                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusEbiTempuraNo.name {
-                    print ("EbiOffScreen")
-                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusEnokiNo.name {
-                    print ("EnokiOffScreen")
-                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusKamabokoNo.name {
-                    print ("KamaOffScreen")
-                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusBokChoiNo.name {
-                    print ("BokOffScreen")
-                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+ 
+                if randomGeneratedVeg == bonusEggNo.name && food.name == bonusEggNo.name {
+                    print ("EggOnScreen")
+                    egg.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusEbiTempuraNo.name && food.name == bonusEbiTempuraNo.name {
+                    print ("EbiOnScreen")
+                    ebiTempura.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusEnokiNo.name && food.name == bonusEnokiNo.name {
+                    print ("EnokiOnScreen")
+                    enoki.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusKamabokoNo.name && food.name == bonusKamabokoNo.name {
+                    print ("KamaOnScreen")
+                    kamaboko.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusBokChoiNo.name && food.name == bonusBokChoiNo.name {
+                    print ("BokOnScreen")
+                    bokChoi.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
                 }
-                */
+ */
             
         } else if bonusVegMethodBool == false || noVegBool == false || bonusVegMethodBool == true {
             food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
