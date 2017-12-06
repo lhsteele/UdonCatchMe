@@ -69,6 +69,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var gameWonBoolean = true
     static var itsADraw = false
     
+    let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
+    let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
+    let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
+    let bonusKamaboko = SKSpriteNode(imageNamed: "BigKamaboko")
+    let bonusBokChoi = SKSpriteNode(imageNamed: "BigBokChoi")
+    let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
+    let bonusEbiTempuraNo = SKSpriteNode(imageNamed: "BigEbiTempuraNo")
+    let bonusEnokiNo = SKSpriteNode(imageNamed: "BigEnokiNo")
+    let bonusKamabokoNo = SKSpriteNode(imageNamed: "BigKamabokoNo")
+    let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
+    
     override func sceneDidLoad() {
         /*
         let defaults = UserDefaults.standard
@@ -164,7 +175,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return random() * (max - min) + min
     }
     
-    func addSquare() {
+    func addFood() {
         var foods = [SKSpriteNode]()
         let egg = SKSpriteNode(imageNamed: "Egg")
         let ebiTempura = SKSpriteNode(imageNamed: "EbiTempura")
@@ -183,6 +194,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         foods.append(enoki)
         foods.append(kamaboko)
         foods.append(bokChoi)
+        
+        var noFoods = [SKSpriteNode]()
+        
+        bonusEggNo.name = "egg"
+        bonusEbiTempuraNo.name = "ebiTempura"
+        bonusEnokiNo.name = "enoki"
+        bonusKamabokoNo.name = "kamaboko"
+        bonusBokChoiNo.name = "bokChoi"
+        
+        noFoods.append(bonusEggNo)
+        noFoods.append(bonusEbiTempuraNo)
+        noFoods.append(bonusEnokiNo)
+        noFoods.append(bonusKamabokoNo)
+        noFoods.append(bonusBokChoiNo)
         
         let randomSquareGenerator = Int(arc4random_uniform(UInt32(foods.count)))
         let food = foods[randomSquareGenerator]
@@ -215,7 +240,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(gameOverScene, transition: reveal)
             
         }
-        food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+        
+        if noVegBool == true {
+            print ("noVegBool is true")
+            if let veg = food as SKSpriteNode! {
+                if let vegName = veg.name {
+                    fallingVeg = vegName
+                    if randomGeneratedVeg == fallingVeg {
+                        print ("fallingVegMatch\(fallingVeg)")
+                        food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    } else {
+                        food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                    }
+                }
+                /*
+                if randomGeneratedVeg == bonusEggNo.name {
+                    print ("EggOfScreen")
+                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusEbiTempuraNo.name {
+                    print ("EbiOffScreen")
+                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusEnokiNo.name {
+                    print ("EnokiOffScreen")
+                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusKamabokoNo.name {
+                    print ("KamaOffScreen")
+                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                } else if randomGeneratedVeg == bonusBokChoiNo.name {
+                    print ("BokOffScreen")
+                    food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                }
+                */
+            }
+        } else if bonusVegMethodBool == false || noVegBool == false || bonusVegMethodBool == true {
+            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+        }
+
+        //food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
         
         switch score {
         case 0...75:
@@ -269,7 +330,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if startButton.contains(location) {
                 run(SKAction.repeatForever(
                     SKAction.sequence([
-                        SKAction.run(addSquare),
+                        SKAction.run(addFood),
                         SKAction.wait(forDuration: 1.0)
                         ])
                 ))
@@ -288,11 +349,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func methodOneOrTwo() {
-        if score < 50 {
-            print ("regular")
+        if score < 10 {
             self.randomBonusVegChange()
         } else {
-            print ("allVeg")
             self.randomAllFoodChange()
         }
     }
@@ -306,16 +365,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         food.removeFromParent()
         
         if (totalSeconds == 0) {
-            /*
-            if score > highScore {
-                let defaults = UserDefaults.standard
-                defaults.set(score, forKey: scoreKey)
-            }
-            */
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -337,16 +390,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
-            /*
-            if score > highScore {
-                let defaults = UserDefaults.standard
-                defaults.set(score, forKey: scoreKey)
-            }
-            */
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -368,16 +415,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
-            /*
-            if score > highScore {
-                let defaults = UserDefaults.standard
-                defaults.set(score, forKey: scoreKey)
-            }
-            */
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -408,16 +449,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if bonusVegMethodBool == true {
                     if randomGeneratedVeg == fallingVeg {
                         self.pointsForMatchingColors(food: food, player: player)
-                        print ("\(randomGeneratedVeg):\(fallingVeg)")
-                        print ("matching")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
                 } else if noVegBool == true {
                     if randomGeneratedVeg == fallingVeg {
                         self.losePointsForNoVeg(food: food, player: player)
-                        print ("\(randomGeneratedVeg):\(fallingVeg)")
-                        print ("noVegMatching")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
@@ -451,11 +488,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func randomBonusVegChange() {
         var bonusFoods = [SKSpriteNode]()
-        let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
-        let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
-        let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
-        let bonusKamaboko = SKSpriteNode(imageNamed: "BigKamaboko")
-        let bonusBokChoi = SKSpriteNode(imageNamed: "BigBokChoi")
         
         bonusEgg.name = "egg"
         bonusEbiTempura.name = "ebiTempura"
@@ -488,14 +520,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.run {
                     self.pauseTimer()
                     self.bonusVegMethodBool = true
-                    print ("randomVegShowing")
                 },
                 SKAction.wait(forDuration: 7, withRange: 5),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.unpauseTimer()
                     self.bonusVegMethodBool = false
-                    print ("randomVegNotShowing")
                 },
                 ])
         )
@@ -503,19 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func randomAllFoodChange() {
-        //noVegBool = true
-        
         var bonusAndNoFoods = [SKSpriteNode]()
-        let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
-        let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
-        let bonusEnoki = SKSpriteNode(imageNamed: "BigEnoki")
-        let bonusKamaboko = SKSpriteNode(imageNamed: "BigKamaboko")
-        let bonusBokChoi = SKSpriteNode(imageNamed: "BigBokChoi")
-        let bonusEggNo = SKSpriteNode(imageNamed: "BigEggNo")
-        let bonusEbiTempuraNo = SKSpriteNode(imageNamed: "BigEbiTempuraNo")
-        let bonusEnokiNo = SKSpriteNode(imageNamed: "BigEnokiNo")
-        let bonusKamabokoNo = SKSpriteNode(imageNamed: "BigKamabokoNo")
-        let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
         
         bonusEgg.name = "egg"
         bonusEbiTempura.name = "ebiTempura"
@@ -528,11 +546,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusKamabokoNo.name = "kamaboko"
         bonusBokChoiNo.name = "bokChoi"
         
-        bonusAndNoFoods.append(bonusEgg)
-        bonusAndNoFoods.append(bonusEbiTempura)
-        bonusAndNoFoods.append(bonusEnoki)
-        bonusAndNoFoods.append(bonusKamaboko)
-        bonusAndNoFoods.append(bonusBokChoi)
+        //bonusAndNoFoods.append(bonusEgg)
+        //bonusAndNoFoods.append(bonusEbiTempura)
+        //bonusAndNoFoods.append(bonusEnoki)
+        //bonusAndNoFoods.append(bonusKamaboko)
+        //bonusAndNoFoods.append(bonusBokChoi)
         bonusAndNoFoods.append(bonusEggNo)
         bonusAndNoFoods.append(bonusEbiTempuraNo)
         bonusAndNoFoods.append(bonusEnokiNo)
@@ -552,53 +570,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 case bonusEgg:
                     noVegBool = false
                     bonusVegMethodBool = true
-                    print (bonusEgg.name as Any)
-                    print (bonusVegMethodBool)
                 case bonusEbiTempura:
                     noVegBool = false
                     bonusVegMethodBool = true
-                    print (bonusEbiTempura.name as Any)
-                    print (bonusVegMethodBool)
                 case bonusEnoki:
                     noVegBool = false
                     bonusVegMethodBool = true
-                    print (bonusEnoki.name as Any)
-                    print (bonusVegMethodBool)
                 case bonusKamaboko:
                     noVegBool = false
                     bonusVegMethodBool = true
-                    print (bonusKamaboko.name as Any)
-                    print (bonusVegMethodBool)
                 case bonusBokChoi:
                     noVegBool = false
                     bonusVegMethodBool = true
-                    print (bonusBokChoi.name as Any)
-                    print (bonusVegMethodBool)
                 case bonusEggNo:
                     noVegBool = true
                     bonusVegMethodBool = false
-                    print (bonusEggNo.name as Any)
-                    print ("no\(noVegBool)")
                 case bonusEbiTempuraNo:
                     noVegBool = true
                     bonusVegMethodBool = false
-                    print (bonusEbiTempuraNo.name as Any)
-                    print ("no\(noVegBool)")
                 case bonusEnokiNo:
                     noVegBool = true
                     bonusVegMethodBool = false
-                    print (bonusEnokiNo.name as Any)
-                    print ("no\(noVegBool)")
                 case bonusKamabokoNo:
                     noVegBool = true
                     bonusVegMethodBool = false
-                    print (bonusKamabokoNo.name as Any)
-                    print ("no\(noVegBool)")
                 case bonusBokChoiNo:
                     noVegBool = true
                     bonusVegMethodBool = false
-                    print (bonusBokChoiNo.name as Any)
-                    print ("no\(noVegBool)")
                 default:
                     noVegBool = false
                     bonusVegMethodBool = false
@@ -632,17 +630,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             GameScene.gameWonBoolean = false
             print ("score 0")
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score == lastHighScore {
             print ("draw")
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
             print ("it's a draw")
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score > lastHighScore {
             print ("high score")
             UserDefaults.standard.set(score, forKey: scoreKey)
@@ -650,16 +648,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             saveHighScore(score: score)
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score < lastHighScore {
             print ("lost")
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -704,25 +702,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             action.speed = 1
         }
     }
-    /*
-    func changeRandomVegBooleanToTrue() {
-        randomVegBool = true
-        if randomVegBool == true {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 0
-            }
-        }
-    }
-    
-    func changeRandomVegBooleanToFalse() {
-        randomVegBool = false
-        if randomVegBool == false {
-            if let action = levelTimerLabel.action(forKey: "timer") {
-                action.speed = 1
-            }
-        }
-    }
-    */
+   
     func changeBonusVegShowingBooleanToTrue() {
         bonusVegMethodBool = true
     }
