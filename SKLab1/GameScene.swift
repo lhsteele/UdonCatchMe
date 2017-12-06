@@ -241,16 +241,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
+        
         if noVegBool == true {
-            print ("noVegBool is true")
-            if let veg = food as SKSpriteNode! {
-                if let vegName = veg.name {
-                    fallingVeg = vegName
-                    if randomGeneratedVeg == fallingVeg {
-                        print ("fallingVegMatch\(fallingVeg)")
-                        food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    } else {
-                        food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                if let veg = food as SKSpriteNode! {
+                    if let vegName = veg.name {
+                        fallingVeg = vegName
+                        if randomGeneratedVeg == fallingVeg, veg.position.y < size.height - veg.size.height / 2 {
+                            print ("fallingVegMatch\(fallingVeg)")
+                            food.run(SKAction.sequence([actionMove, actionMoveDone]))
+                        } else {
+                            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+                        }
                     }
                 }
                 /*
@@ -271,7 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     food.run(SKAction.sequence([actionMove, actionMoveDone]))
                 }
                 */
-            }
+            
         } else if bonusVegMethodBool == false || noVegBool == false || bonusVegMethodBool == true {
             food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
         }
@@ -292,9 +293,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         default: speed = 1.5
         }
     }
-    
-    
-    
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for _ in touches {
