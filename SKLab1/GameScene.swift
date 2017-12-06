@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var noVegMethodBool = false
     
     var randomGeneratedVeg: String = ""
-    var randomGeneratedNoVeg: String = ""
+    //var randomGeneratedNoVeg: String = ""
     var fallingVeg: String = ""
     var mustRunBonusSqMethodBoolean = true
     
@@ -390,14 +390,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if bonusVegMethodBool == true {
                     if randomGeneratedVeg == fallingVeg {
                         self.pointsForMatchingColors(food: food, player: player)
-                        print ("pointsForMatchingColors")
+                        print ("\(randomGeneratedVeg):\(fallingVeg)")
+                        print ("matching")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
                 } else if noVegBool == true {
-                    if randomGeneratedNoVeg == fallingVeg {
+                    if randomGeneratedVeg == fallingVeg {
                         self.losePointsForNoVeg(food: food, player: player)
-                        print ("losePoints")
+                        print ("\(randomGeneratedVeg):\(fallingVeg)")
+                        print ("noVegMatching")
                     } else {
                         self.pointsForRegGamePlay(food: food, player: player)
                     }
@@ -525,9 +527,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
         addChild(randomFood)
         
-        if let rBF = randomFood as SKSpriteNode! {
-            if let rBFName = rBF.name {
-                randomGeneratedNoVeg = rBFName
+        if let rBAF = randomFood as SKSpriteNode! {
+            if let rBAFName = rBAF.name {
+                randomGeneratedVeg = rBAFName
                 switch randomFood {
                 case bonusEgg:
                     noVegBool = false
