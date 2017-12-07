@@ -225,7 +225,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var current = food as SKSpriteNode
         if let cFVN = current.name {
             currentFallingVegName = cFVN
-            print (currentFallingVegName)
         }
 
         food.physicsBody = SKPhysicsBody(rectangleOf: food.size)
@@ -237,6 +236,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let actualDuration = random(min: CGFloat(4.0), max: CGFloat(4.0))
         
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -ebiTempura.size.width/2), duration: TimeInterval(actualDuration))
+        
+        
+        let spriteCheck = SKAction.run() {
+            if self.noVegBool == true {
+                if self.randomGeneratedVeg != self.currentFallingVegName {
+                    print ("no match")
+                    let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                    let gameOverScene = GameOverScene(size: self.size)
+                    self.view?.presentScene(gameOverScene, transition: reveal)
+                    SKAction.removeFromParent()
+                } else {
+                    print ("match")
+                    SKAction.removeFromParent()
+                }
+            } else {
+                SKAction.removeFromParent()
+            }
+            
+        }
+        
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
@@ -245,9 +264,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
-            
         }
         
+        food.run(SKAction.sequence([actionMove, spriteCheck]))
+        /*
+        if noVegBool == false {
+            print ("noVegBool is false")
+            food.run(SKAction.sequence([
+                actionMove,
+                loseAction,
+                actionMoveDone
+                ])
+            )
+        } else {
+            print ("randomVegBool is true")
+            if randomGeneratedVeg != currentFallingVegName {
+                food.run(SKAction.sequence([
+                    actionMove,
+                    loseAction,
+                    actionMoveDone
+                    ])
+                )
+            } else {
+                print ("randomVeg == current")
+                food.run(SKAction.sequence([
+                    actionMove,
+                    actionMoveDone
+                    ])
+                )
+            }
+
+        }
+    
+     
         
         if noVegBool == true {
             if randomGeneratedVeg == currentFallingVegName {
@@ -256,48 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else {
                 food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
             }
-            /*
-                if let veg = food as SKSpriteNode! {
-                    if let vegName = veg.name {
-                        fallingVeg = vegName
-                        if randomGeneratedVeg == fallingVeg, veg.position.y < size.height - veg.size.height / 2 {
-                            print ("fallingVegMatch\(fallingVeg)")
-                            food.run(SKAction.sequence([actionMove, actionMoveDone]))
-                        } else {
-                            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                        }
-                    }
-                }
- 
-                if randomGeneratedVeg == bonusEggNo.name && food.name == bonusEggNo.name {
-                    print ("EggOnScreen")
-                    egg.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusEbiTempuraNo.name && food.name == bonusEbiTempuraNo.name {
-                    print ("EbiOnScreen")
-                    ebiTempura.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusEnokiNo.name && food.name == bonusEnokiNo.name {
-                    print ("EnokiOnScreen")
-                    enoki.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusKamabokoNo.name && food.name == bonusKamabokoNo.name {
-                    print ("KamaOnScreen")
-                    kamaboko.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                } else if randomGeneratedVeg == bonusBokChoiNo.name && food.name == bonusBokChoiNo.name {
-                    print ("BokOnScreen")
-                    bokChoi.run(SKAction.sequence([actionMove, actionMoveDone]))
-                    food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-                }
  */
-            
-        } else if bonusVegMethodBool == false || noVegBool == false || bonusVegMethodBool == true {
-            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-        }
-
-        //food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-        
         switch score {
         case 0...75:
             food.speed = 1
@@ -311,6 +319,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             food.speed = 1.4
         default: speed = 1.5
         }
+    }
+    
+    func endGame() {
+        let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+        let gameOverScene = GameOverScene(size: self.size)
+        self.view?.presentScene(gameOverScene, transition: reveal)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
