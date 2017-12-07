@@ -237,25 +237,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -ebiTempura.size.width/2), duration: TimeInterval(actualDuration))
         
-        
-        let spriteCheck = SKAction.run() {
-            if self.noVegBool == true {
-                if self.randomGeneratedVeg != self.currentFallingVegName {
-                    print ("no match")
-                    let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                    let gameOverScene = GameOverScene(size: self.size)
-                    self.view?.presentScene(gameOverScene, transition: reveal)
-                    SKAction.removeFromParent()
-                } else {
-                    print ("match")
-                    SKAction.removeFromParent()
-                }
-            } else {
-                SKAction.removeFromParent()
-            }
-            
-        }
-        
         let actionMoveDone = SKAction.removeFromParent()
         
         let loseAction = SKAction.run() {
@@ -265,47 +246,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
-        
-        food.run(SKAction.sequence([actionMove, spriteCheck]))
-        /*
-        if noVegBool == false {
-            print ("noVegBool is false")
-            food.run(SKAction.sequence([
-                actionMove,
-                loseAction,
-                actionMoveDone
-                ])
-            )
-        } else {
-            print ("randomVegBool is true")
-            if randomGeneratedVeg != currentFallingVegName {
+        //Need to do the check before the action move is run, as the action move entails it reaching the bottom of the screen.
+        //However the addFood method gets called before the randomVeg methods are called. Does this delay affect it?
+        //Not sure if I can move the SKActions outside of the addFood method, as the food object is within this method?
+        let spriteCheck = SKAction.run() {
+            if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
                 food.run(SKAction.sequence([
                     actionMove,
                     loseAction,
                     actionMoveDone
-                    ])
-                )
-            } else {
-                print ("randomVeg == current")
-                food.run(SKAction.sequence([
-                    actionMove,
-                    actionMoveDone
-                    ])
-                )
+                ]))
+            } else if self.noVegBool == true {
+                if self.randomGeneratedVeg == self.currentFallingVegName {
+                    food.run(SKAction.sequence([
+                        actionMove,
+                        actionMoveDone
+                        ]))
+                } else {
+                    food.run(SKAction.sequence([
+                        actionMove,
+                        loseAction,
+                        actionMoveDone
+                        ]))
+                }
+                
             }
-
+            
         }
-    
      
-        
-        if noVegBool == true {
-            if randomGeneratedVeg == currentFallingVegName {
-                print ("match")
-                food.run(SKAction.sequence([actionMove, actionMoveDone]))
-            } else {
-                food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-            }
- */
         switch score {
         case 0...75:
             food.speed = 1
