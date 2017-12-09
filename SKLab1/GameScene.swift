@@ -52,10 +52,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var regularGamePlay = true
     
     var randomGeneratedVeg: String = ""
-    //var randomGeneratedNoVeg: String = ""
     var fallingVeg: String = ""
     var currentFallingVegName: String = ""
     var mustRunBonusSqMethodBoolean = true
+    var endingSprite: String = ""
     
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
@@ -222,11 +222,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         food.position = CGPoint(x: actualX, y: size.height + ebiTempura.size.height)
         
         addChild(food)
-        
-        let  current = food as SKSpriteNode
-        if let cFVN = current.name {
-            currentFallingVegName = cFVN
-        }
 
         food.physicsBody = SKPhysicsBody(rectangleOf: food.size)
         food.physicsBody?.isDynamic = true
@@ -248,21 +243,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
         
-        //food.run(SKAction.sequence([actionMove, actionMoveDone]))
-        
-        //Need to do the check before the action move is run, as the action move entails it reaching the bottom of the screen.
-        //However the addFood method gets called before the randomVeg methods are called. Does this delay affect it?
-        //Not sure if I can move the SKActions outside of the addFood method, as the food object is within this method?
-        
-        //food.run(spriteCheck)
-        
-        if regularGamePlay == false {
-            food.run(SKAction.sequence([actionMove, actionMoveDone]))
-            print ("regularGamePlayIsFalse")
-        } else {
-            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+        let endOfScreen = SKAction.run() {
+            let endSprite = food as SKSpriteNode
+            if let eS = endSprite.name {
+                self.endingSprite = eS
+            }
         }
- 
+        
+        let spriteCheck = SKAction.run() {
+            if self.noVegBool == true {
+                if self.randomGeneratedVeg != self.endingSprite {
+                    food.run(SKAction.sequence([loseAction, actionMoveDone]))
+                } else {
+                    food.run(actionMoveDone)
+                }
+            } else if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
+                food.run(SKAction.sequence([loseAction, actionMoveDone]))
+            }
+        }
+        
+        food.run(SKAction.sequence([actionMove, endOfScreen, spriteCheck]))
+
         switch score {
         case 0...75:
             food.speed = 1
@@ -276,33 +277,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             food.speed = 1.4
         default: speed = 1.5
         }
-    }
-    
-    func checkSprite() {
-        print ("checkSprite")
-        if self.noVegBool == true {
-            print ("noVegBoolCheckIsTrue")
-            if self.randomGeneratedVeg == self.currentFallingVegName {
-                print ("\(randomGeneratedVeg)\(currentFallingVegName)")
-                self.regularGamePlay = false
-            } else {
-                self.regularGamePlay = true
-            }
-        } else if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
-            print ("noVegBoolCheckIsFalse")
-            self.regularGamePlay = true
-        }
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        //called before each frame is rendered. Is this where I could call something that needs to update in between other methods?
-    
-    }
-    
-    func endGame() {
-        let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-        let gameOverScene = GameOverScene(size: self.size)
-        self.view?.presentScene(gameOverScene, transition: reveal)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -340,7 +314,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if startButton.contains(location) {
                 run(SKAction.repeatForever(
                     SKAction.sequence([
-                        SKAction.run(checkSprite),
                         SKAction.run(addFood),
                         SKAction.wait(forDuration: 1.0)
                         ])
@@ -377,9 +350,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -402,9 +375,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
@@ -427,9 +400,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
