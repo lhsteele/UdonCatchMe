@@ -49,6 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bonusVegMethodBool = false
     var noVegBool = false
     var noVegMethodBool = false
+    var regularGamePlay = true
     
     var randomGeneratedVeg: String = ""
     //var randomGeneratedNoVeg: String = ""
@@ -222,7 +223,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(food)
         
-        var current = food as SKSpriteNode
+        let  current = food as SKSpriteNode
         if let cFVN = current.name {
             currentFallingVegName = cFVN
         }
@@ -246,34 +247,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
+        
+        //food.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
         //Need to do the check before the action move is run, as the action move entails it reaching the bottom of the screen.
         //However the addFood method gets called before the randomVeg methods are called. Does this delay affect it?
         //Not sure if I can move the SKActions outside of the addFood method, as the food object is within this method?
-        let spriteCheck = SKAction.run() {
-            if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
-                food.run(SKAction.sequence([
-                    actionMove,
-                    loseAction,
-                    actionMoveDone
-                ]))
-            } else if self.noVegBool == true {
-                if self.randomGeneratedVeg == self.currentFallingVegName {
-                    food.run(SKAction.sequence([
-                        actionMove,
-                        actionMoveDone
-                        ]))
-                } else {
-                    food.run(SKAction.sequence([
-                        actionMove,
-                        loseAction,
-                        actionMoveDone
-                        ]))
-                }
-                
-            }
-            
+        
+        //food.run(spriteCheck)
+        
+        if regularGamePlay == false {
+            food.run(SKAction.sequence([actionMove, actionMoveDone]))
+            print ("regularGamePlayIsFalse")
+        } else {
+            food.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
         }
-     
+ 
         switch score {
         case 0...75:
             food.speed = 1
@@ -287,6 +276,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             food.speed = 1.4
         default: speed = 1.5
         }
+    }
+    
+    func checkSprite() {
+        print ("checkSprite")
+        if self.noVegBool == true {
+            print ("noVegBoolCheckIsTrue")
+            if self.randomGeneratedVeg == self.currentFallingVegName {
+                print ("\(randomGeneratedVeg)\(currentFallingVegName)")
+                self.regularGamePlay = false
+            } else {
+                self.regularGamePlay = true
+            }
+        } else if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
+            print ("noVegBoolCheckIsFalse")
+            self.regularGamePlay = true
+        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        //called before each frame is rendered. Is this where I could call something that needs to update in between other methods?
+    
     }
     
     func endGame() {
@@ -330,6 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if startButton.contains(location) {
                 run(SKAction.repeatForever(
                     SKAction.sequence([
+                        SKAction.run(checkSprite),
                         SKAction.run(addFood),
                         SKAction.wait(forDuration: 1.0)
                         ])
@@ -584,18 +595,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     bonusVegMethodBool = true
                 case bonusEggNo:
                     noVegBool = true
+                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusEbiTempuraNo:
                     noVegBool = true
+                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusEnokiNo:
                     noVegBool = true
+                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusKamabokoNo:
                     noVegBool = true
+                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusBokChoiNo:
                     noVegBool = true
+                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 default:
                     noVegBool = false
