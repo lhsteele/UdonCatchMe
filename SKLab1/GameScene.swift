@@ -333,7 +333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func methodOneOrTwo() {
-        if score < 10 {
+        if score < 150 {
             self.randomBonusVegChange()
         } else {
             self.randomAllFoodChange()
@@ -489,8 +489,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomBonusFoodGenerator = Int(arc4random_uniform(UInt32(bonusFoods.count)))
         let randomBonusFood = bonusFoods[randomBonusFoodGenerator]
         
-        
-        randomBonusFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
+        randomBonusFood.position = CGPoint(x: self.playableRect.maxX / 2, y: self.playableRect.maxY - 100)
+
         addChild(randomBonusFood)
         
         if let rBF = randomBonusFood as SKSpriteNode! {
@@ -544,7 +544,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomFoodsGenerator = Int(arc4random_uniform(UInt32(bonusAndNoFoods.count)))
         let randomFood = bonusAndNoFoods[randomFoodsGenerator]
         
-        randomFood.position = CGPoint(x: self.playableRect.maxX - 200, y: self.playableRect.maxY - 100)
+        randomFood.position = CGPoint(x: self.playableRect.maxX / 2, y: self.playableRect.maxY - 100)
         addChild(randomFood)
         
         if let rBAF = randomFood as SKSpriteNode! {
@@ -568,23 +568,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     bonusVegMethodBool = true
                 case bonusEggNo:
                     noVegBool = true
-                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusEbiTempuraNo:
                     noVegBool = true
-                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusEnokiNo:
                     noVegBool = true
-                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusKamabokoNo:
                     noVegBool = true
-                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 case bonusBokChoiNo:
                     noVegBool = true
-                    print ("noBoolTrue")
                     bonusVegMethodBool = false
                 default:
                     noVegBool = false
@@ -612,26 +607,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func overrideHighestScore(highScore: Int) {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
-        print ("lastHighScore \(lastHighScore)")
         GameScene.currentScore = score
         
         if score == 0 {
             GameScene.gameWonBoolean = false
-            print ("score 0")
             GameScene.itsADraw = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score == lastHighScore {
-            print ("draw")
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
-            print ("it's a draw")
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score > lastHighScore {
-            print ("high score")
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             saveHighScore(score: score)
@@ -641,7 +631,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score < lastHighScore {
-            print ("lost")
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
