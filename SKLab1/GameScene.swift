@@ -530,11 +530,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusKamabokoNo.name = "kamaboko"
         bonusBokChoiNo.name = "bokChoi"
         
-        //bonusAndNoFoods.append(bonusEgg)
-        //bonusAndNoFoods.append(bonusEbiTempura)
-        //bonusAndNoFoods.append(bonusEnoki)
-        //bonusAndNoFoods.append(bonusKamaboko)
-        //bonusAndNoFoods.append(bonusBokChoi)
+        bonusAndNoFoods.append(bonusEgg)
+        bonusAndNoFoods.append(bonusEbiTempura)
+        bonusAndNoFoods.append(bonusEnoki)
+        bonusAndNoFoods.append(bonusKamaboko)
+        bonusAndNoFoods.append(bonusBokChoi)
         bonusAndNoFoods.append(bonusEggNo)
         bonusAndNoFoods.append(bonusEbiTempuraNo)
         bonusAndNoFoods.append(bonusEnokiNo)
@@ -619,17 +619,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             GameScene.gameWonBoolean = false
             print ("score 0")
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score == lastHighScore {
             print ("draw")
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
             print ("it's a draw")
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score > lastHighScore {
             print ("high score")
             UserDefaults.standard.set(score, forKey: scoreKey)
@@ -637,16 +637,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             saveHighScore(score: score)
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         } else if score < lastHighScore {
             print ("lost")
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene, transition: reveal)
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
         }
     }
     
