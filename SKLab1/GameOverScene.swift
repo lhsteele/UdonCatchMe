@@ -62,7 +62,9 @@ class GameOverScene: SKScene {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             } else if leaderboardButton.contains(location) {
-            //self.showLeaderboard()
+                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                let userRegistrationScene = UserRegistration(size: self.size)
+                self.view?.presentScene(userRegistrationScene, transition: reveal)
             }
         }
     }
