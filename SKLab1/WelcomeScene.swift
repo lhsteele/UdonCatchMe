@@ -14,11 +14,18 @@ class WelcomeScene: SKScene {
     let beginButtonTexture = SKTexture(imageNamed: "BeginButton")
     var beginButton: SKSpriteNode! = nil
     var background = SKSpriteNode(imageNamed: "WelcomeBackground")
+    let gameInstructionsSpeechBubbleTexture = SKTexture(imageNamed: "GameInstructionsSpeechBubble")
+    var speechBubble: SKSpriteNode! = nil
     
     override func didMove(to view: SKView) {
         beginButton = SKSpriteNode(texture: beginButtonTexture)
         beginButton.position = CGPoint(x: size.width/2, y: size.height/2 - beginButton.size.height/2)
         addChild(beginButton)
+        
+        speechBubble = SKSpriteNode(texture: gameInstructionsSpeechBubbleTexture)
+        speechBubble.position = CGPoint(x: size.width/2, y: (size.height/2 + beginButton.size.height) - speechBubble.size.height/2)
+        addChild(speechBubble)
+        
     }
     
     override func sceneDidLoad() {
