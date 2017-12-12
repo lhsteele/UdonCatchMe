@@ -69,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     static var gameWonBoolean = true
     static var itsADraw = false
+    static var timeRanOut = false
     
     let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
     let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
@@ -621,7 +622,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         GameScene.currentScore = score
         
-        if score == 0 {
+        if (totalSeconds == 0) {
+            GameScene.gameWonBoolean = false
+            GameScene.itsADraw = false
+            GameScene.timeRanOut = true
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        } else if score == 0 {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
