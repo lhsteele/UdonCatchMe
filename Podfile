@@ -3,8 +3,9 @@ platform :ios, '9.0'
 
 target 'SKLab1' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  #use_frameworks!
-  pod 'Firebase'
+  use_frameworks!
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
   # Pods for SKLab1
 
