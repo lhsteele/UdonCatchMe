@@ -131,6 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.zPosition = 4
         addChild(lblScore)
         
+        
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.white
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY - 60)
@@ -270,11 +271,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 76...150:
             food.speed = 1.4
         case 151...225:
-            food.speed = 1.8
+            food.speed = 1.6
         case 226...300:
-            food.speed = 2.0
+            food.speed = 1.8
         case 301...375:
-            food.speed = 2.2
+            food.speed = 2.0
         default: speed = 2.2
         }
     }
@@ -480,7 +481,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let seconds = String(totalSeconds % 60)
             levelTimerLabel.text = minutes + ":" + seconds
         }
-        
     }
     
     func randomBonusVegChange() {

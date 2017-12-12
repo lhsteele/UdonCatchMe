@@ -14,12 +14,17 @@
 		EF08562A1F4CC96E008AC1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF0856281F4CC96E008AC1AB /* LaunchScreen.storyboard */; };
 		EF3CDE841FB3A40B00C66109 /* Sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EF3CDE831FB3A40B00C66109 /* Sprites.atlas */; };
 		EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */; };
+		EF5DD3B71FE05ECA00907BFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5DD3B61FE05ECA00907BFE /* GoogleService-Info.plist */; };
 		EF67C2B01F7616BC0052B8BE /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF67C2AF1F7616BB0052B8BE /* GameKit.framework */; };
 		EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */; };
 		EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08561F1F4CC96E008AC1AB /* GameScene.swift */; };
+		F07825B9B371F4726E81B236 /* Pods_SKLab1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2038F00D6168DD9F79E78AC2 /* Pods_SKLab1.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2038F00D6168DD9F79E78AC2 /* Pods_SKLab1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SKLab1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D24755D1291932AAC12BD43 /* Pods-SKLab1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKLab1.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKLab1/Pods-SKLab1.release.xcconfig"; sourceTree = "<group>"; };
+		89E6C6E25FC17DA824D75AAD /* Pods-SKLab1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKLab1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKLab1/Pods-SKLab1.debug.xcconfig"; sourceTree = "<group>"; };
 		EF0856161F4CC96D008AC1AB /* Udon Catch Me!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Udon Catch Me!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF0856191F4CC96D008AC1AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF08561F1F4CC96E008AC1AB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -30,6 +35,7 @@
 		EF08562B1F4CC96E008AC1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF3CDE831FB3A40B00C66109 /* Sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Sprites.atlas; path = Assets.xcassets/Sprites.atlas; sourceTree = "<group>"; };
 		EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
+		EF5DD3B61FE05ECA00907BFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF67C2AF1F7616BB0052B8BE /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SKLab1.entitlements; sourceTree = "<group>"; };
 		EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
@@ -41,18 +47,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF67C2B01F7616BC0052B8BE /* GameKit.framework in Frameworks */,
+				F07825B9B371F4726E81B236 /* Pods_SKLab1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DAEA47933EE15E18F049E23C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				89E6C6E25FC17DA824D75AAD /* Pods-SKLab1.debug.xcconfig */,
+				7D24755D1291932AAC12BD43 /* Pods-SKLab1.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EF08560D1F4CC96D008AC1AB = {
 			isa = PBXGroup;
 			children = (
 				EF0856181F4CC96D008AC1AB /* SKLab1 */,
 				EF0856171F4CC96D008AC1AB /* Products */,
 				EF67C2AE1F7616BB0052B8BE /* Frameworks */,
+				DAEA47933EE15E18F049E23C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +95,7 @@
 				EF3CDE831FB3A40B00C66109 /* Sprites.atlas */,
 				EF0856281F4CC96E008AC1AB /* LaunchScreen.storyboard */,
 				EF08562B1F4CC96E008AC1AB /* Info.plist */,
+				EF5DD3B61FE05ECA00907BFE /* GoogleService-Info.plist */,
 			);
 			path = SKLab1;
 			sourceTree = "<group>";
@@ -86,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				EF67C2AF1F7616BB0052B8BE /* GameKit.framework */,
+				2038F00D6168DD9F79E78AC2 /* Pods_SKLab1.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,9 +116,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EF08562E1F4CC96E008AC1AB /* Build configuration list for PBXNativeTarget "SKLab1" */;
 			buildPhases = (
+				5B0CCF613279D2BC357523F4 /* [CP] Check Pods Manifest.lock */,
 				EF0856121F4CC96D008AC1AB /* Sources */,
 				EF0856131F4CC96D008AC1AB /* Frameworks */,
 				EF0856141F4CC96D008AC1AB /* Resources */,
+				520B98DFBD23A45CBC18877F /* [CP] Embed Pods Frameworks */,
+				0C984B39EDCEE16049763BB9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,12 +182,64 @@
 			files = (
 				EF0856251F4CC96E008AC1AB /* Main.storyboard in Resources */,
 				EF0856271F4CC96E008AC1AB /* Assets.xcassets in Resources */,
+				EF5DD3B71FE05ECA00907BFE /* GoogleService-Info.plist in Resources */,
 				EF3CDE841FB3A40B00C66109 /* Sprites.atlas in Resources */,
 				EF08562A1F4CC96E008AC1AB /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0C984B39EDCEE16049763BB9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKLab1/Pods-SKLab1-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		520B98DFBD23A45CBC18877F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKLab1/Pods-SKLab1-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B0CCF613279D2BC357523F4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SKLab1-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF0856121F4CC96D008AC1AB /* Sources */ = {
@@ -297,6 +371,7 @@
 		};
 		EF08562F1F4CC96E008AC1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89E6C6E25FC17DA824D75AAD /* Pods-SKLab1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SKLab1/SKLab1.entitlements;
@@ -312,6 +387,7 @@
 		};
 		EF0856301F4CC96E008AC1AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D24755D1291932AAC12BD43 /* Pods-SKLab1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SKLab1/SKLab1.entitlements;
