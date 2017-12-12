@@ -346,6 +346,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func pointsForRegGamePlay(food: SKSpriteNode, player: SKSpriteNode) {
         score += 5
         food.removeFromParent()
+        let centerPosition = CGPoint(x: (player.position.x + food.position.x)/2, y: (player.position.y + food.position.y)/2 - 8)
+        
+        let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
+        bonusScoreLabel.fontSize = 20
+        bonusScoreLabel.fontColor = SKColor.blue
+        bonusScoreLabel.text = "+5"
+        bonusScoreLabel.position = centerPosition
+        bonusScoreLabel.zPosition = 300
+        addChild(bonusScoreLabel)
+        
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+        moveAction.timingMode = .easeOut
+        bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
