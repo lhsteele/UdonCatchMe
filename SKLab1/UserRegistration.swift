@@ -16,6 +16,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
     var usernameTextField: UITextField!
+    let submitButton = SKSpriteNode(imageNamed: "SubmitButton")
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -34,14 +35,14 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         createUsernameLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + createUsernameLabel.size.height * 2)
         addChild(createUsernameLabel)
         
-        
-        
+        submitButton.position = CGPoint(x: size.width / 2 , y: size.height / 2 - submitButton.size.height)
+        addChild(submitButton)
     }
     
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
         let originX = (size.width - size.width / 2) / 2
-        usernameTextField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 30, width: size.width / 2, height: 30))
+        usernameTextField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 40, width: size.width / 2, height: 50))
         customize(textField: usernameTextField, placeholder: "Username")
         view.addSubview(usernameTextField)
         usernameTextField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
@@ -55,10 +56,21 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         super.init(size: size)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if submitButton.contains(location) {
+                //save username to Firebase
+                print ("submitButton pressed")
+            }
+        }
+    }
+    
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         textField.leftView = paddingView
         textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
         textField.leftViewMode = UITextFieldViewMode.always
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.autocapitalizationType = .none
@@ -74,6 +86,13 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     func textFieldDidChange(textField: UITextField) {
         print ("TextFieldDidChange")
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
