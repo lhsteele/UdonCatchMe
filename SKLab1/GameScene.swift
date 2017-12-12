@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameKit
 
 
 struct PhysicsCategory {
@@ -624,7 +623,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
-            saveHighScore(score: score)
+            //saveHighScore(score: score)
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
@@ -639,21 +638,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /*
     func saveHighScore(score: Int) {
-        print ("Player has been authenticated.")
-        
-        let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.udonCatchMe")
-        scoreReporter.value = Int64(score)
-        let scoreArray: [GKScore] = [scoreReporter]
-        
-        GKScore.report(scoreArray, withCompletionHandler: { (error) in
-            if error != nil {
-                print ("An error has occured: \(String(describing: error))")
-            }
-        })
-
-        /*
         if GKLocalPlayer.localPlayer().isAuthenticated {
+                    print ("Player has been authenticated.")
             let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.udonCatchMe")
             scoreReporter.value = Int64(score)
             let scoreArray: [GKScore] = [scoreReporter]
@@ -664,8 +652,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             })
         }
-        */
     }
+ */
     
     func pauseTimer() {
         pauseTimerBool = true
@@ -688,5 +676,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func changeBonusVegShowingBooleanToFalse() {
         bonusVegMethodBool = false
     }
- 
+
 }

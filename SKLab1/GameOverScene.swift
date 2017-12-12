@@ -8,9 +8,8 @@
 
 import Foundation
 import SpriteKit
-import GameKit
 
-class GameOverScene: SKScene, GKGameCenterControllerDelegate {
+class GameOverScene: SKScene {
     
     let replayButtonTexture = SKTexture(imageNamed: "ReplayButton")
     var replayButton : SKSpriteNode! = nil
@@ -63,17 +62,15 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             } else if leaderboardButton.contains(location) {
-            self.showLeaderboard()
+            //self.showLeaderboard()
             }
         }
     }
     
+    /*
     func showLeaderboard() {
-        let viewControllerVar = self.view?.window?.rootViewController
-        let gcViewController = GKGameCenterViewController()
-        gcViewController.gameCenterDelegate = self
-        viewControllerVar?.present(gcViewController, animated: true, completion: nil)
     }
+    */
     
     func showCurrentOrHighScore() {
         
@@ -147,10 +144,6 @@ class GameOverScene: SKScene, GKGameCenterControllerDelegate {
         
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 
 }

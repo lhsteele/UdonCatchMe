@@ -7,9 +7,8 @@
 //
 
 import SpriteKit
-import GameKit
 
-class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
+class WelcomeScene: SKScene {
     
     var welcomeLabel: SKLabelNode!
     let beginButtonTexture = SKTexture(imageNamed: "BeginButton")
@@ -47,10 +46,6 @@ class WelcomeScene: SKScene, GKGameCenterControllerDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 
 }

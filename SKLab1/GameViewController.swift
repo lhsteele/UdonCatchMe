@@ -8,18 +8,17 @@
 
 import UIKit
 import SpriteKit
-import GameKit
 
-class GameViewController: UIViewController, GKGameCenterControllerDelegate {
+class GameViewController: UIViewController {
     
     //let scoreKey = "SKLab_Highscore"
     
-    var gcEnabled = Bool()
-    var gcDefaultLeaderBoard = String()
+    //var gcEnabled = Bool()
+    //var gcDefaultLeaderBoard = String()
     
     var score = 0
     
-    let leaderBoard_ID = "com.leaderboard.sklab1"
+    //let leaderBoard_ID = "com.leaderboard.sklab1"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +33,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             view.showsFPS = false
             view.showsNodeCount = false
         }
-        authenticateLocalPlayer()
+        //authenticateLocalPlayer()
         
     }
-    
+    /*
     func authenticateLocalPlayer() {
         let localPlayer: GKLocalPlayer = GKLocalPlayer.localPlayer()
         
@@ -60,7 +59,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             }
         }
     }
-    
+    */
     override var shouldAutorotate: Bool {
         return false
     }
@@ -73,10 +72,5 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil) 
-    }
-    
- 
+
 }
