@@ -17,6 +17,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var textField: UITextField!
     var username = String()
     
+    var player1 = String()
+    
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -77,17 +79,19 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func loadHighScores() {
         let ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
-        ref.observe(.value) { (snapshot) in
+        ref.observe(.value, with: { (snapshot) in
             let players = snapshot.children
             for item in players {
                 if let pair = item as? DataSnapshot {
-                    if let name = pair.key as? String {
-                        let score = pair.value
+                    if let score = pair.value {
+                        let name = pair.key
                         print ("\(name):\(score)")
+                        self.player1 = "\(name) : \(score)"
+                        self.textField.text = self.player1
                     }
                 }
             }
-        }
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
