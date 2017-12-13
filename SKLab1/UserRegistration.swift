@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 import UIKit
-import FirebaseAuth
 import Firebase
 import FirebaseDatabase
 
@@ -69,13 +68,11 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             let location = touch.location(in: self)
             if submitButton.contains(location) {
                 self.saveUsernameToFirebase()
-                print ("submitButton pressed")
             }
         }
     }
 
     func saveUsernameToFirebase() {
-        print ("saveToFB called")
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
         
@@ -103,7 +100,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     }
     
     func textFieldDidChange(textField: UITextField) {
-        print ("TextFieldDidChange")
         if textField == self.usernameTextField {
             self.username = textField.text!
         }

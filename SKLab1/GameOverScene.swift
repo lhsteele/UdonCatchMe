@@ -61,8 +61,14 @@ class GameOverScene: SKScene {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
             } else if leaderboardButton.contains(location) {
-                let userRegistrationScene = UserRegistration(size: self.size)
-                self.view?.presentScene(userRegistrationScene)
+                if GameScene.gameWonBoolean == true && GameScene.itsADraw == false {
+                    let userRegistrationScene = UserRegistration(size: self.size)
+                    self.view?.presentScene(userRegistrationScene)
+                } else if GameScene.gameWonBoolean == false || GameScene.itsADraw == false {
+                    let scene = GameScene(size: size)
+                    self.view?.presentScene(scene)
+                }
+                
             }
         }
     }
