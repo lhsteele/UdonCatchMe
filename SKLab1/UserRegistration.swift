@@ -68,6 +68,9 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             let location = touch.location(in: self)
             if submitButton.contains(location) {
                 self.saveUsernameToFirebase()
+                DispatchQueue.main.async(execute: {
+                    self.usernameTextField.removeFromSuperview()
+                })
             }
         }
     }
