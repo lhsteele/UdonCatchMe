@@ -19,7 +19,10 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
     var usernameTextField: UITextField!
-    var username = String() 
+    var fireUserID = String()
+    var username = String()
+    let scoreKey = "SKLab_Highscore"
+    
     let submitButton = SKSpriteNode(imageNamed: "SubmitButton")
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -70,18 +73,16 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             }
         }
     }
-    
+
     func saveUsernameToFirebase() {
         print ("saveToFB called")
+        let defaults = UserDefaults.standard
+        let highScore = defaults.integer(forKey: scoreKey)
+        
         var ref: DatabaseReference!
-        ref = Database.database().reference().child("Usernames")
-        let childUpdates = ["Test" : username]
+        ref = Database.database().reference().child("Users")
+        let childUpdates = [username : highScore]
         ref.setValue(childUpdates)
-        /*
-        if let userID = Auth.auth().currentUser?.uid {
-            
-        }
-        */
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
@@ -112,7 +113,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
     
     
     required init?(coder aDecoder: NSCoder) {

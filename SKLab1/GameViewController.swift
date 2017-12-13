@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 
+
 class GameViewController: UIViewController {
     
     //let scoreKey = "SKLab_Highscore"
@@ -36,6 +37,9 @@ class GameViewController: UIViewController {
         //authenticateLocalPlayer()
         
     }
+    
+
+    
     /*
     func authenticateLocalPlayer() {
         let localPlayer: GKLocalPlayer = GKLocalPlayer.localPlayer()
