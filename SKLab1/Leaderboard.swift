@@ -11,17 +11,22 @@ import SpriteKit
 import Firebase
 import FirebaseDatabase
 
+
 class Leaderboard: SKScene, UITextFieldDelegate {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
     var textField: UITextField!
     var username = String()
     
-    var player1 = String()
+    var userName = String()
+    var highScore = Int()
+    var listOfPlayers = [[PlayerClass : PlayerClass]]()
+    var sortedPlayers = [PlayerClass]()
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
+    
     
     override func sceneDidLoad() {
         background.position = CGPoint(x: size.width / 2 , y: size.height / 2)
@@ -85,14 +90,23 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 if let pair = item as? DataSnapshot {
                     if let score = pair.value {
                         let name = pair.key
-                        print ("\(name):\(score)")
-                        self.player1 = "\(name) : \(score)"
-                        self.textField.text = self.player1
+                        //print ("\(name):\(score)")
+                        self.highScore = score as! Int
+                        self.userName = name
+                        let player = PlayerClass(playerName: self.userName, highScore: self.highScore)
+                        //self.textField.text = self.player
+                        self.listOfPlayers.append(player)
+                        
                     }
                 }
             }
+            
         })
+        sortedPlayers = listOfPlayers.sorted{$0.highScore > $1.highScore}
+        
+        print (sortedPlayers[index].playerName)
     }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
