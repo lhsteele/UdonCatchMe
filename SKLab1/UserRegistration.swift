@@ -9,6 +9,8 @@
 import Foundation
 import SpriteKit
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class UserRegistration: SKScene, UITextFieldDelegate {
     
@@ -62,10 +64,19 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             if submitButton.contains(location) {
-                //save username to Firebase
-                print (usernameTextField.text)
-                
+                self.saveUsernameToFirebase()
+                print ("submitButton pressed")
             }
+        }
+    }
+    
+    func saveUsernameToFirebase() {
+        print ("saveToFB called")
+        if let userID = Auth.auth().currentUser?.uid {
+            let ref = Database.database().reference(fromURL: "https://udoncatchme.firebaseio.com/")
+            let value = [userID : username]
+            let childUpdates = ["/Usernames/\(userID)" : username]
+            ref.updateChildValues(childUpdates)
         }
     }
     
@@ -88,6 +99,9 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     
     func textFieldDidChange(textField: UITextField) {
         print ("TextFieldDidChange")
+        if textField == self.usernameTextField {
+            self.username = textField.text!
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
