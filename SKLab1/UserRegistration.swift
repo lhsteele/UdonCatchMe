@@ -16,6 +16,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
     var usernameTextField: UITextField!
+    var username = String() 
     let submitButton = SKSpriteNode(imageNamed: "SubmitButton")
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -41,6 +42,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
+        
         let originX = (size.width - size.width / 2) / 2
         usernameTextField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 40, width: size.width / 2, height: 50))
         customize(textField: usernameTextField, placeholder: "Username")
@@ -61,7 +63,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             let location = touch.location(in: self)
             if submitButton.contains(location) {
                 //save username to Firebase
-                print ("submitButton pressed")
+                print (usernameTextField.text)
+                
             }
         }
     }
