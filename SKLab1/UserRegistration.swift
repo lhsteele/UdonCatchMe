@@ -73,8 +73,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     func saveUsernameToFirebase() {
         print ("saveToFB called")
         if let userID = Auth.auth().currentUser?.uid {
-            let ref = Database.database().reference(fromURL: "https://udoncatchme.firebaseio.com/")
-            let value = [userID : username]
+            var ref: DatabaseReference!
+            ref = Database.database().reference(fromURL: "https://udoncatchme.firebaseio.com/")
             let childUpdates = ["/Usernames/\(userID)" : username]
             ref.updateChildValues(childUpdates)
         }
