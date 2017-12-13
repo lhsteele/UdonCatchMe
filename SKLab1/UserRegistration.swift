@@ -11,6 +11,7 @@ import SpriteKit
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseDatabase
 
 class UserRegistration: SKScene, UITextFieldDelegate {
     
@@ -72,12 +73,15 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     
     func saveUsernameToFirebase() {
         print ("saveToFB called")
+        var ref: DatabaseReference!
+        ref = Database.database().reference().child("Usernames")
+        let childUpdates = ["Test" : username]
+        ref.setValue(childUpdates)
+        /*
         if let userID = Auth.auth().currentUser?.uid {
-            var ref: DatabaseReference!
-            ref = Database.database().reference(fromURL: "https://udoncatchme.firebaseio.com/")
-            let childUpdates = ["/Usernames/\(userID)" : username]
-            ref.updateChildValues(childUpdates)
+            
         }
+        */
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
