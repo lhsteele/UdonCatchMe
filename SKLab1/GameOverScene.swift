@@ -62,7 +62,10 @@ class GameOverScene: SKScene {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene, transition: reveal)
             } else if leaderboardButton.contains(location) {
-            //self.showLeaderboard()
+                //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+                let userRegistrationScene = UserRegistration(size: self.size)
+                //self.view?.presentScene(userRegistrationScene, transition: reveal)
+                self.view?.presentScene(userRegistrationScene)
             }
         }
     }
@@ -80,7 +83,7 @@ class GameOverScene: SKScene {
         print ("GameSceneHighScore\(highScore)")
        
         if  GameScene.timeRanOut == true && GameScene.gameWonBoolean == false && GameScene.itsADraw == false {
-            playerStatusLabel.text = "Out of time! :("
+            playerStatusLabel.text = "Times up! :("
             playerStatusLabel.fontSize = 35
             playerStatusLabel.fontColor = SKColor.darkGray
             playerStatusLabel.verticalAlignmentMode = .top
