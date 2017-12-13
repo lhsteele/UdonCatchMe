@@ -65,8 +65,8 @@ class GameOverScene: SKScene {
                     let userRegistrationScene = UserRegistration(size: self.size)
                     self.view?.presentScene(userRegistrationScene)
                 } else if GameScene.gameWonBoolean == false || GameScene.itsADraw == false {
-                    let scene = GameScene(size: size)
-                    self.view?.presentScene(scene)
+                    let leaderboardScene = Leaderboard(size: self.size)
+                    self.view?.presentScene(leaderboardScene)
                 }
                 
             }
