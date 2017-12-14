@@ -20,8 +20,11 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var userName = String()
     var highScore = Int()
-    var listOfPlayers = [[PlayerClass : PlayerClass]]()
-    var sortedPlayers = [PlayerClass]()
+    var listOfPlayers = [[String : AnyObject]]()
+    var player = [String : AnyObject]()
+
+    //var listOfPlayers = [PlayerClass]()
+    //var sortedPlayers = [PlayerClass]()
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -93,18 +96,24 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                         //print ("\(name):\(score)")
                         self.highScore = score as! Int
                         self.userName = name
-                        let player = PlayerClass(playerName: self.userName, highScore: self.highScore)
+                        //let player = PlayerClass(playerName: self.userName, highScore: self.highScore)
                         //self.textField.text = self.player
-                        self.listOfPlayers.append(player)
                         
+                        //var sortedPlayers = [[self.listOfPlayers]]
                     }
                 }
+                self.player["playerName"] = self.userName as AnyObject
+                self.player["highScore"] = self.highScore as AnyObject
+                self.listOfPlayers.append(self.player)
             }
-            
+            //print (self.listOfPlayers)
+            let sortedPlayers = self.listOfPlayers.sorted {$0["highScore"] as! Int > $1["highScore"] as! Int}
+            print (sortedPlayers)
         })
-        sortedPlayers = listOfPlayers.sorted{$0.highScore > $1.highScore}
+        //print (self.listOfPlayers)
         
-        print (sortedPlayers[index].playerName)
+        //sortedPlayers = listOfPlayers.sorted{$0.highScore > $1.highScore}
+        //print (sortedPlayers)
     }
 
     
