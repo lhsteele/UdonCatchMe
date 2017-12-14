@@ -20,11 +20,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var userName = String()
     var highScore = Int()
-    var listOfPlayers = [[String : AnyObject]]()
-    var player = [String : AnyObject]()
-
-    //var listOfPlayers = [PlayerClass]()
-    //var sortedPlayers = [PlayerClass]()
+    var listOfPlayers = [[String : Any]]()
+    var player = [String : Any]()
+    
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -93,27 +91,22 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 if let pair = item as? DataSnapshot {
                     if let score = pair.value {
                         let name = pair.key
-                        //print ("\(name):\(score)")
                         self.highScore = score as! Int
                         self.userName = name
-                        //let player = PlayerClass(playerName: self.userName, highScore: self.highScore)
-                        //self.textField.text = self.player
-                        
-                        //var sortedPlayers = [[self.listOfPlayers]]
                     }
                 }
-                self.player["playerName"] = self.userName as AnyObject
-                self.player["highScore"] = self.highScore as AnyObject
+                self.player["playerName"] = self.userName as String
+                self.player["highScore"] = self.highScore as Int
                 self.listOfPlayers.append(self.player)
             }
-            //print (self.listOfPlayers)
             let sortedPlayers = self.listOfPlayers.sorted {$0["highScore"] as! Int > $1["highScore"] as! Int}
-            print (sortedPlayers)
+            //print (sortedPlayers)
+            for (index, person) in sortedPlayers.enumerated() {
+                if let player = [sortedPlayers["playerName"] as? String : sortedPlayers["highScore"] as? String] {
+                        print (player.description)
+                }
+            }
         })
-        //print (self.listOfPlayers)
-        
-        //sortedPlayers = listOfPlayers.sorted{$0.highScore > $1.highScore}
-        //print (sortedPlayers)
     }
 
     
