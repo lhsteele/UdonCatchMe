@@ -5,7 +5,7 @@
 //  Created by Lisa Steele on 12/13/17.
 //  Copyright © 2017 lisahsteele. All rights reserved.
 //
-
+/*
 import UIKit
 import SpriteKit
 import Firebase
@@ -100,19 +100,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 self.listOfPlayers.append(self.player)
             }
             let sortedPlayers = self.listOfPlayers.sorted {$0["highScore"] as! Int > $1["highScore"] as! Int}
-            //print (sortedPlayers)
-            for (index, person) in sortedPlayers.enumerated() {
-                if let player = [sortedPlayers["playerName"] as? String : sortedPlayers["highScore"] as? String] {
-                        print (player.description)
-                }
-            }
+            print (sortedPlayers)
+            let player1 = sortedPlayers.indices
+            print (player1)
         })
     }
-
-    
+  
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 
 }
+*/

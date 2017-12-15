@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playableRect: CGRect
     var gameTimer = Timer()
    
-    var totalSeconds: Int = 10
+    var totalSeconds: Int = 60
     var pauseTimerBool = false
     var randomVegBool = false
     var bonusVegMethodBool = false
