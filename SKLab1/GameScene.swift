@@ -240,9 +240,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let loseAction = SKAction.run() {
             self.overrideHighestScore(highScore: self.score)
             
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         }
         
         let endOfScreen = SKAction.run() {
@@ -365,9 +364,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         }
     }
     
@@ -390,9 +388,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         }
     }
     
@@ -415,9 +412,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         }
     }
     
@@ -623,59 +619,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         GameScene.currentScore = score
         
-        if (totalSeconds == 0) {
+        if (totalSeconds == 0) && score == lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
             GameScene.timeRanOut = true
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            UserDefaults.standard.set(score, forKey: scoreKey)
+            UserDefaults.standard.synchronize()
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
+        } else if (totalSeconds == 0) && score <= lastHighScore {
+            GameScene.gameWonBoolean = false
+            GameScene.itsADraw = false
+            GameScene.timeRanOut = true
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         } else if score == 0 {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         } else if score == lastHighScore {
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         } else if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
-            //saveHighScore(score: score)
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         } else if score < lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene, transition: reveal)
+            self.view?.presentScene(gameOverScene)
         }
     }
-    
-    /*
-    func saveHighScore(score: Int) {
-        if GKLocalPlayer.localPlayer().isAuthenticated {
-                    print ("Player has been authenticated.")
-            let scoreReporter = GKScore(leaderboardIdentifier: "com.leaderboard.udonCatchMe")
-            scoreReporter.value = Int64(score)
-            let scoreArray: [GKScore] = [scoreReporter]
-            
-            GKScore.report(scoreArray, withCompletionHandler: { (error) in
-                if error != nil {
-                    print ("An error has occured: \(String(describing: error))")
-                }
-            })
-        }
-    }
- */
     
     func pauseTimer() {
         pauseTimerBool = true
