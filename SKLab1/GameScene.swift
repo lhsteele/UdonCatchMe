@@ -619,12 +619,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         GameScene.currentScore = score
         
-        if (totalSeconds == 0) && score == lastHighScore {
-            GameScene.gameWonBoolean = false
+        if (totalSeconds == 0) && score > lastHighScore {
+            GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
             GameScene.timeRanOut = true
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
+        } else if (totalSeconds == 0) && score == lastHighScore {
+            GameScene.gameWonBoolean = false
+            GameScene.itsADraw = true
+            GameScene.timeRanOut = true
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         } else if (totalSeconds == 0) && score <= lastHighScore {
