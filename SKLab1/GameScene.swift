@@ -269,14 +269,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 0...75:
             food.speed = 1
         case 76...150:
-            food.speed = 1.4
+            food.speed = 1.2
         case 151...225:
-            food.speed = 1.6
+            food.speed = 1.4
         case 226...300:
-            food.speed = 1.8
+            food.speed = 1.6
         case 301...375:
-            food.speed = 2.0
-        default: speed = 2.2
+            food.speed = 1.8
+        default: speed = 2.0
         }
     }
 
