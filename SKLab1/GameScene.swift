@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreKey = "SKLab_Highscore"
     var highScore = 10
     var showingHighScore = false
+    var timesUpLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     
     var levelTimerLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     var count = 10
@@ -43,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playableRect: CGRect
     var gameTimer = Timer()
    
-    var totalSeconds: Int = 60
+    var totalSeconds: Int = 5
     var pauseTimerBool = false
     var randomVegBool = false
     var bonusVegMethodBool = false
@@ -60,8 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
  
-    var gcEnabled = Bool()
-    var gcDefaultLeaderBoard = String()
+    //var gcEnabled = Bool()
+    //var gcDefaultLeaderBoard = String()
     
     var background = SKSpriteNode(imageNamed: "Background")
     
@@ -84,11 +85,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
     
     override func sceneDidLoad() {
-        /*
-        let defaults = UserDefaults.standard
+        /*        let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
-        */
+        */  
     }
     
     override func didMove(to view: SKView) {
@@ -351,21 +351,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let centerPosition = CGPoint(x: (player.position.x + food.position.x)/2, y: (player.position.y + food.position.y)/2 - 8)
         
         let bonusScoreLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
-        bonusScoreLabel.fontSize = 20
+        bonusScoreLabel.fontSize = 40
         bonusScoreLabel.fontColor = SKColor.blue
         bonusScoreLabel.text = "+5"
         bonusScoreLabel.position = centerPosition
         bonusScoreLabel.zPosition = 300
         addChild(bonusScoreLabel)
         
-        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            
+            timesUpLabel.text = "Times Up! :("
+            timesUpLabel.fontSize = 35
+            timesUpLabel.fontColor = SKColor.darkGray
+            timesUpLabel.verticalAlignmentMode = .top
+            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.width / 2 + 100)
+
+            SKAction.run {
+                self.addChild(self.timesUpLabel)
+                SKAction.wait(forDuration: 5)
+                SKAction.run() {
+                    let gameOverScene = GameOverScene(size: self.size)
+                    self.view?.presentScene(gameOverScene)
+                }
+            }
+            
+            
+            
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         }
     }
     
@@ -382,7 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.zPosition = 300
         addChild(bonusScoreLabel)
         
-        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
@@ -406,7 +424,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bonusScoreLabel.zPosition = 300
         addChild(bonusScoreLabel)
         
-        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 0.7)
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
         
@@ -618,47 +636,76 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func overrideHighestScore(highScore: Int) {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         GameScene.currentScore = score
-        
+        /*
         if (totalSeconds == 0) && score > lastHighScore {
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
             GameScene.timeRanOut = true
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
+
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         } else if (totalSeconds == 0) && score == lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = true
             GameScene.timeRanOut = true
+            
+            timesUpLabel.text = "Times Up! :("
+            timesUpLabel.fontSize = 35
+            timesUpLabel.fontColor = SKColor.darkGray
+            timesUpLabel.verticalAlignmentMode = .top
+            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+                SKAction.wait(forDuration: 5)
+            )
+            
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         } else if (totalSeconds == 0) && score <= lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
             GameScene.timeRanOut = true
+            
+            timesUpLabel.text = "Times Up! :("
+            timesUpLabel.fontSize = 35
+            timesUpLabel.fontColor = SKColor.darkGray
+            timesUpLabel.verticalAlignmentMode = .top
+            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+                SKAction.wait(forDuration: 5)
+            )
+            
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
-        } else if score == 0 {
+        } else 
+        */
+        if score == 0 {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         } else if score == lastHighScore {
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+           // let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         } else if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         } else if score < lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         }
     }
     

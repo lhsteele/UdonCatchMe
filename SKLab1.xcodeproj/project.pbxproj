@@ -407,6 +407,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lisahsteele.SKLab1;
 				PRODUCT_NAME = "Udon Catch Me!";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -423,6 +424,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lisahsteele.SKLab1;
 				PRODUCT_NAME = "Udon Catch Me!";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
