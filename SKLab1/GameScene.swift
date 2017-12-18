@@ -237,9 +237,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMoveDone = SKAction.removeFromParent()
         
+        let timeCheck = SKAction.run() {
+            self.timesUpLabel.text = "Times Up! :("
+            self.timesUpLabel.fontSize = 35
+            self.timesUpLabel.fontColor = SKColor.darkGray
+            self.timesUpLabel.verticalAlignmentMode = .top
+            self.timesUpLabel.position = CGPoint(x: self.size.width / 2, y: self.size.width / 2 + 100)
+            
+            if (self.totalSeconds == 0) {
+                self.addChild(self.timesUpLabel)
+            }
+        }
+        
         let loseAction = SKAction.run() {
             self.overrideHighestScore(highScore: self.score)
-            
+            food.run(
+                SKAction.sequence([
+                    timeCheck,
+                    SKAction.wait(forDuration: 5),
+                    SKAction.removeFromParent()
+                ])
+            )
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         }
@@ -364,25 +382,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
-            
-            timesUpLabel.text = "Times Up! :("
-            timesUpLabel.fontSize = 35
-            timesUpLabel.fontColor = SKColor.darkGray
-            timesUpLabel.verticalAlignmentMode = .top
-            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.width / 2 + 100)
-
-            SKAction.run {
-                self.addChild(self.timesUpLabel)
-                SKAction.wait(forDuration: 5)
-                SKAction.run() {
-                    let gameOverScene = GameOverScene(size: self.size)
-                    self.view?.presentScene(gameOverScene)
-                }
-            }
-            
-            
-            
-            //let gameOverScene = GameOverScene(size: self.size)
+            let gameOverScene = GameOverScene(size: self.size)
             //self.view?.presentScene(gameOverScene)
         }
     }
@@ -407,7 +407,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //self.view?.presentScene(gameOverScene)
         }
     }
     
@@ -431,7 +431,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (totalSeconds == 0) {
             overrideHighestScore(highScore: self.score)
             let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //self.view?.presentScene(gameOverScene)
         }
     }
     
