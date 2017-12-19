@@ -35,7 +35,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreKey = "SKLab_Highscore"
     var highScore = 10
     var showingHighScore = false
-    var timesUpLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     
     var levelTimerLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     var count = 10
@@ -60,6 +59,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
+    
+    let timesUpLabelTexture = SKTexture(imageNamed: "TimesUpLabel")
+    var timesUpLabel : SKSpriteNode! = nil
  
     //var gcEnabled = Bool()
     //var gcDefaultLeaderBoard = String()
@@ -237,29 +239,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let actionMoveDone = SKAction.removeFromParent()
         
-        let timeCheck = SKAction.run() {
-            self.timesUpLabel.text = "Times Up! :("
-            self.timesUpLabel.fontSize = 35
-            self.timesUpLabel.fontColor = SKColor.darkGray
-            self.timesUpLabel.verticalAlignmentMode = .top
-            self.timesUpLabel.position = CGPoint(x: self.size.width / 2, y: self.size.width / 2 + 100)
-            
-            if (self.totalSeconds == 0) {
-                self.addChild(self.timesUpLabel)
-            }
-        }
-        
         let loseAction = SKAction.run() {
+            
             self.overrideHighestScore(highScore: self.score)
-            food.run(
-                SKAction.sequence([
-                    timeCheck,
-                    SKAction.wait(forDuration: 5),
-                    SKAction.removeFromParent()
-                ])
-            )
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
+            //let gameOverScene = GameOverScene(size: self.size)
+            //self.view?.presentScene(gameOverScene)
         }
         
         let endOfScreen = SKAction.run() {
@@ -270,18 +254,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         let spriteCheck = SKAction.run() {
-            if self.noVegBool == true {
+           if self.noVegBool == true {
                 if self.randomGeneratedVeg != self.endingSprite {
                     food.run(SKAction.sequence([loseAction, actionMoveDone]))
                 } else {
                     food.run(actionMoveDone)
                 }
             } else if self.bonusVegMethodBool == false || self.bonusVegMethodBool == true || self.noVegBool == false {
-                food.run(SKAction.sequence([loseAction, actionMoveDone]))
+                    food.run(SKAction.sequence([loseAction, actionMoveDone]))
             }
         }
         
-        food.run(SKAction.sequence([actionMove, endOfScreen, spriteCheck]))
+        if (totalSeconds > 0) {
+            food.run(SKAction.sequence([actionMove, endOfScreen, spriteCheck]))
+        } else {
+            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
+            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
+            timesUpLabel.zPosition = 2
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+                SKAction.sequence([
+                    SKAction.wait(forDuration: 4),
+                    SKAction.removeFromParent(),
+                    SKAction.run {
+                    self.overrideHighestScore(highScore: self.score)
+                    }
+                    ])
+            )
+        }
 
         switch score {
         case 0...75:
@@ -379,12 +380,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        
+        /*
         if (totalSeconds == 0) {
-            overrideHighestScore(highScore: self.score)
-            let gameOverScene = GameOverScene(size: self.size)
+            
+            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
+            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
+            timesUpLabel.zPosition = 2
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+            SKAction.sequence([
+                SKAction.wait(forDuration: 3),
+                SKAction.removeFromParent(),
+                SKAction.run {
+                    self.overrideHighestScore(highScore: self.score)
+                }
+                ])
+            )
+            
+            //overrideHighestScore(highScore: self.score)
+            //let gameOverScene = GameOverScene(size: self.size)
             //self.view?.presentScene(gameOverScene)
         }
+        */
     }
     
     func pointsForMatchingColors(food: SKSpriteNode, player: SKSpriteNode) {
@@ -403,12 +421,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        
+        /*
         if (totalSeconds == 0) {
-            overrideHighestScore(highScore: self.score)
-            let gameOverScene = GameOverScene(size: self.size)
+            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
+            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
+            timesUpLabel.zPosition = 2
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+                SKAction.sequence([
+                    SKAction.wait(forDuration: 3),
+                    SKAction.removeFromParent(),
+                    SKAction.run {
+                        self.overrideHighestScore(highScore: self.score)
+                    }
+                    ])
+            )
+            
+            //overrideHighestScore(highScore: self.score)
+            //let gameOverScene = GameOverScene(size: self.size)
             //self.view?.presentScene(gameOverScene)
         }
+        */
     }
     
     func losePointsForNoVeg(food: SKSpriteNode, player: SKSpriteNode) {
@@ -427,12 +461,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        
+        /*
         if (totalSeconds == 0) {
-            overrideHighestScore(highScore: self.score)
-            let gameOverScene = GameOverScene(size: self.size)
+            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
+            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
+            timesUpLabel.zPosition = 2
+            addChild(timesUpLabel)
+            
+            timesUpLabel.run (
+                SKAction.sequence([
+                    SKAction.wait(forDuration: 3),
+                    SKAction.removeFromParent(),
+                    SKAction.run {
+                        self.overrideHighestScore(highScore: self.score)
+                    }
+                    ])
+            )
+            //overrideHighestScore(highScore: self.score)
+            //let gameOverScene = GameOverScene(size: self.size)
             //self.view?.presentScene(gameOverScene)
         }
+        */
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -687,25 +736,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if score == 0 {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         } else if score == lastHighScore {
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
-           // let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         } else if score > lastHighScore {
             UserDefaults.standard.set(score, forKey: scoreKey)
             UserDefaults.standard.synchronize()
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         } else if score < lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
+            let gameOverScene = GameOverScene(size: self.size)
+            self.view?.presentScene(gameOverScene)
         }
     }
     
