@@ -14,6 +14,7 @@
 		EF08562A1F4CC96E008AC1AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF0856281F4CC96E008AC1AB /* LaunchScreen.storyboard */; };
 		EF3CDE841FB3A40B00C66109 /* Sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EF3CDE831FB3A40B00C66109 /* Sprites.atlas */; };
 		EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */; };
+		EF46D6461FEAE88E00107B6F /* GameRulesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */; };
 		EF4A3BFA1FE070BA0024E127 /* UserRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */; };
 		EF4A3BFC1FE1AE350024E127 /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */; };
 		EF4A3BFE1FE1B5340024E127 /* LeaderboardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */; };
@@ -39,6 +40,7 @@
 		EF08562B1F4CC96E008AC1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF3CDE831FB3A40B00C66109 /* Sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Sprites.atlas; path = Assets.xcassets/Sprites.atlas; sourceTree = "<group>"; };
 		EF3CDE891FB3C48600C66109 /* WelcomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScene.swift; sourceTree = "<group>"; };
+		EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRulesScene.swift; sourceTree = "<group>"; };
 		EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegistration.swift; sourceTree = "<group>"; };
 		EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
 		EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardTableView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				EFDC56551FE1C61B008C72F4 /* PlayerClass.swift */,
 				EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */,
 				EF08561F1F4CC96E008AC1AB /* GameScene.swift */,
+				EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */,
 				EF0856211F4CC96E008AC1AB /* GameViewController.swift */,
 				EF0856231F4CC96E008AC1AB /* Main.storyboard */,
 				EF0856261F4CC96E008AC1AB /* Assets.xcassets */,
@@ -275,6 +278,7 @@
 				EF4A3BFA1FE070BA0024E127 /* UserRegistration.swift in Sources */,
 				EF4A3BFE1FE1B5340024E127 /* LeaderboardTableView.swift in Sources */,
 				EF08561A1F4CC96D008AC1AB /* AppDelegate.swift in Sources */,
+				EF46D6461FEAE88E00107B6F /* GameRulesScene.swift in Sources */,
 				EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

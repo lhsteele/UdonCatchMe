@@ -1,0 +1,40 @@
+//
+//  GameRulesScene.swift
+//  SKLab1
+//
+//  Created by Lisa Steele on 12/20/17.
+//  Copyright © 2017 lisahsteele. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import SpriteKit
+
+class GameRulesScene: SKScene {
+    
+    let background = SKSpriteNode(imageNamed: "GameOverBackground")
+    
+    var playableRect: CGRect
+    var deviceWidth = UIScreen.main.bounds.width
+    var deviceHeight = UIScreen.main.bounds.height
+    
+    override func sceneDidLoad() {
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.zPosition = -1
+        addChild(background)
+    }
+    
+    override init(size: CGSize) {
+        let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
+        let playableWidth = size.height / maxAspectRatio
+        let playableMargin = (size.width - playableWidth) / 2.0
+        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
