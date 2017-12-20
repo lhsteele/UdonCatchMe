@@ -43,13 +43,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playableRect: CGRect
     var gameTimer = Timer()
    
-    var totalSeconds: Int = 5
+    var totalSeconds: Int = 15
     var pauseTimerBool = false
     var randomVegBool = false
     var bonusVegMethodBool = false
     var noVegBool = false
     var noVegMethodBool = false
     var regularGamePlay = true
+    var timerBool = false
     
     var randomGeneratedVeg: String = ""
     var fallingVeg: String = ""
@@ -73,7 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     static var gameWonBoolean = true
     static var itsADraw = false
-    static var timeRanOut = false
+    
+    var enlarged = false
+    var savedPosition = CGPoint.zero
     
     let bonusEgg = SKSpriteNode(imageNamed: "BigEgg")
     let bonusEbiTempura = SKSpriteNode(imageNamed: "BigEbiTempura")
@@ -87,10 +90,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
     
     override func sceneDidLoad() {
-        /*        let defaults = UserDefaults.standard
+        /*
+        let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
-        */  
+        */
     }
     
     override func didMove(to view: SKView) {
@@ -134,13 +138,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lblScore.zPosition = 4
         addChild(lblScore)
         
-        
         levelTimerLabel.fontSize = 20
         levelTimerLabel.fontColor = SKColor.white
         levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY - 60)
         levelTimerLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         levelTimerLabel.zPosition = 5
         addChild(levelTimerLabel)
+        
         
         self.addPlayer()
 
@@ -384,29 +388,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        /*
-        if (totalSeconds == 0) {
-            
-            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
-            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
-            timesUpLabel.zPosition = 2
-            addChild(timesUpLabel)
-            
-            timesUpLabel.run (
-            SKAction.sequence([
-                SKAction.wait(forDuration: 3),
-                SKAction.removeFromParent(),
-                SKAction.run {
-                    self.overrideHighestScore(highScore: self.score)
-                }
-                ])
-            )
-            
-            //overrideHighestScore(highScore: self.score)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
-        }
-        */
     }
     
     func pointsForMatchingColors(food: SKSpriteNode, player: SKSpriteNode) {
@@ -425,28 +406,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        /*
-        if (totalSeconds == 0) {
-            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
-            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
-            timesUpLabel.zPosition = 2
-            addChild(timesUpLabel)
-            
-            timesUpLabel.run (
-                SKAction.sequence([
-                    SKAction.wait(forDuration: 3),
-                    SKAction.removeFromParent(),
-                    SKAction.run {
-                        self.overrideHighestScore(highScore: self.score)
-                    }
-                    ])
-            )
-            
-            //overrideHighestScore(highScore: self.score)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
-        }
-        */
     }
     
     func losePointsForNoVeg(food: SKSpriteNode, player: SKSpriteNode) {
@@ -465,27 +424,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveAction = SKAction.move(by: CGVector(dx: 0, dy:3), duration: 1)
         moveAction.timingMode = .easeOut
         bonusScoreLabel.run(SKAction.sequence([moveAction, SKAction.removeFromParent()]))
-        /*
-        if (totalSeconds == 0) {
-            timesUpLabel = SKSpriteNode(texture: timesUpLabelTexture)
-            timesUpLabel.position = CGPoint(x: size.width/2, y: size.height/2)
-            timesUpLabel.zPosition = 2
-            addChild(timesUpLabel)
-            
-            timesUpLabel.run (
-                SKAction.sequence([
-                    SKAction.wait(forDuration: 3),
-                    SKAction.removeFromParent(),
-                    SKAction.run {
-                        self.overrideHighestScore(highScore: self.score)
-                    }
-                    ])
-            )
-            //overrideHighestScore(highScore: self.score)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
-        }
-        */
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -536,6 +474,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let finishTimer: SKAction = SKAction.run {
             self.updateTimer()
             self.restartTimer()
+            self.timeCheck()
         }
         let seq:SKAction = SKAction.sequence([wait, finishTimer])
         levelTimerLabel.run(seq, withKey: "timer")
@@ -548,6 +487,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let minutes = String(totalSeconds / 60)
             let seconds = String(totalSeconds % 60)
             levelTimerLabel.text = minutes + ":" + seconds
+        }
+    }
+    
+    func timeCheck() {
+        if (totalSeconds <= 10) {
+            timerBool = true
+            self.changeTimerLabelSize()
         }
     }
     
@@ -689,64 +635,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func overrideHighestScore(highScore: Int) {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         GameScene.currentScore = score
-        /*
-        if (totalSeconds == 0) && score > lastHighScore {
-            GameScene.gameWonBoolean = true
-            GameScene.itsADraw = false
-            GameScene.timeRanOut = true
-            UserDefaults.standard.set(score, forKey: scoreKey)
-            UserDefaults.standard.synchronize()
-
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
-        } else if (totalSeconds == 0) && score == lastHighScore {
-            GameScene.gameWonBoolean = false
-            GameScene.itsADraw = true
-            GameScene.timeRanOut = true
-            
-            timesUpLabel.text = "Times Up! :("
-            timesUpLabel.fontSize = 35
-            timesUpLabel.fontColor = SKColor.darkGray
-            timesUpLabel.verticalAlignmentMode = .top
-            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-            addChild(timesUpLabel)
-            
-            timesUpLabel.run (
-                SKAction.wait(forDuration: 5)
-            )
-            
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
-        } else if (totalSeconds == 0) && score <= lastHighScore {
-            GameScene.gameWonBoolean = false
-            GameScene.itsADraw = false
-            GameScene.timeRanOut = true
-            
-            timesUpLabel.text = "Times Up! :("
-            timesUpLabel.fontSize = 35
-            timesUpLabel.fontColor = SKColor.darkGray
-            timesUpLabel.verticalAlignmentMode = .top
-            timesUpLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-            addChild(timesUpLabel)
-            
-            timesUpLabel.run (
-                SKAction.wait(forDuration: 5)
-            )
-            
-            let gameOverScene = GameOverScene(size: self.size)
-            self.view?.presentScene(gameOverScene)
-        } else 
-        */
         if score == 0 {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         } else if score == lastHighScore {
             GameScene.itsADraw = true
             GameScene.gameWonBoolean = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         } else if score > lastHighScore {
@@ -754,18 +650,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             UserDefaults.standard.synchronize()
             GameScene.gameWonBoolean = true
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         } else if score < lastHighScore {
             GameScene.gameWonBoolean = false
             GameScene.itsADraw = false
-            //let reveal = SKTransition.flipHorizontal(withDuration: 3)
             let gameOverScene = GameOverScene(size: self.size)
             self.view?.presentScene(gameOverScene)
         }
     }
     
+    func changeTimerLabelSize() {
+        if timerBool == true {
+            levelTimerLabel.fontSize = 40
+            levelTimerLabel.position = CGPoint(x: playableRect.minX + 35, y: playableRect.maxY - 75)
+        }
+    }
+
     func pauseTimer() {
         pauseTimerBool = true
         if let action = levelTimerLabel.action(forKey: "timer") {
