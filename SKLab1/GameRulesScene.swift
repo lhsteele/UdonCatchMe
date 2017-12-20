@@ -13,6 +13,10 @@ import SpriteKit
 class GameRulesScene: SKScene {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
+    let gameRulesTexture = SKTexture(imageNamed: "GameRules")
+    var gameRules: SKSpriteNode! = nil
+    let smallBackToGameTexture = SKTexture(imageNamed: "BackToGameSmall")
+    var smallBackToGameButton: SKSpriteNode! = nil
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -23,6 +27,14 @@ class GameRulesScene: SKScene {
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.zPosition = -1
         addChild(background)
+        
+        gameRules = SKSpriteNode(texture: gameRulesTexture)
+        gameRules.position = CGPoint(x: size.width/2 - 10, y: size.height/2 )
+        addChild(gameRules)
+        
+        smallBackToGameButton = SKSpriteNode(texture: smallBackToGameTexture)
+        smallBackToGameButton.position = CGPoint(x: size.width/2, y: (size.height/2 - gameRules.size.height/2) - smallBackToGameButton.size.height)
+        addChild(smallBackToGameButton)
     }
     
     override init(size: CGSize) {
@@ -31,6 +43,16 @@ class GameRulesScene: SKScene {
         let playableMargin = (size.width - playableWidth) / 2.0
         playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if smallBackToGameButton.contains(location) {
+                let scene = WelcomeScene(size: size)
+                self.view?.presentScene(scene)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
