@@ -275,7 +275,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             timesUpLabel.run (
                 SKAction.sequence([
-                    SKAction.wait(forDuration: 4),
+                    SKAction.wait(forDuration: 5),
                     SKAction.removeFromParent(),
                     SKAction.run {
                     self.overrideHighestScore(highScore: self.score)
@@ -353,10 +353,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func methodOneOrTwo() {
-        if score < 150 {
+        if (totalSeconds > 0) {
+            if score < 150 {
             self.randomBonusVegChange()
+            } else {
+                self.randomAllFoodChange()
+            }
         } else {
-            self.randomAllFoodChange()
+            return
         }
     }
     
