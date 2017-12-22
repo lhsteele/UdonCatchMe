@@ -14,12 +14,8 @@ class GameViewController: UIViewController {
     
     //let scoreKey = "SKLab_Highscore"
     
-    //var gcEnabled = Bool()
-    //var gcDefaultLeaderBoard = String()
-    
     var score = 0
-    
-    //let leaderBoard_ID = "com.leaderboard.sklab1"
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,36 +30,8 @@ class GameViewController: UIViewController {
             view.showsFPS = false
             view.showsNodeCount = false
         }
-        //authenticateLocalPlayer()
-        
     }
     
-
-    
-    /*
-    func authenticateLocalPlayer() {
-        let localPlayer: GKLocalPlayer = GKLocalPlayer.localPlayer()
-        
-        localPlayer.authenticateHandler = {(ViewController, error) -> Void in
-            if ((ViewController) != nil) {
-                self.present(ViewController!, animated: true, completion: nil)
-            } else if (localPlayer.isAuthenticated) {
-                self.gcEnabled = true
-                
-                localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifier, error) in
-                    if error != nil { print (error as Any)
-                    } else {
-                        self.gcDefaultLeaderBoard = leaderboardIdentifier!
-                    }
-                })
-            } else {
-                self.gcEnabled = false
-                print ("Local player could not be authenticated!")
-                print (error as Any)
-            }
-        }
-    }
-    */
     override var shouldAutorotate: Bool {
         return false
     }

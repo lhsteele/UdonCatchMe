@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playableRect: CGRect
     var gameTimer = Timer()
    
-    var totalSeconds: Int = 15
+    var totalSeconds: Int = 60
     var pauseTimerBool = false
     var randomVegBool = false
     var bonusVegMethodBool = false
@@ -63,9 +63,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let timesUpLabelTexture = SKTexture(imageNamed: "TimesUpLabel")
     var timesUpLabel : SKSpriteNode! = nil
- 
-    //var gcEnabled = Bool()
-    //var gcDefaultLeaderBoard = String()
     
     var background = SKSpriteNode(imageNamed: "Background")
     
@@ -246,8 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let loseAction = SKAction.run() {
             
             self.overrideHighestScore(highScore: self.score)
-            //let gameOverScene = GameOverScene(size: self.size)
-            //self.view?.presentScene(gameOverScene)
         }
         
         let endOfScreen = SKAction.run() {
