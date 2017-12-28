@@ -61,6 +61,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
     
+    let gameRulesTexture = SKTexture(imageNamed: "GameRulesButton")
+    var gameRulesButton: SKSpriteNode! = nil
+    
     let timesUpLabelTexture = SKTexture(imageNamed: "TimesUpLabel")
     var timesUpLabel : SKSpriteNode! = nil
     
@@ -142,6 +145,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelTimerLabel.zPosition = 5
         addChild(levelTimerLabel)
         
+        gameRulesButton = SKSpriteNode(texture: gameRulesTexture)
+        gameRulesButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
+        addChild(gameRulesButton)
         
         self.addPlayer()
 
@@ -347,6 +353,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.restartTimer()
                 startButton.removeFromParent()
                 highScoreNode.removeFromParent()
+                gameRulesButton.removeFromParent()
+            } else if gameRulesButton.contains(location) {
+                let scene = GameRulesScene(size: size)
+                self.view?.presentScene(scene)
             }
         }
     }

@@ -12,7 +12,7 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    //let scoreKey = "SKLab_Highscore"
+    //let scoreKey = "SKLab_Highscore" 
     
     var score = 0
 
