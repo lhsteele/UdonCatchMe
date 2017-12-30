@@ -15,7 +15,8 @@ class WelcomeScene: SKScene {
     var beginButton: SKSpriteNode! = nil
     let gameRulesTexture = SKTexture(imageNamed: "GameRulesButton")
     var gameRulesButton: SKSpriteNode! = nil
-    var background = SKSpriteNode(imageNamed: "WelcomeBackground")
+    //var background = SKSpriteNode(imageNamed: "WelcomeBackground")
+    var background: SKSpriteNode! = nil
     let gameInstructionsSpeechBubbleTexture = SKTexture(imageNamed: "GameInstructionsSpeechBubble")
     var speechBubble: SKSpriteNode! = nil
     
@@ -40,6 +41,17 @@ class WelcomeScene: SKScene {
     
     override func sceneDidLoad() {
         //background.size = self.frame.size
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "WelcomeBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "WelcomeBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "WelcomeBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "WelcomeBackgroundPlus")
+        }
+        
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.zPosition = -1
@@ -74,3 +86,22 @@ class WelcomeScene: SKScene {
     }
 
 }
+
+
+extension UIScreen {
+    enum SizeType: CGFloat {
+        case Unknown = 0.0
+        case iphone4 = 480
+        case iphone5 = 568
+        case iphone6 = 667
+        case iphonePlus = 736
+    }
+    
+    var sizeType: SizeType {
+        //let height = nativeBounds.height
+        let height = UIScreen.main.bounds.height
+        guard let sizeType = SizeType(rawValue: height) else { return .Unknown}
+        return sizeType
+    }
+}
+
