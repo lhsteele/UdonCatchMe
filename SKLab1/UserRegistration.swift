@@ -71,12 +71,15 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
-            /*
-            if backToGameButton.contains(location) {
+            
+            if backButtonSm.contains(location) {
+                DispatchQueue.main.async(execute: {
+                    self.usernameTextField.removeFromSuperview()
+                })
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
             }
-            */
+            
             if submitButtonSm.contains(location) {
                 self.saveUsernameToFirebase()
                 DispatchQueue.main.async(execute: {
