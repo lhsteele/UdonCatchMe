@@ -5,7 +5,8 @@
 //  Created by Lisa Steele on 12/13/17.
 //  Copyright © 2017 lisahsteele. All rights reserved.
 //
-/*
+
+import Foundation
 import UIKit
 import SpriteKit
 import Firebase
@@ -15,11 +16,14 @@ import FirebaseDatabase
 class Leaderboard: SKScene, UITextFieldDelegate {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
-    var textField: UITextField!
-    var username = String()
+    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
+    let leaderboardGreeting = SKSpriteNode(imageNamed: "LeaderboardComingSoon")
+    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
+    //var textField: UITextField!
+    //var username = String()
     
-    var userName = String()
-    var highScore = Int()
+    //var userName = String()
+    //var highScore = Int()
     var listOfPlayers = [[String : Any]]()
     var player = [String : Any]()
     
@@ -35,15 +39,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         background.zPosition = -1
         addChild(background)
         
-        self.loadHighScores()
-    }
-    
-    override func didMove(to view: SKView) {
-        let originX = (size.width / 2) / 5
-        textField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 125, width: size.width / 1.25, height: 50))
-        customize(textField: textField, placeholder: "Player : High Score")
-        view.addSubview(textField)
-        textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+        usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
+        addChild(usernameSceneImage)
+        
+        leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
+        addChild(leaderboardGreeting)
+        
+        backToGameButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        addChild(backToGameButton)
+        
+        //self.loadHighScores()
     }
     
     override init(size: CGSize) {
@@ -54,6 +59,27 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         super.init(size: size)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            
+            if backToGameButton.contains(location) {
+                let scene = GameScene(size: size)
+                self.view?.presentScene(scene)
+            }
+        }
+    }
+    
+    /*
+    override func didMove(to view: SKView) {
+        guard let view = self.view else {return}
+        let originX = (size.width / 2) / 5
+        textField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 125, width: size.width / 1.25, height: 50))
+        customize(textField: textField, placeholder: "Player : High Score")
+        view.addSubview(textField)
+        textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+    }
+ 
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         textField.leftView = paddingView
@@ -105,11 +131,11 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             print (player1)
         })
     }
-  
+  */
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 
 }
-*/
+
