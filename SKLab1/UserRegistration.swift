@@ -81,7 +81,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             }
             
             if submitButtonSm.contains(location) {
-                self.saveUsernameToFirebase()
+                self.checkForUsernameInFirebase()
+                //self.saveUsernameToFirebase()
                 DispatchQueue.main.async(execute: {
                     self.usernameTextField.removeFromSuperview()
                 })
@@ -109,6 +110,29 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         ref = Database.database().reference().child("Users")
         let childUpdates = [username : highScore]
         ref.updateChildValues(childUpdates)
+    }
+    
+    func checkForUsernameInFirebase() {
+        print ("CheckRun")
+        var ref: DatabaseReference!
+        ref = Database.database().reference().child("Users")
+        _ = ref.queryEqual(toValue: username).observe(.value, with: { (snapshot) in
+            if snapshot.exists() {
+                for item in snapshot.children {
+                    if let pair = item as? DataSnapshot {
+                        if let userName = pair.key as? String {
+                            if userName == self.username {
+                                //alert to say they can't use this username
+                                print ("username exists")
+                            }
+                            
+                        }
+                    }
+                }
+            } else {
+                self.saveUsernameToFirebase()
+            }
+        })
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
