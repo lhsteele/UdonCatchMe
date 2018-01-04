@@ -108,7 +108,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
         let childUpdates = [username : highScore]
-        ref.setValue(childUpdates)
+        ref.updateChildValues(childUpdates)
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
