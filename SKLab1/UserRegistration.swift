@@ -25,7 +25,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     var fireUserID = String()
     var username = String()
     let scoreKey = "SKLab_Highscore"
-
+    var usernameExists = false
+    
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -82,7 +83,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             
             if submitButtonSm.contains(location) {
                 self.checkForUsernameInFirebase()
-                //self.saveUsernameToFirebase()
             }
             
         }
@@ -113,21 +113,23 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         print ("CheckRun")
         var ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
-        _ = ref.observe(.value, with: { (snapshot) in
+        _ = ref.observeSingleEvent(of: .value, with: { (snapshot) in
             print (snapshot)
             for item in snapshot.children {
                 if let pair = item as? DataSnapshot {
                     if let userName = pair.key as? String {
                         if userName == self.username {
                             self.displayAlertMessage(messageToDisplay: "This username is already taken.")
-                            return
+                            self.usernameExists = true
+                            print ("bool true")
                             //alert to say they can't use this username
                             print ("username exists")
-                        } 
+                        } else if userName != self.username {
+                            self.saveUsernameToFirebase()
+                        }
                     }
                 }
             }
-            self.saveUsernameToFirebase()
         })
     }
     
