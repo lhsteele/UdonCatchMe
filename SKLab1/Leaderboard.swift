@@ -19,13 +19,13 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let leaderboardGreeting = SKSpriteNode(imageNamed: "LeaderboardComingSoon")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
-    //var textField: UITextField!
-    //var username = String()
+    var textField: UITextField!
+    var username = String()
     
-    //var userName = String()
-    //var highScore = Int()
+    var userName = String()
+    var highScore = Int()
     var listOfPlayers = [[String : Any]]()
-    var player = [String : Any]()
+    var player = [(String) : (Any)]()
     
     
     var playableRect: CGRect
@@ -42,13 +42,13 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
         addChild(usernameSceneImage)
         
-        leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
-        addChild(leaderboardGreeting)
+        //leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
+        //addChild(leaderboardGreeting)
         
         backToGameButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(backToGameButton)
         
-        //self.loadHighScores()
+        self.loadHighScores()
     }
     
     override init(size: CGSize) {
@@ -70,7 +70,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         }
     }
     
-    /*
+    
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
@@ -111,6 +111,30 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func loadHighScores() {
         let ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
+        ref.queryOrderedByValue().observe(.value, with: { (snapshot) in
+            let entries = snapshot.children
+            for entry in entries {
+                if let pair = entry as? DataSnapshot {
+                    if let score = pair.value {
+                        let name = pair.key
+                        self.userName = name
+                        self.highScore = score as! Int
+                    }
+                }
+                self.player["playerName"] = self.userName as String
+                self.player["highScore"] = self.highScore as Int
+                self.listOfPlayers.append(self.player)
+                let result = listOfPlayers.sorted { (first: (key: [String], value: [Int]), second: (key: [String], value: [Int])) -> Bool in
+                    return first.value.first! < second.value.first!
+                }
+            }
+        })
+    }
+    
+    /*
+    func loadHighScores() {
+        let ref: DatabaseReference!
+        ref = Database.database().reference().child("Users")
         ref.observe(.value, with: { (snapshot) in
             let players = snapshot.children
             for item in players {
@@ -127,11 +151,11 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             }
             let sortedPlayers = self.listOfPlayers.sorted {$0["highScore"] as! Int > $1["highScore"] as! Int}
             print (sortedPlayers)
-            let player1 = sortedPlayers.indices
-            print (player1)
+            //let player1 = sortedPlayers.indices
+            //print (player1)
         })
     }
-  */
+    */
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
