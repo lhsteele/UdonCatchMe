@@ -83,9 +83,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             if submitButtonSm.contains(location) {
                 self.checkForUsernameInFirebase()
                 //self.saveUsernameToFirebase()
-                DispatchQueue.main.async(execute: {
-                    self.usernameTextField.removeFromSuperview()
-                })
             }
             
         }
@@ -116,22 +113,21 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         print ("CheckRun")
         var ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
-        _ = ref.queryEqual(toValue: username).observe(.value, with: { (snapshot) in
-            if snapshot.exists() {
-                for item in snapshot.children {
-                    if let pair = item as? DataSnapshot {
-                        if let userName = pair.key as? String {
-                            if userName == self.username {
-                                //alert to say they can't use this username
-                                print ("username exists")
-                            }
-                            
-                        }
+        _ = ref.observe(.value, with: { (snapshot) in
+            print (snapshot)
+            for item in snapshot.children {
+                if let pair = item as? DataSnapshot {
+                    if let userName = pair.key as? String {
+                        if userName == self.username {
+                            self.displayAlertMessage(messageToDisplay: "This username is already taken.")
+                            return
+                            //alert to say they can't use this username
+                            print ("username exists")
+                        } 
                     }
                 }
-            } else {
-                self.saveUsernameToFirebase()
             }
+            self.saveUsernameToFirebase()
         })
     }
     
@@ -163,7 +159,17 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         return true
     }
     
-
+    func displayAlertMessage(messageToDisplay: String) {
+        let alertController = UIAlertController(title: "Sorry!", message: messageToDisplay, preferredStyle: .alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action: UIAlertAction!) in
+        }
+        
+        alertController.addAction(OKAction)
+        if let vc = self.scene?.view?.window?.rootViewController {
+            vc.present(alertController, animated: true, completion: nil)
+        }
+    }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -171,3 +177,4 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     }
     
 }
+
