@@ -12,6 +12,15 @@ import SpriteKit
 import Firebase
 import FirebaseDatabase
 
+struct PlayerEntries {
+    var playerName: String
+    var highScore: Int
+    
+    init(playerName: String, highScore: Int) {
+        self.playerName = playerName
+        self.highScore = highScore
+    }
+}
 
 class Leaderboard: SKScene, UITextFieldDelegate {
     
@@ -24,8 +33,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var userName = String()
     var highScore = Int()
-    var listOfPlayers = [[String : Any]]()
-    var player = [(String) : (Any)]()
+    var listOfPlayers = [PlayerEntries]()
+    //var listOfPlayers = [[String : Any]]()
+    //var player = [(String) : (Any)]()
     
     
     var playableRect: CGRect
@@ -121,12 +131,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                         self.highScore = score as! Int
                     }
                 }
-                self.player["playerName"] = self.userName as String
-                self.player["highScore"] = self.highScore as Int
-                self.listOfPlayers.append(self.player)
-                let result = listOfPlayers.sorted { (first: (key: [String], value: [Int]), second: (key: [String], value: [Int])) -> Bool in
-                    return first.value.first! < second.value.first!
-                }
+                let player = [PlayerEntries(playerName: self.userName, highScore: self.highScore)]
+                let result = player.sorted{ $0.highScore > $1.highScore }
+                print (result)
             }
         })
     }
