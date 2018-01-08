@@ -118,7 +118,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         //textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
     }
     
-    func customize(textField: UITextField, isSecureTextEntry: Bool = false) {
+    func customize(textField: UITextField, placeholder: String, textFieldText: String, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
         textField.keyboardType = UIKeyboardType.default
@@ -126,12 +126,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.leftViewMode = UITextFieldViewMode.always
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        //textField.layer.borderColor = UIColor.black.cgColor
-        //textField.layer.borderWidth = 0.5
-        //textField.layer.cornerRadius = 4.0
         textField.textColor = .black
-        //textField.isSecureTextEntry = isSecureTextEntry
-        textField.text = self.firstPlace
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
+        textField.text = textFieldText
     }
 
  
@@ -207,16 +204,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         print (result[0])
         self.firstPlace = "\(result[0].playerName) :               \(result[0].score)"
         print (self.firstPlace)
-        self.customize(textField: self.textField0)
-        self.customize(textField: self.textField1)
-        self.customize(textField: self.textField2)
-        self.customize(textField: self.textField3)
-        self.customize(textField: self.textField4)
-        self.customize(textField: self.textField5)
-        self.customize(textField: self.textField6)
-        self.customize(textField: self.textField7)
-        self.customize(textField: self.textField8)
-        self.customize(textField: self.textField9)
+        self.customize(textField: self.textField0, placeholder: "Player:               Score:", textFieldText: self.firstPlace)
+        self.customize(textField: self.textField1, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField2, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField3, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField4, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField5, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField6, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField7, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField8, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField9, placeholder: "Player:               Score:", textFieldText: "")
     }
 
     required init?(coder aDecoder: NSCoder) {
