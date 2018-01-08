@@ -24,7 +24,7 @@ struct PlayerEntries {
 
 class Leaderboard: SKScene, UITextFieldDelegate {
     
-    let background = SKSpriteNode(imageNamed: "GameOverBackground")
+    let background = SKSpriteNode(imageNamed: "LeaderboardBackground")
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
@@ -38,6 +38,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var textField7: UITextField!
     var textField8: UITextField!
     var textField9: UITextField!
+    var labelTextField: UITextField!
     var username = String()
     
     var userName = String()
@@ -73,9 +74,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         
         backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
-        
+    
         self.loadHighScores()
-
+        
     }
     
     override init(size: CGSize) {
@@ -113,6 +114,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
+        labelTextField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 1.25, height: 35))
         textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 1.25, height: 35))
         textField1 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 1.25, height: 35))
         textField2 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 70, width: size.width / 1.25, height: 35))
@@ -123,6 +125,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField7 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 105, width: size.width / 1.25, height: 35))
         textField8 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 140, width: size.width / 1.25, height: 35))
         textField9 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 1.25, height: 35))
+        view.addSubview(labelTextField)
         view.addSubview(textField0)
         view.addSubview(textField1)
         view.addSubview(textField2)
@@ -135,20 +138,21 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         view.addSubview(textField9)
     }
     
-    func customize(textField: UITextField, placeholder: String, textFieldText: String?, isSecureTextEntry: Bool = false) {
+    func customize(textField: UITextField, placeholder: String, textFieldText: String?) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
     }
-    
+
+    /*
     func textFieldDidChange(textField: UITextField) {
         if textField == self.textField0 {
             self.firstPlace = textField.text!
         }
     }
-    
+    */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -181,11 +185,14 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             leaderboardEntry = "\(result[index].playerName) :                    \(result[index].score)"
             print (leaderboardEntry)
             for textField in textFieldArray {
-                if let entry = textField as? UITextField {
-                    _ = self.customize(textField: textFieldArray[index]!, placeholder: "Player:                    Score:", textFieldText: leaderboardEntry)
+                if let entry = leaderboardEntry as? String {
+                    _ = self.customize(textField: textFieldArray[index]!, placeholder: "", textFieldText: leaderboardEntry)
+                } else {
+                    _ = self.customize(textField: textFieldArray[index]!, placeholder: "Player:               Score:", textFieldText: nil)
                 }
             }
         }
+        customize(textField: labelTextField, placeholder: "", textFieldText: "Player                              Score")
     }
 
     required init?(coder aDecoder: NSCoder) {
