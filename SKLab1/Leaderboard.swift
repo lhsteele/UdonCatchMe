@@ -55,7 +55,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         //leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
         //addChild(leaderboardGreeting)
         
-        backToGameButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
         
         self.loadHighScores()
