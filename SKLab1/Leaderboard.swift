@@ -26,8 +26,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
-    let leaderboardGreeting = SKSpriteNode(imageNamed: "LeaderboardComingSoon")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
+
     var textField0: UITextField!
     var textField1: UITextField!
     var textField2: UITextField!
@@ -42,9 +42,19 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var userName = String()
     var highScore = Int()
-    //var player = PlayerEntries()
     var listOfEntries = [PlayerEntries]()
+    
+    var leaderboardEntry = String()
     var firstPlace = String()
+    var secondPlace = String()
+    var thirdPlace = String()
+    var fourthPlace = String()
+    var fifthPlace = String()
+    var sixthPlace = String()
+    var seventhPlace = String()
+    var eigthPlace = String()
+    var ninthPlace = String()
+    var tenthPlace = String()
     
     
     var playableRect: CGRect
@@ -60,9 +70,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         
         usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height / 1.5)
         addChild(usernameSceneImage)
-        
-        //leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
-        //addChild(leaderboardGreeting)
         
         backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
@@ -104,7 +111,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField7 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 105, width: size.width / 1.25, height: 35))
         textField8 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 140, width: size.width / 1.25, height: 35))
         textField9 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 1.25, height: 35))
-        //customize(textField: textField)
         view.addSubview(textField0)
         view.addSubview(textField1)
         view.addSubview(textField2)
@@ -115,41 +121,22 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         view.addSubview(textField7)
         view.addSubview(textField8)
         view.addSubview(textField9)
-        //textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
     }
     
-    func customize(textField: UITextField, placeholder: String, textFieldText: String, isSecureTextEntry: Bool = false) {
+    func customize(textField: UITextField, placeholder: String, textFieldText: String?, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
+        /*
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.leftViewMode = UITextFieldViewMode.always
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
+        */
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
     }
-
- 
-    /*
-    func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
-        textField.leftView = paddingView
-        textField.keyboardType = UIKeyboardType.default
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.leftViewMode = UITextFieldViewMode.always
-        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.cornerRadius = 4.0
-        textField.textColor = .darkGray
-        textField.isSecureTextEntry = isSecureTextEntry
-        textField.text = self.firstPlace
-    }
-    */
     
     func textFieldDidChange(textField: UITextField) {
         if textField == self.textField0 {
@@ -174,46 +161,68 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                         self.userName = name
                         self.highScore = score as! Int
                     }
-                    var player = PlayerEntries(playerName: self.userName, score: self.highScore)
+                    let player = PlayerEntries(playerName: self.userName, score: self.highScore)
                     self.listOfEntries.append(player)
                 }
             }
-            /*
-            let result = self.listOfEntries.sorted{ $0.score > $1.score }
-            print (result[0])
-            self.firstPlace = "Player: \(result[0].playerName) - Score: \(result[0].score)"
-            print (self.firstPlace)
-            self.customize(textField: self.textField0)
-            self.customize(textField: self.textField1)
-            self.customize(textField: self.textField2)
-            self.customize(textField: self.textField3)
-            self.customize(textField: self.textField4)
-            self.customize(textField: self.textField5)
-            self.customize(textField: self.textField6)
-            self.customize(textField: self.textField7)
-            self.customize(textField: self.textField8)
-            self.customize(textField: self.textField9)
-            */
             self.populateLeaderboard()
         })
     }
     
     func populateLeaderboard() {
-        print (self.listOfEntries)
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
-        print (result[0])
-        self.firstPlace = "\(result[0].playerName) :               \(result[0].score)"
-        print (self.firstPlace)
+        var textFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
+        for (index, _) in result.enumerated() {
+            leaderboardEntry = "\(result[index].playerName) :               \(result[index].score)"
+            print (leaderboardEntry)
+            for textField in textFieldArray {
+                if let entry = textField as? UITextField {
+                    let entryExists = self.customize(textField: textFieldArray[index]!, placeholder: "Player:               Score:", textFieldText: leaderboardEntry)
+                } else {
+                    let emptyEntry = self.customize(textField: textFieldArray[index]!, placeholder: "Player:               Score:", textFieldText: "")
+                }
+            }
+        }
+        
+        
+        /*
+            if case result[].playerName = result[].playerName as String {
+            self.firstPlace = "\(result[0].playerName) :               \(result[0].score)"
+            self.secondPlace = "\(result[1].playerName) :               \(result[1].score)"
+            self.thirdPlace = "\(result[2].playerName) :               \(result[2].score)"
+            self.fourthPlace = "\(result[3].playerName) :               \(result[3].score)"
+            self.fifthPlace = "\(result[4].playerName) :               \(result[4].score)"
+            self.sixthPlace = "\(result[5].playerName) :               \(result[5].score)"
+            self.seventhPlace = "\(result[6].playerName) :               \(result[6].score)"
+            self.eigthPlace = "\(result[7].playerName) :               \(result[7].score)"
+            self.ninthPlace = "\(result[8].playerName) :               \(result[8].score)"
+            self.tenthPlace = "\(result[9].playerName) :               \(result[9].score)"
+        } else {
+            self.firstPlace = ""
+            self.secondPlace = ""
+            self.thirdPlace = ""
+            self.fourthPlace = ""
+            self.fifthPlace = ""
+            self.sixthPlace = ""
+            self.seventhPlace = ""
+            self.eigthPlace = ""
+            self.ninthPlace = ""
+            self.tenthPlace = ""
+        }
+ 
+        
+        
         self.customize(textField: self.textField0, placeholder: "Player:               Score:", textFieldText: self.firstPlace)
-        self.customize(textField: self.textField1, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField2, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField3, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField4, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField5, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField6, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField7, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField8, placeholder: "Player:               Score:", textFieldText: "")
-        self.customize(textField: self.textField9, placeholder: "Player:               Score:", textFieldText: "")
+        self.customize(textField: self.textField1, placeholder: "Player:               Score:", textFieldText: self.secondPlace)
+        self.customize(textField: self.textField2, placeholder: "Player:               Score:", textFieldText: self.thirdPlace)
+        self.customize(textField: self.textField3, placeholder: "Player:               Score:", textFieldText: self.fourthPlace)
+        self.customize(textField: self.textField4, placeholder: "Player:               Score:", textFieldText: self.fifthPlace)
+        self.customize(textField: self.textField5, placeholder: "Player:               Score:", textFieldText: self.sixthPlace)
+        self.customize(textField: self.textField6, placeholder: "Player:               Score:", textFieldText: self.seventhPlace)
+        self.customize(textField: self.textField7, placeholder: "Player:               Score:", textFieldText: self.eigthPlace)
+        self.customize(textField: self.textField8, placeholder: "Player:               Score:", textFieldText: self.ninthPlace)
+        self.customize(textField: self.textField9, placeholder: "Player:               Score:", textFieldText: self.tenthPlace)
+ */
     }
 
     required init?(coder aDecoder: NSCoder) {
