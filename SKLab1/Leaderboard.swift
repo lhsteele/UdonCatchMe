@@ -126,11 +126,11 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.leftViewMode = UITextFieldViewMode.always
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.cornerRadius = 4.0
+        //textField.layer.borderColor = UIColor.black.cgColor
+        //textField.layer.borderWidth = 0.5
+        //textField.layer.cornerRadius = 4.0
         textField.textColor = .black
-        textField.isSecureTextEntry = isSecureTextEntry
+        //textField.isSecureTextEntry = isSecureTextEntry
         textField.text = self.firstPlace
     }
 
@@ -181,6 +181,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.listOfEntries.append(player)
                 }
             }
+            /*
             let result = self.listOfEntries.sorted{ $0.score > $1.score }
             print (result[0])
             self.firstPlace = "Player: \(result[0].playerName) - Score: \(result[0].score)"
@@ -195,7 +196,27 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             self.customize(textField: self.textField7)
             self.customize(textField: self.textField8)
             self.customize(textField: self.textField9)
+            */
+            self.populateLeaderboard()
         })
+    }
+    
+    func populateLeaderboard() {
+        print (self.listOfEntries)
+        let result = self.listOfEntries.sorted{ $0.score > $1.score }
+        print (result[0])
+        self.firstPlace = "\(result[0].playerName) :               \(result[0].score)"
+        print (self.firstPlace)
+        self.customize(textField: self.textField0)
+        self.customize(textField: self.textField1)
+        self.customize(textField: self.textField2)
+        self.customize(textField: self.textField3)
+        self.customize(textField: self.textField4)
+        self.customize(textField: self.textField5)
+        self.customize(textField: self.textField6)
+        self.customize(textField: self.textField7)
+        self.customize(textField: self.textField8)
+        self.customize(textField: self.textField9)
     }
 
     required init?(coder aDecoder: NSCoder) {
