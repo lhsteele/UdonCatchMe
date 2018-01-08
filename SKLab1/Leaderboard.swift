@@ -28,7 +28,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let leaderboardGreeting = SKSpriteNode(imageNamed: "LeaderboardComingSoon")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
-    var textField: UITextField!
+    var textField0: UITextField!
+    var textField1: UITextField!
+    var textField2: UITextField!
+    var textField3: UITextField!
+    var textField4: UITextField!
+    var textField5: UITextField!
+    var textField6: UITextField!
+    var textField7: UITextField!
+    var textField8: UITextField!
+    var textField9: UITextField!
     var username = String()
     
     var userName = String()
@@ -49,7 +58,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         background.zPosition = -1
         addChild(background)
         
-        usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
+        usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height / 1.5)
         addChild(usernameSceneImage)
         
         //leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
@@ -85,14 +94,32 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
-        textField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 125, width: size.width / 1.25, height: 50))
+        textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 1.25, height: 35))
+        textField1 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 1.25, height: 35))
+        textField2 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 70, width: size.width / 1.25, height: 35))
+        textField3 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 35, width: size.width / 1.25, height: 35))
+        textField4 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2, width: size.width / 1.25, height: 35))
+        textField5 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 35, width: size.width / 1.25, height: 35))
+        textField6 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 70, width: size.width / 1.25, height: 35))
+        textField7 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 105, width: size.width / 1.25, height: 35))
+        textField8 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 140, width: size.width / 1.25, height: 35))
+        textField9 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 1.25, height: 35))
         //customize(textField: textField)
-        view.addSubview(textField)
+        view.addSubview(textField0)
+        view.addSubview(textField1)
+        view.addSubview(textField2)
+        view.addSubview(textField3)
+        view.addSubview(textField4)
+        view.addSubview(textField5)
+        view.addSubview(textField6)
+        view.addSubview(textField7)
+        view.addSubview(textField8)
+        view.addSubview(textField9)
         //textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
     }
     
     func customize(textField: UITextField, isSecureTextEntry: Bool = false) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
@@ -128,7 +155,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     */
     
     func textFieldDidChange(textField: UITextField) {
-        if textField == self.textField {
+        if textField == self.textField0 {
             self.firstPlace = textField.text!
         }
     }
@@ -158,7 +185,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             print (result[0])
             self.firstPlace = "Player: \(result[0].playerName) - Score: \(result[0].score)"
             print (self.firstPlace)
-            self.customize(textField: self.textField)
+            self.customize(textField: self.textField0)
+            self.customize(textField: self.textField1)
+            self.customize(textField: self.textField2)
+            self.customize(textField: self.textField3)
+            self.customize(textField: self.textField4)
+            self.customize(textField: self.textField5)
+            self.customize(textField: self.textField6)
+            self.customize(textField: self.textField7)
+            self.customize(textField: self.textField8)
+            self.customize(textField: self.textField9)
         })
     }
 
