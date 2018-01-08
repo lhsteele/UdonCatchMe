@@ -59,6 +59,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         addChild(backToGameButton)
         
         self.loadHighScores()
+
     }
     
     override init(size: CGSize) {
@@ -85,11 +86,29 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         textField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 125, width: size.width / 1.25, height: 50))
-        customize(textField: textField, placeholder: "Player : High Score")
+        //customize(textField: textField)
         view.addSubview(textField)
         //textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
     }
+    
+    func customize(textField: UITextField, isSecureTextEntry: Bool = false) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
+        textField.leftView = paddingView
+        textField.keyboardType = UIKeyboardType.default
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.leftViewMode = UITextFieldViewMode.always
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.borderWidth = 0.5
+        textField.layer.cornerRadius = 4.0
+        textField.textColor = .black
+        textField.isSecureTextEntry = isSecureTextEntry
+        textField.text = self.firstPlace
+    }
+
  
+    /*
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         textField.leftView = paddingView
@@ -106,6 +125,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.isSecureTextEntry = isSecureTextEntry
         textField.text = self.firstPlace
     }
+    */
     
     func textFieldDidChange(textField: UITextField) {
         if textField == self.textField {
@@ -136,8 +156,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             }
             let result = self.listOfEntries.sorted{ $0.score > $1.score }
             print (result[0])
-            self.firstPlace = "Player:\(result[0].playerName) - Score:\(result[0].score)"
+            self.firstPlace = "Player: \(result[0].playerName) - Score: \(result[0].score)"
             print (self.firstPlace)
+            self.customize(textField: self.textField)
         })
     }
 
