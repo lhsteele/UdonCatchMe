@@ -29,6 +29,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
     var textField0: UITextField!
+    var textField01: UITextField!
     var textField1: UITextField!
     var textField2: UITextField!
     var textField3: UITextField!
@@ -77,6 +78,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
         self.loadHighScores()
         
+        
     }
     
     override init(size: CGSize) {
@@ -105,6 +107,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.textField7.removeFromSuperview()
                     self.textField8.removeFromSuperview()
                     self.textField9.removeFromSuperview()
+                    self.labelTextField.removeFromSuperview()
                 })
             }
         }
@@ -114,8 +117,11 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     override func didMove(to view: SKView) {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
+        let originX2 = size.width / 2
         labelTextField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 1.25, height: 35))
-        textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 1.25, height: 35))
+        textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
+        textField01 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
+        //textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 1.25, height: 35))
         textField1 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 1.25, height: 35))
         textField2 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 70, width: size.width / 1.25, height: 35))
         textField3 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 35, width: size.width / 1.25, height: 35))
@@ -144,8 +150,13 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
+        
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.borderWidth = 0.5
+        textField.layer.cornerRadius = 4.0
     }
-
+    
+    
     /*
     func textFieldDidChange(textField: UITextField) {
         if textField == self.textField0 {
@@ -174,7 +185,10 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.listOfEntries.append(player)
                 }
             }
-            self.populateLeaderboard()
+            //self.populateLeaderboard()
+            self.customize(textField: self.textField0, placeholder: "Player", textFieldText: "")
+            self.customize(textField: self.textField01, placeholder: "Score", textFieldText: "")
+            
         })
     }
     
