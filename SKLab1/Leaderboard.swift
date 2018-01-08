@@ -14,11 +14,11 @@ import FirebaseDatabase
 
 struct PlayerEntries {
     var playerName: String
-    var highScore: Int
+    var score: Int
     
-    init(playerName: String, highScore: Int) {
+    init(playerName: String, score: Int) {
         self.playerName = playerName
-        self.highScore = highScore
+        self.score = score
     }
 }
 
@@ -33,9 +33,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var userName = String()
     var highScore = Int()
-    var listOfPlayers = [PlayerEntries]()
-    //var listOfPlayers = [[String : Any]]()
-    //var player = [(String) : (Any)]()
+    //var player = PlayerEntries()
+    var listOfEntries = [PlayerEntries]()
     
     
     var playableRect: CGRect
@@ -121,7 +120,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func loadHighScores() {
         let ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
-        ref.queryOrderedByValue().observe(.value, with: { (snapshot) in
+        ref.observe(.value, with: { (snapshot) in
             let entries = snapshot.children
             for entry in entries {
                 if let pair = entry as? DataSnapshot {
@@ -130,39 +129,15 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                         self.userName = name
                         self.highScore = score as! Int
                     }
+                    var player = PlayerEntries(playerName: self.userName, score: self.highScore)
+                    self.listOfEntries.append(player)
                 }
-                let player = [PlayerEntries(playerName: self.userName, highScore: self.highScore)]
-                let result = player.sorted{ $0.highScore > $1.highScore }
-                print (result)
             }
+            let result = self.listOfEntries.sorted{ $0.score > $1.score }
+            print (result)
         })
     }
-    
-    /*
-    func loadHighScores() {
-        let ref: DatabaseReference!
-        ref = Database.database().reference().child("Users")
-        ref.observe(.value, with: { (snapshot) in
-            let players = snapshot.children
-            for item in players {
-                if let pair = item as? DataSnapshot {
-                    if let score = pair.value {
-                        let name = pair.key
-                        self.highScore = score as! Int
-                        self.userName = name
-                    }
-                }
-                self.player["playerName"] = self.userName as String
-                self.player["highScore"] = self.highScore as Int
-                self.listOfPlayers.append(self.player)
-            }
-            let sortedPlayers = self.listOfPlayers.sorted {$0["highScore"] as! Int > $1["highScore"] as! Int}
-            print (sortedPlayers)
-            //let player1 = sortedPlayers.indices
-            //print (player1)
-        })
-    }
-    */
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
