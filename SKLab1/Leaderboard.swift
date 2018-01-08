@@ -93,6 +93,18 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             if backToGameButton.contains(location) {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
+                DispatchQueue.main.async(execute: {
+                    self.textField0.removeFromSuperview()
+                    self.textField1.removeFromSuperview()
+                    self.textField2.removeFromSuperview()
+                    self.textField3.removeFromSuperview()
+                    self.textField4.removeFromSuperview()
+                    self.textField5.removeFromSuperview()
+                    self.textField6.removeFromSuperview()
+                    self.textField7.removeFromSuperview()
+                    self.textField8.removeFromSuperview()
+                    self.textField9.removeFromSuperview()
+                })
             }
         }
     }
@@ -126,13 +138,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func customize(textField: UITextField, placeholder: String, textFieldText: String?, isSecureTextEntry: Bool = false) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
-        /*
-        textField.keyboardType = UIKeyboardType.default
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.leftViewMode = UITextFieldViewMode.always
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        */
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
@@ -173,56 +178,14 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
         var textFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         for (index, _) in result.enumerated() {
-            leaderboardEntry = "\(result[index].playerName) :               \(result[index].score)"
+            leaderboardEntry = "\(result[index].playerName) :                    \(result[index].score)"
             print (leaderboardEntry)
             for textField in textFieldArray {
                 if let entry = textField as? UITextField {
-                    let entryExists = self.customize(textField: textFieldArray[index]!, placeholder: "Player:               Score:", textFieldText: leaderboardEntry)
-                } else {
-                    let emptyEntry = self.customize(textField: textFieldArray[index]!, placeholder: "Player:               Score:", textFieldText: "")
+                    _ = self.customize(textField: textFieldArray[index]!, placeholder: "Player:                    Score:", textFieldText: leaderboardEntry)
                 }
             }
         }
-        
-        
-        /*
-            if case result[].playerName = result[].playerName as String {
-            self.firstPlace = "\(result[0].playerName) :               \(result[0].score)"
-            self.secondPlace = "\(result[1].playerName) :               \(result[1].score)"
-            self.thirdPlace = "\(result[2].playerName) :               \(result[2].score)"
-            self.fourthPlace = "\(result[3].playerName) :               \(result[3].score)"
-            self.fifthPlace = "\(result[4].playerName) :               \(result[4].score)"
-            self.sixthPlace = "\(result[5].playerName) :               \(result[5].score)"
-            self.seventhPlace = "\(result[6].playerName) :               \(result[6].score)"
-            self.eigthPlace = "\(result[7].playerName) :               \(result[7].score)"
-            self.ninthPlace = "\(result[8].playerName) :               \(result[8].score)"
-            self.tenthPlace = "\(result[9].playerName) :               \(result[9].score)"
-        } else {
-            self.firstPlace = ""
-            self.secondPlace = ""
-            self.thirdPlace = ""
-            self.fourthPlace = ""
-            self.fifthPlace = ""
-            self.sixthPlace = ""
-            self.seventhPlace = ""
-            self.eigthPlace = ""
-            self.ninthPlace = ""
-            self.tenthPlace = ""
-        }
- 
-        
-        
-        self.customize(textField: self.textField0, placeholder: "Player:               Score:", textFieldText: self.firstPlace)
-        self.customize(textField: self.textField1, placeholder: "Player:               Score:", textFieldText: self.secondPlace)
-        self.customize(textField: self.textField2, placeholder: "Player:               Score:", textFieldText: self.thirdPlace)
-        self.customize(textField: self.textField3, placeholder: "Player:               Score:", textFieldText: self.fourthPlace)
-        self.customize(textField: self.textField4, placeholder: "Player:               Score:", textFieldText: self.fifthPlace)
-        self.customize(textField: self.textField5, placeholder: "Player:               Score:", textFieldText: self.sixthPlace)
-        self.customize(textField: self.textField6, placeholder: "Player:               Score:", textFieldText: self.seventhPlace)
-        self.customize(textField: self.textField7, placeholder: "Player:               Score:", textFieldText: self.eigthPlace)
-        self.customize(textField: self.textField8, placeholder: "Player:               Score:", textFieldText: self.ninthPlace)
-        self.customize(textField: self.textField9, placeholder: "Player:               Score:", textFieldText: self.tenthPlace)
- */
     }
 
     required init?(coder aDecoder: NSCoder) {
