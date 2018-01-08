@@ -35,6 +35,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var highScore = Int()
     //var player = PlayerEntries()
     var listOfEntries = [PlayerEntries]()
+    var firstPlace = String()
     
     
     var playableRect: CGRect
@@ -86,7 +87,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 125, width: size.width / 1.25, height: 50))
         customize(textField: textField, placeholder: "Player : High Score")
         view.addSubview(textField)
-        textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
+        //textField.addTarget(self, action: #selector(UserRegistration.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
     }
  
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
@@ -103,12 +104,12 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.layer.cornerRadius = 4.0
         textField.textColor = .darkGray
         textField.isSecureTextEntry = isSecureTextEntry
-        
+        textField.text = self.firstPlace
     }
     
     func textFieldDidChange(textField: UITextField) {
         if textField == self.textField {
-            self.username = textField.text!
+            self.firstPlace = textField.text!
         }
     }
     
@@ -134,7 +135,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 }
             }
             let result = self.listOfEntries.sorted{ $0.score > $1.score }
-            print (result)
+            print (result[0])
+            self.firstPlace = "Player:\(result[0].playerName) - Score:\(result[0].score)"
+            print (self.firstPlace)
         })
     }
 
