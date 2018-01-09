@@ -50,7 +50,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var textField9_1: UITextField!
     var playerLabel: UITextField!
     var scoreLabel: UITextField!
-    var counterLabel: UILabel!
+    var counterLabel = SKLabelNode()
+    var totalLabel = SKLabelNode()
     
     //var username = String()
     
@@ -90,6 +91,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
     
+        counterLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 50)
+        counterLabel.fontColor = SKColor.black
+        counterLabel.fontSize = 15
+        addChild(counterLabel)
+        
+        totalLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 30)
+        totalLabel.fontColor = SKColor.black
+        totalLabel.fontSize = 15
+        addChild(totalLabel)
+        
         self.loadHighScores()
         
         
@@ -133,7 +144,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.textField9_1.removeFromSuperview()
                     self.playerLabel.removeFromSuperview()
                     self.scoreLabel.removeFromSuperview()
-                    self.counterLabel.removeFromSuperview()
+                    self.counterLabel.removeFromParent()
                 })
             }
         }
@@ -170,7 +181,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField9_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
         view.addSubview(playerLabel)
         view.addSubview(scoreLabel)
-        view.addSubview(counterLabel)
         view.addSubview(textField0)
         view.addSubview(textField0_1)
         view.addSubview(textField1)
@@ -241,6 +251,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func populateLeaderboard() {
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
         count = self.listOfEntries.count
+        counterLabel.text = "\(count) out of"
+    
         print (count)
         var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
@@ -250,7 +262,10 @@ class Leaderboard: SKScene, UITextFieldDelegate {
             for _ in playerTextFieldArray {
                 _ = self.customize(textField: playerTextFieldArray[index]!, placeholder: "Player", textFieldText: leaderboardPlayerEntry)
                 _ = self.customize(textField: scoreTextFieldArray[index]!, placeholder: "Score", textFieldText: leaderboardScoreEntry)
+
             }
+            let entriesCount = playerTextFieldArray.count
+            print (entriesCount)
         }
         customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
         customize(textField: scoreLabel, placeholder: "", textFieldText: "Score")
