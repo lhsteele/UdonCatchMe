@@ -59,6 +59,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var highScore = Int()
     var listOfEntries = [PlayerEntries]()
     var count = Int()
+    var total = Int()
     
     var leaderboardPlayerEntry = String()
     var leaderboardScoreEntry = String()
@@ -250,22 +251,34 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     func populateLeaderboard() {
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
-        count = self.listOfEntries.count
+        let topTen = result.prefix(10)
+        print (topTen)
+        count = topTen.count
+        total = self.listOfEntries.count
+        
         counterLabel.text = "\(count) out of"
+        totalLabel.text = "\(total)"
+        
+        /*
+        if total < 10 {
+            counterLabel.text = "\(count) out of"
+            totalLabel.text = "\(total)"
+        } else {
+            counterLabel.text = "10 out of"
+            totalLabel.text = "\(total)"
+        }
+        */
     
-        print (count)
         var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
-        for (index, _) in result.enumerated() {
+
+        for (index, _) in topTen.enumerated() {
             leaderboardScoreEntry = "\(result[index].score)"
             leaderboardPlayerEntry = "\(result[index].playerName)"
             for _ in playerTextFieldArray {
                 _ = self.customize(textField: playerTextFieldArray[index]!, placeholder: "Player", textFieldText: leaderboardPlayerEntry)
                 _ = self.customize(textField: scoreTextFieldArray[index]!, placeholder: "Score", textFieldText: leaderboardScoreEntry)
-
             }
-            let entriesCount = playerTextFieldArray.count
-            print (entriesCount)
         }
         customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
         customize(textField: scoreLabel, placeholder: "", textFieldText: "Score")
