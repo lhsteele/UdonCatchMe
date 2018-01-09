@@ -154,10 +154,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         let originX2 = (size.width / 2)
-        //UILabel.appearance().font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-        UITextField.appearance().font = UIFont(name: "AvenirNext-Light", size: 20)
-        UITextField.appearance().textColor = UIColor.darkGray
-        
+
         playerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
         scoreLabel = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
         
@@ -209,9 +206,10 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func customize(textField: UITextField, placeholder: String, textFieldText: String?) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftView = paddingView
-        textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
+        textField.font = UIFont(name: "AvenirNext-Light", size: 20)
+        textField.textColor = UIColor.darkGray
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -263,7 +261,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
         customize(textField: scoreLabel, placeholder: "", textFieldText: "Score")
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
