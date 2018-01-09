@@ -21,7 +21,6 @@
 		EF5DD3B91FE0617B00907BFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5DD3B81FE0617B00907BFE /* GoogleService-Info.plist */; };
 		EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */; };
 		EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08561F1F4CC96E008AC1AB /* GameScene.swift */; };
-		EFDC56561FE1C61B008C72F4 /* PlayerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDC56551FE1C61B008C72F4 /* PlayerClass.swift */; };
 		F07825B9B371F4726E81B236 /* Pods_SKLab1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2038F00D6168DD9F79E78AC2 /* Pods_SKLab1.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 		EF5DD3B81FE0617B00907BFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SKLab1.entitlements; sourceTree = "<group>"; };
 		EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
-		EFDC56551FE1C61B008C72F4 /* PlayerClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +95,6 @@
 				EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */,
 				EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */,
 				EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */,
-				EFDC56551FE1C61B008C72F4 /* PlayerClass.swift */,
 				EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */,
 				EF08561F1F4CC96E008AC1AB /* GameScene.swift */,
 				EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */,
@@ -266,7 +263,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFDC56561FE1C61B008C72F4 /* PlayerClass.swift in Sources */,
 				EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */,
 				EF0856221F4CC96E008AC1AB /* GameViewController.swift in Sources */,
 				EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */,
