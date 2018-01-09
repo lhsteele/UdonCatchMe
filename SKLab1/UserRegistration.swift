@@ -107,6 +107,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         ref = Database.database().reference().child("Users")
         let childUpdates = [username : highScore]
         ref.updateChildValues(childUpdates)
+        
+        displaySuccessAlertMessage(messageToDisplay: "Your high score now lives in the UDON hall of fame.")
     }
     
     func checkForUsernameInFirebase() {
@@ -119,7 +121,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
                 if let pair = item as? DataSnapshot {
                     if let userName = pair.key as? String {
                         if userName == self.username {
-                            self.displayAlertMessage(messageToDisplay: "This username is already taken.")
+                            self.displayUsernameExistsAlertMessage(messageToDisplay: "This username is already taken.")
                             self.usernameExists = true
                             print ("bool true")
                             //alert to say they can't use this username
@@ -161,7 +163,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         return true
     }
     
-    func displayAlertMessage(messageToDisplay: String) {
+    func displayUsernameExistsAlertMessage(messageToDisplay: String) {
         let alertController = UIAlertController(title: "Sorry!", message: messageToDisplay, preferredStyle: .alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action: UIAlertAction!) in
@@ -173,6 +175,22 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         }
     }
     
+    func displaySuccessAlertMessage(messageToDisplay: String) {
+        let alertController = UIAlertController(title: "Congratulations!", message: messageToDisplay, preferredStyle: .alert)
+        
+        let viewLeaderboardAction = UIAlertAction(title: "View Leaderboard", style: .default) { (action: UIAlertAction!) in
+            let scene = Leaderboard(size: self.size)
+            self.view?.presentScene(scene)
+            DispatchQueue.main.async(execute: {
+                self.usernameTextField.removeFromSuperview()
+            })
+        }
+        
+        alertController.addAction(viewLeaderboardAction)
+        if let vc = self.scene?.view?.window?.rootViewController {
+            vc.present(alertController, animated: true, completion: nil)
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
