@@ -50,11 +50,14 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var textField9_1: UITextField!
     var playerLabel: UITextField!
     var scoreLabel: UITextField!
-    var username = String()
+    var counterLabel: UILabel!
+    
+    //var username = String()
     
     var userName = String()
     var highScore = Int()
     var listOfEntries = [PlayerEntries]()
+    var count = Int()
     
     var leaderboardPlayerEntry = String()
     var leaderboardScoreEntry = String()
@@ -130,6 +133,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.textField9_1.removeFromSuperview()
                     self.playerLabel.removeFromSuperview()
                     self.scoreLabel.removeFromSuperview()
+                    self.counterLabel.removeFromSuperview()
                 })
             }
         }
@@ -142,6 +146,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         let originX2 = (size.width / 2)
         playerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
         scoreLabel = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
+        
+        
         textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
         textField0_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
         textField1 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 2.5, height: 35))
@@ -164,6 +170,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField9_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
         view.addSubview(playerLabel)
         view.addSubview(scoreLabel)
+        view.addSubview(counterLabel)
         view.addSubview(textField0)
         view.addSubview(textField0_1)
         view.addSubview(textField1)
@@ -228,26 +235,21 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 }
             }
             self.populateLeaderboard()
-            //self.customize(textField: self.textField0, placeholder: "Player", textFieldText: "")
-            //self.customize(textField: self.textField0_1, placeholder: "Score", textFieldText: "")
-            
         })
     }
     
     func populateLeaderboard() {
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
+        count = self.listOfEntries.count
+        print (count)
         var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
         for (index, _) in result.enumerated() {
             leaderboardScoreEntry = "\(result[index].score)"
             leaderboardPlayerEntry = "\(result[index].playerName)"
             for _ in playerTextFieldArray {
-                if let entry = leaderboardPlayerEntry as? String {
-                    _ = self.customize(textField: playerTextFieldArray[index]!, placeholder: "Player", textFieldText: leaderboardPlayerEntry)
-                }
-                if let entry = leaderboardScoreEntry as? String {
-                    _ = self.customize(textField: scoreTextFieldArray[index]!, placeholder: "Score", textFieldText: leaderboardScoreEntry)
-                }
+                _ = self.customize(textField: playerTextFieldArray[index]!, placeholder: "Player", textFieldText: leaderboardPlayerEntry)
+                _ = self.customize(textField: scoreTextFieldArray[index]!, placeholder: "Score", textFieldText: leaderboardScoreEntry)
             }
         }
         customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
