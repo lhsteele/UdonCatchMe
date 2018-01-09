@@ -154,9 +154,12 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         let originX2 = (size.width / 2)
+        //UILabel.appearance().font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        UITextField.appearance().font = UIFont(name: "AvenirNext-Light", size: 20)
+        UITextField.appearance().textColor = UIColor.darkGray
+        
         playerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
         scoreLabel = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
-        
         
         textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
         textField0_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
@@ -178,6 +181,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField8_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 140, width: size.width / 2.5, height: 35))
         textField9 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
         textField9_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
+
         view.addSubview(playerLabel)
         view.addSubview(scoreLabel)
         view.addSubview(textField0)

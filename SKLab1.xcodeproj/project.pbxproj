@@ -17,7 +17,6 @@
 		EF46D6461FEAE88E00107B6F /* GameRulesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */; };
 		EF4A3BFA1FE070BA0024E127 /* UserRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */; };
 		EF4A3BFC1FE1AE350024E127 /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */; };
-		EF4A3BFE1FE1B5340024E127 /* LeaderboardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */; };
 		EF5DD3B91FE0617B00907BFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5DD3B81FE0617B00907BFE /* GoogleService-Info.plist */; };
 		EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */; };
 		EFB3B0F51F798A2700B92263 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF08561F1F4CC96E008AC1AB /* GameScene.swift */; };
@@ -41,7 +40,6 @@
 		EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameRulesScene.swift; sourceTree = "<group>"; };
 		EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegistration.swift; sourceTree = "<group>"; };
 		EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
-		EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardTableView.swift; sourceTree = "<group>"; };
 		EF5DD3B81FE0617B00907BFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EFB3B0F01F761A4F00B92263 /* SKLab1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SKLab1.entitlements; sourceTree = "<group>"; };
 		EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 				EFB3B0F31F7980BF00B92263 /* GameOverScene.swift */,
 				EF4A3BF91FE070BA0024E127 /* UserRegistration.swift */,
 				EF4A3BFB1FE1AE340024E127 /* Leaderboard.swift */,
-				EF4A3BFD1FE1B5340024E127 /* LeaderboardTableView.swift */,
 				EF08561F1F4CC96E008AC1AB /* GameScene.swift */,
 				EF46D6451FEAE88E00107B6F /* GameRulesScene.swift */,
 				EF0856211F4CC96E008AC1AB /* GameViewController.swift */,
@@ -268,7 +265,6 @@
 				EF3CDE8A1FB3C48600C66109 /* WelcomeScene.swift in Sources */,
 				EF4A3BFC1FE1AE350024E127 /* Leaderboard.swift in Sources */,
 				EF4A3BFA1FE070BA0024E127 /* UserRegistration.swift in Sources */,
-				EF4A3BFE1FE1B5340024E127 /* LeaderboardTableView.swift in Sources */,
 				EF08561A1F4CC96D008AC1AB /* AppDelegate.swift in Sources */,
 				EF46D6461FEAE88E00107B6F /* GameRulesScene.swift in Sources */,
 				EFB3B0F41F7980BF00B92263 /* GameOverScene.swift in Sources */,
