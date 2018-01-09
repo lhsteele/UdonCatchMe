@@ -53,8 +53,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
     
-    //var username = String()
-    
     var userName = String()
     var highScore = Int()
     var listOfEntries = [PlayerEntries]()
@@ -210,20 +208,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
         textField.text = textFieldText
-        
-        //textField.layer.borderColor = UIColor.black.cgColor
-        //textField.layer.borderWidth = 0.5
-        //textField.layer.cornerRadius = 4.0
     }
-    
-    
-    /*
-    func textFieldDidChange(textField: UITextField) {
-        if textField == self.textField0 {
-            self.firstPlace = textField.text!
-        }
-    }
-    */
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -258,17 +244,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         
         counterLabel.text = "\(count) out of"
         totalLabel.text = "\(total)"
-        
-        /*
-        if total < 10 {
-            counterLabel.text = "\(count) out of"
-            totalLabel.text = "\(total)"
-        } else {
-            counterLabel.text = "10 out of"
-            totalLabel.text = "\(total)"
-        }
-        */
-    
+
         var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
 
