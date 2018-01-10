@@ -50,6 +50,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var textField9_1: UITextField!
     var playerLabel: UITextField!
     var scoreLabel: UITextField!
+    var currentPlayerLabel: UITextField!
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
     
@@ -61,6 +62,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var leaderboardPlayerEntry = String()
     var leaderboardScoreEntry = String()
+    /*
     var firstPlace = String()
     var secondPlace = String()
     var thirdPlace = String()
@@ -71,7 +73,8 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     var eigthPlace = String()
     var ninthPlace = String()
     var tenthPlace = String()
-    
+    */
+    let scoreKey = "SKLab_Highscore"
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -143,6 +146,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                     self.textField9_1.removeFromSuperview()
                     self.playerLabel.removeFromSuperview()
                     self.scoreLabel.removeFromSuperview()
+                    self.currentPlayerLabel.removeFromSuperview()
                     self.counterLabel.removeFromParent()
                 })
             }
@@ -157,6 +161,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
 
         playerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
         scoreLabel = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
+        currentPlayerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 210, width: size.width / 1.25, height: 35))
         
         textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
         textField0_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
@@ -181,6 +186,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
 
         view.addSubview(playerLabel)
         view.addSubview(scoreLabel)
+        view.addSubview(currentPlayerLabel)
         view.addSubview(textField0)
         view.addSubview(textField0_1)
         view.addSubview(textField1)
@@ -246,6 +252,9 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         
         counterLabel.text = "\(count) out of"
         totalLabel.text = "\(total)"
+        
+        let defaults = UserDefaults.standard
+        let highScore = defaults.integer(forKey: scoreKey)
 
         var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
         var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
@@ -260,6 +269,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         }
         customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
         customize(textField: scoreLabel, placeholder: "", textFieldText: "Score")
+        customize(textField: currentPlayerLabel, placeholder: "", textFieldText: "Your high score is: \(highScore)")
     }
     
     required init?(coder aDecoder: NSCoder) {
