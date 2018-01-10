@@ -17,8 +17,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
-    //let leaderboardGreeting = SKSpriteNode(imageNamed: "LeaderboardComingSoon")
-    //let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
     let backButtonSm = SKSpriteNode(imageNamed: "BackButtonSm")
     let submitButtonSm = SKSpriteNode(imageNamed: "SubmitButtonSm")
     var usernameTextField: UITextField!
@@ -43,12 +41,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         usernameSceneImage.position = CGPoint(x: size.width / 2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
         addChild(usernameSceneImage)
         
-        //leaderboardGreeting.position = CGPoint(x: size.width / 2, y: (size.height / 2 + backToGameButton.size.height) + leaderboardGreeting.size.height)
-        //addChild(leaderboardGreeting)
-        
-        //backToGameButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        //addChild(backToGameButton)
-        
         backButtonSm.position = CGPoint(x: size.width/2 + backButtonSm.size.width/2, y: size.height/2 - backButtonSm.size.height * 1.5)
         addChild(backButtonSm)
         
@@ -58,8 +50,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         createUsernameLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + createUsernameLabel.size.height * 2)
         addChild(createUsernameLabel)
         
-        //submitButton.position = CGPoint(x: size.width / 2 , y: size.height / 2 - submitButton.size.height)
-        //addChild(submitButton)
     }
     
     override init(size: CGSize) {
@@ -172,12 +162,20 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         
         alertController.addAction(OKAction)
         if let vc = self.scene?.view?.window?.rootViewController {
-            vc.present(alertController, animated: true, completion: nil)
+            if vc.presentedViewController == nil {
+                vc.present(alertController, animated: true, completion: nil)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    vc.dismiss(animated: true, completion: { 
+                        vc.present(alertController, animated: true, completion: nil)
+                    })
+                })
+            }
         }
     }
     
     func displaySuccessAlertMessage(messageToDisplay: String) {
-        let alertController = UIAlertController(title: "Congratulations!", message: messageToDisplay, preferredStyle: .alert)
+        let successAlertController = UIAlertController(title: "Congratulations!", message: messageToDisplay, preferredStyle: .alert)
         
         let viewLeaderboardAction = UIAlertAction(title: "View Leaderboard", style: .default) { (action: UIAlertAction!) in
             let scene = Leaderboard(size: self.size)
@@ -187,9 +185,17 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             })
         }
         
-        alertController.addAction(viewLeaderboardAction)
+        successAlertController.addAction(viewLeaderboardAction)
         if let vc = self.scene?.view?.window?.rootViewController {
-            vc.present(alertController, animated: true, completion: nil)
+            if vc.presentedViewController == nil {
+                vc.present(successAlertController, animated: true, completion: nil)
+            } else {
+                DispatchQueue.main.async(execute: {
+                    vc.dismiss(animated: true, completion: {
+                        vc.present(successAlertController, animated: true, completion: nil)
+                    })
+                })
+            }
         }
     }
     

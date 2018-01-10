@@ -91,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
     
     override func sceneDidLoad() {
-        /*        
+        /*
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
