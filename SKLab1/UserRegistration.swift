@@ -25,7 +25,9 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     var fireUserID = String()
     var username = String()
     let scoreKey = "SKLab_Highscore"
-    var usernameExists = false
+    let usernameKey = "DBUsername"
+    var uDefaultUsername = String()
+    var usernameExists = true
     
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -83,6 +85,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             
             if submitButtonSm.contains(location) {
                 self.checkForUsernameInFirebase()
+                self.saveUsernameToFirebase()
             }
             
         }
@@ -102,13 +105,19 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     func saveUsernameToFirebase() {
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
+        defaults.set(username, forKey: usernameKey)
         
-        var ref: DatabaseReference!
-        ref = Database.database().reference().child("Users")
-        let childUpdates = [username : highScore]
-        ref.updateChildValues(childUpdates)
-        
-        displaySuccessAlertMessage(messageToDisplay: "Your high score now lives in the UDON hall of fame.")
+        if self.usernameExists == false {
+            print ("IFrun")
+            print (usernameExists)
+            var ref: DatabaseReference!
+            ref = Database.database().reference().child("Users")
+            let childUpdates = [username : highScore]
+            ref.updateChildValues(childUpdates)
+            displaySuccessAlertMessage(messageToDisplay: "Your high score now lives in the UDON hall of fame.")
+        }
+        let UD = defaults.object(forKey: usernameKey) as? String ?? String()
+        print (UD)
     }
     
     func checkForUsernameInFirebase() {
@@ -116,22 +125,20 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         var ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
         _ = ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            print (snapshot)
             for item in snapshot.children {
                 if let pair = item as? DataSnapshot {
-                    if let userName = pair.key as? String {
+                    let userName = pair.key
+                        print (userName)
                         if userName == self.username {
+                            print ("match Found")
                             self.displayUsernameExistsAlertMessage(messageToDisplay: "This username is already taken.")
-                            self.usernameExists = true
-                            print ("bool true")
-                            //alert to say they can't use this username
-                            print ("username exists")
-                        } else if userName != self.username {
-                            self.saveUsernameToFirebase()
+                            print ("first\(self.usernameExists)")
+                        } else {
+                            self.usernameExists = false
                         }
-                    }
                 }
             }
+            
         })
     }
     

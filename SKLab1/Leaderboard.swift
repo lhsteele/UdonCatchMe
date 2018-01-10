@@ -62,18 +62,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     var leaderboardPlayerEntry = String()
     var leaderboardScoreEntry = String()
-    /*
-    var firstPlace = String()
-    var secondPlace = String()
-    var thirdPlace = String()
-    var fourthPlace = String()
-    var fifthPlace = String()
-    var sixthPlace = String()
-    var seventhPlace = String()
-    var eigthPlace = String()
-    var ninthPlace = String()
-    var tenthPlace = String()
-    */
+
     let scoreKey = "SKLab_Highscore"
     
     var playableRect: CGRect
