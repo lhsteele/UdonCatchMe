@@ -33,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreText: SKLabelNode!
     var lblScore: SKLabelNode!
     let scoreKey = "SKLab_Highscore"
+    let usernameKey = "DBUsername"
     var highScore = 10
     var showingHighScore = false
     
@@ -90,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
     
     override func sceneDidLoad() {
-        /*
+        /*        
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
@@ -639,6 +640,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func overrideHighestScore(highScore: Int) {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
+        let currentPlayer = UserDefaults.standard.object(forKey: usernameKey) as? String ?? String()
+        print (currentPlayer)
         GameScene.currentScore = score
         if score == 0 {
             GameScene.gameWonBoolean = false

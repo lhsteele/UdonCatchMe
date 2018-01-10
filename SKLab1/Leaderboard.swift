@@ -235,7 +235,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     func populateLeaderboard() {
         let result = self.listOfEntries.sorted{ $0.score > $1.score }
         let topTen = result.prefix(10)
-        print (topTen)
         count = topTen.count
         total = self.listOfEntries.count
         

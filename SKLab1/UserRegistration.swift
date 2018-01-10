@@ -26,7 +26,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     var username = String()
     let scoreKey = "SKLab_Highscore"
     let usernameKey = "DBUsername"
-    var uDefaultUsername = String()
     var usernameExists = true
     
     var playableRect: CGRect
@@ -85,7 +84,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             
             if submitButtonSm.contains(location) {
                 self.checkForUsernameInFirebase()
-                self.saveUsernameToFirebase()
             }
             
         }
@@ -108,8 +106,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         defaults.set(username, forKey: usernameKey)
         
         if self.usernameExists == false {
-            print ("IFrun")
-            print (usernameExists)
             var ref: DatabaseReference!
             ref = Database.database().reference().child("Users")
             let childUpdates = [username : highScore]
@@ -121,7 +117,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     }
     
     func checkForUsernameInFirebase() {
-        print ("CheckRun")
         var ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
         _ = ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -130,9 +125,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
                     let userName = pair.key
                         print (userName)
                         if userName == self.username {
-                            print ("match Found")
                             self.displayUsernameExistsAlertMessage(messageToDisplay: "This username is already taken.")
-                            print ("first\(self.usernameExists)")
                         } else {
                             self.usernameExists = false
                         }
@@ -140,6 +133,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             }
             
         })
+        self.saveUsernameToFirebase()
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
