@@ -17,8 +17,8 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let scoreSavedLabel = SKSpriteNode(imageNamed: "ScoreSavedLabel")
-    let backButtonSm = SKSpriteNode(imageNamed: "BackButtonSm")
-    let submitButtonSm = SKSpriteNode(imageNamed: "SubmitButtonSm")
+    let leaderboardButtonTexture = SKTexture(imageNamed: "LeaderboardButton")
+    var leaderboardButton: SKSpriteNode! = nil
     var usernameTextField: UITextField!
     var fireUserID = String()
     var username = String()
@@ -40,12 +40,10 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
         
         usernameSceneImage.position = CGPoint(x: size.width / 2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
         addChild(usernameSceneImage)
-        
-        backButtonSm.position = CGPoint(x: size.width/2 + backButtonSm.size.width/2, y: size.height/2 - backButtonSm.size.height * 1.5)
-        addChild(backButtonSm)
-        
-        submitButtonSm.position = CGPoint(x: size.width/2 - submitButtonSm.size.width/2, y: size.height/2 - submitButtonSm.size.height * 1.5)
-        addChild(submitButtonSm)
+
+        leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - 50) - leaderboardButton.size.height)
+        addChild(leaderboardButton)
         
         scoreSavedLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + scoreSavedLabel.size.height * 2)
         addChild(scoreSavedLabel)
@@ -63,7 +61,7 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
-            
+            /*
             if backButtonSm.contains(location) {
                 DispatchQueue.main.async(execute: {
                     self.usernameTextField.removeFromSuperview()
@@ -74,7 +72,7 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
             
             if submitButtonSm.contains(location) {
             }
-            
+            */
         }
     }
     
