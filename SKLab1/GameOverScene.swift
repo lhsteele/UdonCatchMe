@@ -22,6 +22,7 @@ class GameOverScene: SKScene {
     let drawScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let playerStatusLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let scoreKey = "SKLab_Highscore"
+    var usernameKey = "DBUsername"
     var gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground")
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
@@ -55,28 +56,35 @@ class GameOverScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let defaults = UserDefaults.standard
+        let savedUsername = defaults.object(forKey: usernameKey) as? String ?? String()
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             if replayButton2.contains(location) {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
             } else if leaderboardButton.contains(location) {
+                /*
                 let scoreSavedScene = ScoreSaved(size: self.size)
                 self.view?.presentScene(scoreSavedScene)
-                /*
                 let leaderboardScene = Leaderboard(size: self.size)
                 self.view?.presentScene(leaderboardScene)
                 //let userRegistrationScene = UserRegistration(size: self.size)
                 //self.view?.presentScene(userRegistrationScene)
- 
+  */
                 if GameScene.gameWonBoolean == true && GameScene.itsADraw == false {
-                    let userRegistrationScene = UserRegistration(size: self.size)
-                    self.view?.presentScene(userRegistrationScene)
+                    if UserDefaults.standard.object(forKey: usernameKey) != nil {
+                        let scoreSavedScene = ScoreSaved(size: self.size)
+                        self.view?.presentScene(scoreSavedScene)
+                    } else {
+                        let userRegistrationScene = UserRegistration(size: self.size)
+                        self.view?.presentScene(userRegistrationScene)
+                    }
                 } else if GameScene.gameWonBoolean == false || GameScene.itsADraw == false {
                     let leaderboardScene = Leaderboard(size: self.size)
                     self.view?.presentScene(leaderboardScene)
                 }
- */
+
             }
         }
     }

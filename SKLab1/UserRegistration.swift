@@ -15,7 +15,7 @@ import FirebaseDatabase
 class UserRegistration: SKScene, UITextFieldDelegate {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
-    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
+    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImageLg")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
     let backButtonSm = SKSpriteNode(imageNamed: "BackButtonSm")
     let submitButtonSm = SKSpriteNode(imageNamed: "SubmitButtonSm")
