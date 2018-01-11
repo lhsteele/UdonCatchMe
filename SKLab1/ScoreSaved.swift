@@ -15,9 +15,9 @@ import FirebaseDatabase
 class ScoreSaved: SKScene, UITextFieldDelegate {
     
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
-    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
+    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImageLg")
     let scoreSavedLabel = SKSpriteNode(imageNamed: "ScoreSavedLabel")
-    let leaderboardButtonTexture = SKTexture(imageNamed: "LeaderboardButton")
+    let leaderboardButtonTexture = SKTexture(imageNamed: "ViewLeaderboardSm")
     var leaderboardButton: SKSpriteNode! = nil
     var usernameTextField: UITextField!
     var fireUserID = String()
@@ -42,7 +42,7 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
         addChild(usernameSceneImage)
 
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
-        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - 50) - leaderboardButton.size.height)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - 20) - leaderboardButton.size.height)
         addChild(leaderboardButton)
         
         scoreSavedLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + scoreSavedLabel.size.height * 2)
@@ -61,18 +61,16 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
-            /*
-            if backButtonSm.contains(location) {
+            
+            if leaderboardButton.contains(location) {
                 DispatchQueue.main.async(execute: {
                     self.usernameTextField.removeFromSuperview()
+                    self.scoreSavedLabel.removeFromParent()
                 })
-                let scene = GameScene(size: size)
+                let scene = Leaderboard(size: size)
                 self.view?.presentScene(scene)
             }
-            
-            if submitButtonSm.contains(location) {
-            }
-            */
+
         }
     }
     
