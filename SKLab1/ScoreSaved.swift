@@ -63,6 +63,7 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
             let location = touch.location(in: self)
             
             if leaderboardButton.contains(location) {
+                self.saveScoreToFirebase()
                 DispatchQueue.main.async(execute: {
                     self.usernameTextField.removeFromSuperview()
                     self.scoreSavedLabel.removeFromParent()
@@ -109,6 +110,18 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func saveScoreToFirebase() {
+        let defaults = UserDefaults.standard
+        let highScore = defaults.integer(forKey: scoreKey)
+        let savedUsername = defaults.object(forKey: usernameKey) as? String ?? String()
+        
+        var ref: DatabaseReference!
+        ref = Database.database().reference().child("Users")
+        let childUpdates = [savedUsername : highScore]
+        ref.updateChildValues(childUpdates)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

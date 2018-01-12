@@ -96,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
         defaults.removeObject(forKey: usernameKey)
-        */
+        */ 
     }
     
     override func didMove(to view: SKView) {
@@ -642,7 +642,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func overrideHighestScore(highScore: Int) {
         let lastHighScore = UserDefaults.standard.integer(forKey: scoreKey)
         let currentPlayer = UserDefaults.standard.object(forKey: usernameKey) as? String ?? String()
-        print (currentPlayer)
+        print ("currentPlayer\(currentPlayer)")
         GameScene.currentScore = score
         if score == 0 {
             GameScene.gameWonBoolean = false
