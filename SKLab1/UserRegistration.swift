@@ -102,8 +102,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             ref.updateChildValues(childUpdates)
             displaySuccessAlertMessage(messageToDisplay: "Your high score now lives in the UDON hall of fame.")
         }
-        let UD = defaults.object(forKey: usernameKey) as? String ?? String()
-        print (UD)
     }
     
     func checkForUsernameInFirebase() {
@@ -116,14 +114,14 @@ class UserRegistration: SKScene, UITextFieldDelegate {
                         print (userName)
                         if userName == self.username {
                             self.displayUsernameExistsAlertMessage(messageToDisplay: "This username is already taken.")
+                            return
                         } else {
                             self.usernameExists = false
                         }
                 }
             }
-            
+             self.saveUsernameToFirebase()
         })
-        self.saveUsernameToFirebase()
     }
     
     func customize(textField: UITextField, placeholder: String, isSecureTextEntry: Bool = false) {
