@@ -111,7 +111,6 @@ class UserRegistration: SKScene, UITextFieldDelegate {
             for item in snapshot.children {
                 if let pair = item as? DataSnapshot {
                     let userName = pair.key
-                        print (userName)
                         if userName == self.username {
                             self.displayUsernameExistsAlertMessage(messageToDisplay: "This username is already taken.")
                             return

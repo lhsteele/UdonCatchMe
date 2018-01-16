@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "GameRules.png",
+      "filename" : "GameRulesNew.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "GameRules@2x.png",
+      "filename" : "GameRulesNew@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "GameRules@3x.png",
+      "filename" : "GameRulesNew@3x.png",
       "scale" : "3x"
     }
   ],
