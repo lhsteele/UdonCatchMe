@@ -29,11 +29,11 @@ class GameRulesScene: SKScene {
         addChild(background)
         
         gameRules = SKSpriteNode(texture: gameRulesTexture)
-        gameRules.position = CGPoint(x: size.width/2 - 10, y: size.height/2 )
+        gameRules.position = CGPoint(x: size.width/2 - 10, y: (size.height / 2) - 45)
         addChild(gameRules)
         
         smallBackToGameButton = SKSpriteNode(texture: smallBackToGameTexture)
-        smallBackToGameButton.position = CGPoint(x: size.width/2, y: (size.height/2 - gameRules.size.height/2) - smallBackToGameButton.size.height)
+        smallBackToGameButton.position = CGPoint(x: size.width/2, y: (gameRules.size.height - gameRules.size.height) + smallBackToGameButton.size.height * 2)
         addChild(smallBackToGameButton)
     }
     
