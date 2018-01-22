@@ -28,29 +28,30 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
-    var textField0: UITextField!
-    var textField0_1: UITextField!
-    var textField1: UITextField!
-    var textField1_1: UITextField!
-    var textField2: UITextField!
-    var textField2_1: UITextField!
-    var textField3: UITextField!
-    var textField3_1: UITextField!
-    var textField4: UITextField!
-    var textField4_1: UITextField!
-    var textField5: UITextField!
-    var textField5_1: UITextField!
-    var textField6: UITextField!
-    var textField6_1: UITextField!
-    var textField7: UITextField!
-    var textField7_1: UITextField!
-    var textField8: UITextField!
-    var textField8_1: UITextField!
-    var textField9: UITextField!
-    var textField9_1: UITextField!
-    var playerLabel: UITextField!
-    var scoreLabel: UITextField!
-    var currentPlayerLabel: UITextField!
+    var label0: UILabel!
+    var label0_1: UILabel!
+    var label1: UILabel!
+    var label1_1: UILabel!
+    var label2: UILabel!
+    var label2_1: UILabel!
+    var label3: UILabel!
+    var label3_1: UILabel!
+    var label4: UILabel!
+    var label4_1: UILabel!
+    var label5: UILabel!
+    var label5_1: UILabel!
+    var label6: UILabel!
+    var label6_1: UILabel!
+    var label7: UILabel!
+    var label7_1: UILabel!
+    var label8: UILabel!
+    var label8_1: UILabel!
+    var label9: UILabel!
+    var label9_1: UILabel!
+    
+    var playerLabel: UILabel!
+    var scoreLabel: UILabel!
+    var currentPlayerLabel: UILabel!
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
     
@@ -113,28 +114,28 @@ class Leaderboard: SKScene, UITextFieldDelegate {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
                 DispatchQueue.main.async(execute: {
-                    self.textField0.removeFromSuperview()
-                    self.textField0_1.removeFromSuperview()
-                    self.textField1.removeFromSuperview()
-                    self.textField1_1.removeFromSuperview()
-                    self.textField2.removeFromSuperview()
-                    self.textField2_1.removeFromSuperview()
-                    self.textField3.removeFromSuperview()
-                    self.textField3_1.removeFromSuperview()
-                    self.textField4.removeFromSuperview()
-                    self.textField4_1.removeFromSuperview()
-                    self.textField5.removeFromSuperview()
-                    self.textField5_1.removeFromSuperview()
-                    self.textField6.removeFromSuperview()
-                    self.textField6_1.removeFromSuperview()
-                    self.textField7.removeFromSuperview()
-                    self.textField7_1.removeFromSuperview()
-                    self.textField8.removeFromSuperview()
-                    self.textField8_1.removeFromSuperview()
-                    self.textField9.removeFromSuperview()
-                    self.textField9_1.removeFromSuperview()
-                    self.playerLabel.removeFromSuperview()
-                    self.scoreLabel.removeFromSuperview()
+                    self.label0.removeFromSuperview()
+                    self.label0_1.removeFromSuperview()
+                    self.label1.removeFromSuperview()
+                    self.label1_1.removeFromSuperview()
+                    self.label2.removeFromSuperview()
+                    self.label2_1.removeFromSuperview()
+                    self.label3.removeFromSuperview()
+                    self.label3_1.removeFromSuperview()
+                    self.label4.removeFromSuperview()
+                    self.label4_1.removeFromSuperview()
+                    self.label5.removeFromSuperview()
+                    self.label5_1.removeFromSuperview()
+                    self.label6.removeFromSuperview()
+                    self.label6_1.removeFromSuperview()
+                    self.label7.removeFromSuperview()
+                    self.label7_1.removeFromSuperview()
+                    self.label8.removeFromSuperview()
+                    self.label8_1.removeFromSuperview()
+                    self.label9.removeFromSuperview()
+                    self.label9_1.removeFromSuperview()
+                    //self.playerLabel.removeFromSuperview()
+                    //self.scoreLabel.removeFromSuperview()
                     self.currentPlayerLabel.removeFromSuperview()
                     self.counterLabel.removeFromParent()
                 })
@@ -148,68 +149,61 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         let originX = (size.width / 2) / 5
         let originX2 = (size.width / 2)
 
-        playerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
-        scoreLabel = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
-        currentPlayerLabel = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 210, width: size.width / 1.25, height: 35))
-        
-        textField0 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
-        textField0_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
-        textField1 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 2.5, height: 35))
-        textField1_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 105, width: size.width / 2.5, height: 35))
-        textField2 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 70, width: size.width / 2.5, height: 35))
-        textField2_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 70, width: size.width / 2.5, height: 35))
-        textField3 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 - 35, width: size.width / 2.5, height: 35))
-        textField3_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 - 35, width: size.width / 2.5, height: 35))
-        textField4 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2, width: size.width / 2.5, height: 35))
-        textField4_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2, width: size.width / 2.5, height: 35))
-        textField5 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 35, width: size.width / 2.5, height: 35))
-        textField5_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 35, width: size.width / 2.5, height: 35))
-        textField6 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 70, width: size.width / 2.5, height: 35))
-        textField6_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 70, width: size.width / 2.5, height: 35))
-        textField7 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 105, width: size.width / 2.5, height: 35))
-        textField7_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 105, width: size.width / 2.5, height: 35))
-        textField8 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 140, width: size.width / 2.5, height: 35))
-        textField8_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 140, width: size.width / 2.5, height: 35))
-        textField9 = UITextField(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
-        textField9_1 = UITextField(frame: CGRect.init(x: originX2, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
+        //playerLabel = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
+        //scoreLabel = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 - 175, width: size.width / 2.5, height: 35))
+        //currentPlayerLabel = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 210, width: size.width / 1.25, height: 35))
+        currentPlayerLabel = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 175, width: size.width / 1.25, height: 35))
+        label0 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
+        label0_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 - 140, width: size.width / 2.5, height: 35))
+        label1 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 105, width: size.width / 2.5, height: 35))
+        label1_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 - 105, width: size.width / 2.5, height: 35))
+        label2 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 70, width: size.width / 2.5, height: 35))
+        label2_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 - 70, width: size.width / 2.5, height: 35))
+        label3 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 - 35, width: size.width / 2.5, height: 35))
+        label3_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 - 35, width: size.width / 2.5, height: 35))
+        label4 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2, width: size.width / 2.5, height: 35))
+        label4_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2, width: size.width / 2.5, height: 35))
+        label5 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 35, width: size.width / 2.5, height: 35))
+        label5_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 + 35, width: size.width / 2.5, height: 35))
+        label6 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 70, width: size.width / 2.5, height: 35))
+        label6_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 + 70, width: size.width / 2.5, height: 35))
+        label7 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 105, width: size.width / 2.5, height: 35))
+        label7_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 + 105, width: size.width / 2.5, height: 35))
+        label8 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 140, width: size.width / 2.5, height: 35))
+        label8_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 + 140, width: size.width / 2.5, height: 35))
+        label9 = UILabel(frame: CGRect.init(x: originX, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
+        label9_1 = UILabel(frame: CGRect.init(x: originX2, y: size.height / 2 + 175, width: size.width / 2.5, height: 35))
 
-        view.addSubview(playerLabel)
-        view.addSubview(scoreLabel)
+        //view.addSubview(playerLabel)
+        //view.addSubview(scoreLabel)
         view.addSubview(currentPlayerLabel)
-        view.addSubview(textField0)
-        view.addSubview(textField0_1)
-        view.addSubview(textField1)
-        view.addSubview(textField1_1)
-        view.addSubview(textField2)
-        view.addSubview(textField2_1)
-        view.addSubview(textField3)
-        view.addSubview(textField3_1)
-        view.addSubview(textField4)
-        view.addSubview(textField4_1)
-        view.addSubview(textField5)
-        view.addSubview(textField5_1)
-        view.addSubview(textField6)
-        view.addSubview(textField6_1)
-        view.addSubview(textField7)
-        view.addSubview(textField7_1)
-        view.addSubview(textField8)
-        view.addSubview(textField8_1)
-        view.addSubview(textField9)
-        view.addSubview(textField9_1)
+        view.addSubview(label0)
+        view.addSubview(label0_1)
+        view.addSubview(label1)
+        view.addSubview(label1_1)
+        view.addSubview(label2)
+        view.addSubview(label2_1)
+        view.addSubview(label3)
+        view.addSubview(label3_1)
+        view.addSubview(label4)
+        view.addSubview(label4_1)
+        view.addSubview(label5)
+        view.addSubview(label5_1)
+        view.addSubview(label6)
+        view.addSubview(label6_1)
+        view.addSubview(label7)
+        view.addSubview(label7_1)
+        view.addSubview(label8)
+        view.addSubview(label8_1)
+        view.addSubview(label9)
+        view.addSubview(label9_1)
     }
     
-    func customize(textField: UITextField, placeholder: String, textFieldText: String?) {
+    func customize(label: UILabel, labelText: String?) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        textField.leftView = paddingView
-        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
-        textField.text = textFieldText
-        textField.font = UIFont(name: "AvenirNext-Light", size: 20)
-        textField.textColor = UIColor.darkGray
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        label.text = labelText
+        label.font = UIFont(name: "AvenirNext-Light", size: 20)
+        label.textColor = UIColor.darkGray
     }
     
     func loadHighScores() {
@@ -244,20 +238,21 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
 
-        var playerTextFieldArray = [textField0, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9]
-        var scoreTextFieldArray = [textField0_1, textField1_1, textField2_1, textField3_1, textField4_1, textField5_1, textField6_1, textField7_1, textField8_1, textField9_1]
+        var playerTextFieldArray = [label0, label1, label2, label3, label4, label5, label6, label7, label8, label9]
+        var scoreTextFieldArray = [label0_1, label1_1, label2_1, label3_1, label4_1, label5_1, label6_1, label7_1, label8_1, label9_1]
 
         for (index, _) in topTen.enumerated() {
             leaderboardScoreEntry = "\(result[index].score)"
             leaderboardPlayerEntry = "\(result[index].playerName)"
             for _ in playerTextFieldArray {
-                _ = self.customize(textField: playerTextFieldArray[index]!, placeholder: "Player", textFieldText: leaderboardPlayerEntry)
-                _ = self.customize(textField: scoreTextFieldArray[index]!, placeholder: "Score", textFieldText: leaderboardScoreEntry)
+
+                _ = self.customize(label: playerTextFieldArray[index]!, labelText: leaderboardPlayerEntry)
+                _ = self.customize(label: scoreTextFieldArray[index]!, labelText: leaderboardScoreEntry)
             }
         }
-        customize(textField: playerLabel, placeholder: "", textFieldText: "Player")
-        customize(textField: scoreLabel, placeholder: "", textFieldText: "Score")
-        customize(textField: currentPlayerLabel, placeholder: "", textFieldText: "Your high score is: \(highScore)")
+        //customize(label: playerLabel, labelText: "Player")
+        //customize(label: scoreLabel, labelText: "Score")
+        customize(label: currentPlayerLabel, labelText: "Your high score is: \(highScore)")
     }
     
     required init?(coder aDecoder: NSCoder) {
