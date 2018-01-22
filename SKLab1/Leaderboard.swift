@@ -200,7 +200,6 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     }
     
     func customize(label: UILabel, labelText: String?) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         label.text = labelText
         label.font = UIFont(name: "AvenirNext-Light", size: 20)
         label.textColor = UIColor.darkGray
