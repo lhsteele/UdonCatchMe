@@ -30,10 +30,12 @@ class GameRulesScene: SKScene {
         
         gameRules = SKSpriteNode(texture: gameRulesTexture)
         gameRules.position = CGPoint(x: size.width/2 - 10, y: (size.height / 2) - 45)
+        gameRules.zPosition = 0
         addChild(gameRules)
         
         smallBackToGameButton = SKSpriteNode(texture: smallBackToGameTexture)
         smallBackToGameButton.position = CGPoint(x: size.width/2, y: (gameRules.size.height - gameRules.size.height) + smallBackToGameButton.size.height / 1.5)
+        smallBackToGameButton.zPosition = 1
         addChild(smallBackToGameButton)
     }
     

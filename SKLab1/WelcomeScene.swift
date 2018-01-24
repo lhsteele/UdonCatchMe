@@ -44,12 +44,16 @@ class WelcomeScene: SKScene {
         
         if UIScreen.main.sizeType == .iphone4 {
             background = SKSpriteNode(imageNamed: "WelcomeBackground4")
+            print ("4")
         } else if UIScreen.main.sizeType == .iphone5 {
             background = SKSpriteNode(imageNamed: "WelcomeBackground5s")
+            print ("5s")
         } else if UIScreen.main.sizeType == .iphone6 {
             background = SKSpriteNode(imageNamed: "WelcomeBackground6")
+            print ("6")
         } else if UIScreen.main.sizeType == .iphonePlus {
             background = SKSpriteNode(imageNamed: "WelcomeBackgroundPlus")
+            print ("plus")
         }
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)

@@ -212,8 +212,12 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     func customize(label: UILabel, labelText: String?) {
         label.text = labelText
-        label.font = UIFont(name: "AvenirNext-Light", size: 20)
         label.textColor = UIColor.darkGray
+        if UIScreen.main.sizeType == .iphone4 {
+            label.font = UIFont(name: "AvenirNext-Light", size: 10)
+        } else {
+            label.font = UIFont(name: "AvenirNext-Light", size: 20)
+        }
     }
     
     func loadHighScores() {
