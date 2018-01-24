@@ -24,7 +24,8 @@ struct PlayerEntries {
 
 class Leaderboard: SKScene, UITextFieldDelegate {
     
-    let background = SKSpriteNode(imageNamed: "LeaderboardBackground")
+    //let background = SKSpriteNode(imageNamed: "LeaderboardBackground")
+    var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
@@ -72,6 +73,16 @@ class Leaderboard: SKScene, UITextFieldDelegate {
     
     
     override func sceneDidLoad() {
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackgroundPlus")
+        }
+        
         background.position = CGPoint(x: size.width / 2 , y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.zPosition = -1
