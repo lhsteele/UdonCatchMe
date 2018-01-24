@@ -22,23 +22,8 @@ struct PlayerEntries {
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
     var items: [String] = ["Player1", "Player2", "Player3"]
     
-    var background: SKSpriteNode! = nil
-    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
-    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
-    
-    let scoreKey = "SKLab_Highscore"
-    
-    var playableRect: CGRect
-    var deviceWidth = UIScreen.main.bounds.width
-    var deviceHeight = UIScreen.main.bounds.height
-    
     override init(frame: CGRect, style: UITableViewStyle) {
-        let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
-        let playableWidth = frame.height / maxAspectRatio
-        let playableMargin = (frame.width - playableWidth) / 2.0
-        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: frame.height)
         super.init(frame: frame, style: style)
-        
         self.delegate = self
         self.dataSource = self
     }
@@ -68,6 +53,68 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
 }
 
 class LeaderboardScene: SKScene {
-    var
+    var leaderboardTableView = TableViewLeaderboard()
+    var playableRect: CGRect
+    var deviceWidth = UIScreen.main.bounds.width
+    var deviceHeight = UIScreen.main.bounds.height
+    
+    var currentPlayerLabel: UILabel!
+    var counterLabel = SKLabelNode()
+    var totalLabel = SKLabelNode()
+    
+    var background: SKSpriteNode! = nil
+    let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
+    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
+    
+    let scoreKey = "SKLab_Highscore"
+    
+    override func didMove(to: SKView) {
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackgroundPlus")
+        }
+        
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        background.zPosition = -1
+        addChild(background)
+        
+        usernameSceneImage.position = CGPoint(x: size.width/2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height / 1.5)
+        addChild(usernameSceneImage)
+        
+        backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
+        addChild(backToGameButton)
+        
+        counterLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 50)
+        counterLabel.fontColor = SKColor.black
+        counterLabel.fontSize = 15
+        addChild(counterLabel)
+        
+        totalLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 30)
+        totalLabel.fontColor = SKColor.black
+        totalLabel.fontSize = 15
+        addChild(totalLabel)
+        
+        leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        leaderboardTableView.frame = CGRect(x: 20, y: 50, width: 280, height: 200)
+        self.scene?.view?.addSubview(leaderboardTableView)
+        leaderboardTableView.reloadData()
+    }
+    
+    override init(size: CGSize) {
+        let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
+        let playableWidth = size.height / maxAspectRatio
+        let playableMargin = (size.width - playableWidth) / 2.0
+        playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
-

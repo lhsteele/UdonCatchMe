@@ -62,6 +62,9 @@ class GameOverScene: SKScene {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
             } else if leaderboardButton.contains(location) {
+                let scene = LeaderboardScene(size: size)
+                self.view?.presentScene(scene)
+                /*
                 if UserDefaults.standard.object(forKey: usernameKey) != nil {
                     if GameScene.gameWonBoolean == true && GameScene.itsADraw == false {
                         let scoreSavedScene = ScoreSaved(size: self.size)
@@ -74,19 +77,7 @@ class GameOverScene: SKScene {
                     let userRegistrationScene = UserRegistration(size: self.size)
                     self.view?.presentScene(userRegistrationScene)
                 }
-                /*
-                if GameScene.gameWonBoolean == true && GameScene.itsADraw == false {
-                    if UserDefaults.standard.object(forKey: usernameKey) != nil {
-                        let scoreSavedScene = ScoreSaved(size: self.size)
-                        self.view?.presentScene(scoreSavedScene)
-                    } else {
-                        let userRegistrationScene = UserRegistration(size: self.size)
-                        self.view?.presentScene(userRegistrationScene)
-                    }
-                } else if GameScene.gameWonBoolean == false || GameScene.itsADraw == false {
-                    let leaderboardScene = Leaderboard(size: self.size)
-                    self.view?.presentScene(leaderboardScene)
-                }
+                
                 */
 
             }
