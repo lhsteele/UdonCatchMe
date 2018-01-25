@@ -22,6 +22,7 @@ struct PlayerEntries {
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
     var items: [String] = ["Player1", "Player2", "Player3"]
     
+    
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         self.delegate = self
@@ -100,8 +101,13 @@ class LeaderboardScene: SKScene {
         totalLabel.fontSize = 15
         addChild(totalLabel)
         
+        guard let view = self.view else {return}
+        let originX = (size.width / 2) / 5
+        
+        
         leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        leaderboardTableView.frame = CGRect(x: 20, y: 50, width: 280, height: 200)
+        //leaderboardTableView.frame = CGRect(x: 20, y: 50, width: 280, height: 200)
+        leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
         self.scene?.view?.addSubview(leaderboardTableView)
         leaderboardTableView.reloadData()
     }
