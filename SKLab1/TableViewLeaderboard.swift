@@ -51,6 +51,10 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         return "Your high score is: X"
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
+    }
+    
 }
 
 class LeaderboardScene: SKScene {
@@ -106,7 +110,7 @@ class LeaderboardScene: SKScene {
         
         
         leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        //leaderboardTableView.frame = CGRect(x: 20, y: 50, width: 280, height: 200)
+        leaderboardTableView.backgroundColor = UIColor.gray
         leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
         self.scene?.view?.addSubview(leaderboardTableView)
         leaderboardTableView.reloadData()
