@@ -20,7 +20,7 @@ struct PlayerEntries {
 }
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
-    var items: [String] = ["Player1", "Player2", "Player3"]
+    var items: [String] = ["P1", "P2", "P3"]
     
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -111,7 +111,12 @@ class LeaderboardScene: SKScene {
         
         leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         leaderboardTableView.backgroundColor = UIColor.gray
-        leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
+        } else {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 400)
+        }
         self.scene?.view?.addSubview(leaderboardTableView)
         leaderboardTableView.reloadData()
     }
