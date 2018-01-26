@@ -269,9 +269,7 @@ class Leaderboard: SKScene, UITextFieldDelegate {
         customize(label: currentPlayerLabel, labelText: "Your high score is: \(highScore)")
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+15
     
 
 }
