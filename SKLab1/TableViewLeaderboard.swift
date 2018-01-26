@@ -58,9 +58,10 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         let headerView = UIView()
         headerView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
-        let label = UILabel(frame: CGRect(x: 10, y: 7, width: headerView.frame.size.width, height: 325 ))
-        label.text = "Your high score is: X"
+        let label = UILabel(frame: CGRect(x: 10, y: 7, width: tableView.bounds.size.width, height: 15 ))
         label.textColor = UIColor.black
+        label.text = "Your high score is: X"
+        label.sizeToFit()
         headerView.addSubview(label)
         return headerView
     }
