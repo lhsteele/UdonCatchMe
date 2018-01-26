@@ -74,6 +74,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
 
 class LeaderboardScene: SKScene {
     var leaderboardTableView = TableViewLeaderboard()
+    var scrollView: UIScrollView!
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -123,7 +124,6 @@ class LeaderboardScene: SKScene {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         
-        
         leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         leaderboardTableView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
@@ -136,8 +136,14 @@ class LeaderboardScene: SKScene {
         } else if UIScreen.main.sizeType == .iphonePlus {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
         }
-        self.scene?.view?.addSubview(leaderboardTableView)
+        //self.scene?.view?.addSubview(leaderboardTableView)
         leaderboardTableView.reloadData()
+        
+        scrollView = UIScrollView(frame: view.bounds)
+        scrollView.backgroundColor = UIColor.clear
+        scrollView.contentSize = leaderboardTableView.bounds.size
+        scrollView.addSubview(leaderboardTableView)
+        self.scene?.view?.addSubview(scrollView)
     }
     
     override init(size: CGSize) {
