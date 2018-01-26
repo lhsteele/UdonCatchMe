@@ -20,7 +20,7 @@ struct PlayerEntries {
 }
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
-    var items: [String] = ["P1", "P2", "P3"]
+    var items: [String] = ["P1", "P2", "P3", "P4,", "P5,", "P6,", "P7", "P8", "P9", "P10"]
     
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -114,8 +114,12 @@ class LeaderboardScene: SKScene {
         
         if UIScreen.main.sizeType == .iphone4 {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
-        } else {
-            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 400)
+        } else if UIScreen.main.sizeType == .iphone5 {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 125, width: size.width / 1.25, height: 325)
+        } else if UIScreen.main.sizeType == .iphone6 {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 150, width: size.width / 1.25, height: 400)
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
         }
         self.scene?.view?.addSubview(leaderboardTableView)
         leaderboardTableView.reloadData()
