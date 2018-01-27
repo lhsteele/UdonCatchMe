@@ -44,6 +44,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
         cell.textLabel?.text = self.items[indexPath.row]
+        cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
     
@@ -59,7 +60,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         headerView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
         let label = UILabel(frame: CGRect(x: 10, y: 7, width: tableView.bounds.size.width, height: 15 ))
-        label.textColor = UIColor.black
+        label.textColor = UIColor.darkGray
         label.text = "Your high score is: X"
         label.sizeToFit()
         headerView.addSubview(label)
@@ -126,6 +127,7 @@ class LeaderboardScene: SKScene {
         
         leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         leaderboardTableView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
+        
         
         if UIScreen.main.sizeType == .iphone4 {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 100, width: size.width / 1.25, height: 250)
