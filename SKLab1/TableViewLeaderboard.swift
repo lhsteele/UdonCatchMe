@@ -6,8 +6,11 @@
 //  Copyright © 2018 lisahsteele. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import SpriteKit
+import Firebase
+import FirebaseDatabase
 
 struct PlayerEntries {
     var playerName: String
@@ -21,7 +24,12 @@ struct PlayerEntries {
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
     var items: [String] = ["P1", "P2", "P3", "P4,", "P5,", "P6,", "P7", "P8", "P9", "P10"]
-    
+    var listOfEntries = [PlayerEntries]()
+    var result = [PlayerEntries]()
+    //var listOfEntries: [String] = ["1", "2", "3"]
+    var userName = String()
+    var highScore = Int()
+ 
     
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -38,12 +46,17 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return result.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
-        cell.textLabel?.text = self.items[indexPath.row]
+        let entry = self.result[indexPath.row]
+        //let player = entry.playerName
+        //let score = entry.score
+        
+        //cell.textLabel?.text = "\(player) : \(score)"
+        cell.textLabel?.text = entry.playerName
         cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
@@ -80,6 +93,12 @@ class LeaderboardScene: SKScene {
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
     
+    var count = Int()
+    var total = Int()
+    var userName = String()
+    var highScore = Int()
+    var listOfEntries = [PlayerEntries]()
+    var result = [PlayerEntries]()
     var currentPlayerLabel: UILabel!
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
@@ -91,6 +110,8 @@ class LeaderboardScene: SKScene {
     let scoreKey = "SKLab_Highscore"
     
     override func didMove(to: SKView) {
+        loadHighScores()
+        
         if UIScreen.main.sizeType == .iphone4 {
             background = SKSpriteNode(imageNamed: "LeaderboardBackground4")
         } else if UIScreen.main.sizeType == .iphone5 {
@@ -139,7 +160,7 @@ class LeaderboardScene: SKScene {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
         }
         //self.scene?.view?.addSubview(leaderboardTableView)
-        leaderboardTableView.reloadData()
+        //leaderboardTableView.reloadData()
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.backgroundColor = UIColor.clear
@@ -147,6 +168,45 @@ class LeaderboardScene: SKScene {
         scrollView.addSubview(leaderboardTableView)
         self.scene?.view?.addSubview(scrollView)
     }
+    
+    func loadHighScores() {
+        let ref: DatabaseReference!
+        ref = Database.database().reference().child("Users")
+        ref.observe(.value, with: { (snapshot) in
+            let entries = snapshot.children
+            for entry in entries {
+                if let pair = entry as? DataSnapshot {
+                    if let score = pair.value {
+                        let name = pair.key
+                        self.userName = name
+                        self.highScore = score as! Int
+                    }
+                    let player = PlayerEntries(playerName: self.userName, score: self.highScore)
+                    self.listOfEntries.append(player)
+                }
+            }
+            self.result = self.listOfEntries.sorted{ $0.score > $1.score }
+            print (self.result)
+            self.leaderboardTableView.reloadData()
+            self.populateLeaderboard()
+        })
+        print ("loadHighScore run")
+    }
+
+    
+    func populateLeaderboard() {
+        let result = self.listOfEntries.sorted{ $0.score > $1.score }
+        let topTen = result.prefix(10)
+        count = topTen.count
+        total = self.listOfEntries.count
+        
+        counterLabel.text = "\(count) out of"
+        totalLabel.text = "\(total)"
+        
+        let defaults = UserDefaults.standard
+        let highScore = defaults.integer(forKey: scoreKey)
+    }
+
     
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
