@@ -22,11 +22,14 @@ struct PlayerEntries {
     }
 }
 
+//var result = [PlayerEntries]()
+var tableData = [PlayerEntries]()
+
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
     var items: [String] = ["P1", "P2", "P3", "P4,", "P5,", "P6,", "P7", "P8", "P9", "P10"]
-    var listOfEntries = [PlayerEntries]()
-    var result = [PlayerEntries]()
-    //var listOfEntries: [String] = ["1", "2", "3"]
+    //var listOfEntries = [PlayerEntries]()
+    
+
     var userName = String()
     var highScore = Int()
  
@@ -40,23 +43,48 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    /*
+    func loadHighScores() {
+        let ref: DatabaseReference!
+        ref = Database.database().reference().child("Users")
+        ref.observe(.value, with: { (snapshot) in
+            let entries = snapshot.children
+            for entry in entries {
+                if let pair = entry as? DataSnapshot {
+                    if let score = pair.value {
+                        let name = pair.key
+                        self.userName = name
+                        self.highScore = score as! Int
+                    }
+                    let player = PlayerEntries(playerName: self.userName, score: self.highScore)
+                    self.listOfEntries.append(player)
+                }
+            }
+            self.result = self.listOfEntries.sorted{ $0.score > $1.score }
+            print (self.result)
+            //self.leaderboardTableView.reloadData()
+            //self.populateLeaderboard()
+        })
+        print ("loadHighScore run")
+    }
+    */
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return result.count
+        return tableData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
-        let entry = self.result[indexPath.row]
-        //let player = entry.playerName
-        //let score = entry.score
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
+        print (tableData)
+        let entry = tableData[indexPath.row]
+        let player = entry.playerName
+        let score = entry.score
         
-        //cell.textLabel?.text = "\(player) : \(score)"
-        cell.textLabel?.text = entry.playerName
+        cell.textLabel?.text = "\(player) : \(score)"
+        //cell.textLabel?.text = entry.playerName
         cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
@@ -186,9 +214,9 @@ class LeaderboardScene: SKScene {
                 }
             }
             self.result = self.listOfEntries.sorted{ $0.score > $1.score }
-            print (self.result)
+            tableData = self.result
             self.leaderboardTableView.reloadData()
-            self.populateLeaderboard()
+            //self.populateLeaderboard()
         })
         print ("loadHighScore run")
     }
