@@ -97,9 +97,6 @@ class LeaderboardScene: SKScene {
     var highScore = Int()
     var listOfEntries = [PlayerEntries]()
     var result = [PlayerEntries]()
-    var currentPlayerLabel: UILabel!
-    var counterLabel = SKLabelNode()
-    var totalLabel = SKLabelNode()
     
     var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
@@ -128,16 +125,6 @@ class LeaderboardScene: SKScene {
         
         backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
-        
-        counterLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 50)
-        counterLabel.fontColor = SKColor.black
-        counterLabel.fontSize = 15
-        addChild(counterLabel)
-        
-        totalLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 30)
-        totalLabel.fontColor = SKColor.black
-        totalLabel.fontSize = 15
-        addChild(totalLabel)
         
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
@@ -180,24 +167,11 @@ class LeaderboardScene: SKScene {
                 }
             }
             self.result = self.listOfEntries.sorted{ $0.score > $1.score }
+            //let topTen = self.result.prefix(10)
             tableData = self.result
             self.leaderboardTableView.reloadData()
-            self.populateLeaderboard()
         })
-        print ("loadHighScore run")
     }
-
-    
-    func populateLeaderboard() {
-        let result = self.listOfEntries.sorted{ $0.score > $1.score }
-        let topTen = result.prefix(10)
-        count = topTen.count
-        total = self.listOfEntries.count
-        
-        counterLabel.text = "\(count) out of"
-        totalLabel.text = "\(total)"
-    }
-
     
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
