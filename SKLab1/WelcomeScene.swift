@@ -54,7 +54,7 @@ class WelcomeScene: SKScene {
         } else if UIScreen.main.sizeType == .iphonePlus {
             background = SKSpriteNode(imageNamed: "WelcomeBackgroundPlus")
             print ("plus")
-        }
+        } 
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
