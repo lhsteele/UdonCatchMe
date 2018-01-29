@@ -22,17 +22,12 @@ struct PlayerEntries {
     }
 }
 
-//var result = [PlayerEntries]()
 var tableData = [PlayerEntries]()
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
-    var items: [String] = ["P1", "P2", "P3", "P4,", "P5,", "P6,", "P7", "P8", "P9", "P10"]
-    //var listOfEntries = [PlayerEntries]()
-    
-
     var userName = String()
     var highScore = Int()
- 
+    let scoreKey = "SKLab_Highscore"
     
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -43,31 +38,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    /*
-    func loadHighScores() {
-        let ref: DatabaseReference!
-        ref = Database.database().reference().child("Users")
-        ref.observe(.value, with: { (snapshot) in
-            let entries = snapshot.children
-            for entry in entries {
-                if let pair = entry as? DataSnapshot {
-                    if let score = pair.value {
-                        let name = pair.key
-                        self.userName = name
-                        self.highScore = score as! Int
-                    }
-                    let player = PlayerEntries(playerName: self.userName, score: self.highScore)
-                    self.listOfEntries.append(player)
-                }
-            }
-            self.result = self.listOfEntries.sorted{ $0.score > $1.score }
-            print (self.result)
-            //self.leaderboardTableView.reloadData()
-            //self.populateLeaderboard()
-        })
-        print ("loadHighScore run")
-    }
-    */
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -84,7 +55,6 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         let score = entry.score
         
         cell.textLabel?.text = "\(player) : \(score)"
-        //cell.textLabel?.text = entry.playerName
         cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
@@ -93,16 +63,16 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         return "Your high score is: X"
     }
     
-    
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let defaults = UserDefaults.standard
+        let highScore = defaults.integer(forKey: scoreKey)
         
         let headerView = UIView()
         headerView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
         let label = UILabel(frame: CGRect(x: 10, y: 7, width: tableView.bounds.size.width, height: 15 ))
         label.textColor = UIColor.darkGray
-        label.text = "Your high score is: X"
+        label.text = "Your high score is: \(highScore)"
         label.sizeToFit()
         headerView.addSubview(label)
         return headerView
@@ -134,8 +104,6 @@ class LeaderboardScene: SKScene {
     var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
-    
-    let scoreKey = "SKLab_Highscore"
     
     override func didMove(to: SKView) {
         loadHighScores()
@@ -187,8 +155,6 @@ class LeaderboardScene: SKScene {
         } else if UIScreen.main.sizeType == .iphonePlus {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
         }
-        //self.scene?.view?.addSubview(leaderboardTableView)
-        //leaderboardTableView.reloadData()
         
         scrollView = UIScrollView(frame: view.bounds)
         scrollView.backgroundColor = UIColor.clear
@@ -216,7 +182,7 @@ class LeaderboardScene: SKScene {
             self.result = self.listOfEntries.sorted{ $0.score > $1.score }
             tableData = self.result
             self.leaderboardTableView.reloadData()
-            //self.populateLeaderboard()
+            self.populateLeaderboard()
         })
         print ("loadHighScore run")
     }
@@ -230,9 +196,6 @@ class LeaderboardScene: SKScene {
         
         counterLabel.text = "\(count) out of"
         totalLabel.text = "\(total)"
-        
-        let defaults = UserDefaults.standard
-        let highScore = defaults.integer(forKey: scoreKey)
     }
 
     
