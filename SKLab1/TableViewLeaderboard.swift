@@ -28,6 +28,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     var userName = String()
     var highScore = Int()
     let scoreKey = "SKLab_Highscore"
+    var topTwentyFive = [PlayerEntries]()
     
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -44,13 +45,17 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
+        if tableData.count < 25 {
+            return tableData.count
+        } else {
+            return 25
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
-        print (tableData)
-        let entry = tableData[indexPath.row]
+        let topTwentyFive = tableData.prefix(25)
+        let entry = topTwentyFive[indexPath.row]
         let player = entry.playerName
         let score = entry.score
         
@@ -102,6 +107,9 @@ class LeaderboardScene: SKScene {
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
     let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
     
+    var counterLabel = SKLabelNode()
+    var totalLabel = SKLabelNode()
+    
     override func didMove(to: SKView) {
         loadHighScores()
         
@@ -125,6 +133,16 @@ class LeaderboardScene: SKScene {
         
         backToGameButton.position = CGPoint(x: (size.width - size.width) + 75, y: (size.height - size.height) + 30)
         addChild(backToGameButton)
+        
+        counterLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 50)
+        counterLabel.fontColor = SKColor.black
+        counterLabel.fontSize = 15
+        addChild(counterLabel)
+        
+        totalLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 30)
+        totalLabel.fontColor = SKColor.black
+        totalLabel.fontSize = 15
+        addChild(totalLabel)
         
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
@@ -167,10 +185,19 @@ class LeaderboardScene: SKScene {
                 }
             }
             self.result = self.listOfEntries.sorted{ $0.score > $1.score }
-            //let topTen = self.result.prefix(10)
             tableData = self.result
             self.leaderboardTableView.reloadData()
+            self.populateTable()
         })
+    }
+    
+    func populateTable() {
+        let topTwentyFive = self.result.prefix(25)
+        count = topTwentyFive.count
+        total = self.listOfEntries.count
+        
+        counterLabel.text = "\(count) out of"
+        totalLabel.text = "\(total)"
     }
     
     override init(size: CGSize) {
