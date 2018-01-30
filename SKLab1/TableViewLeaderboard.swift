@@ -23,12 +23,14 @@ struct PlayerEntries {
 }
 
 var tableData = [PlayerEntries]()
+    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource {
     var userName = String()
     var highScore = Int()
     let scoreKey = "SKLab_Highscore"
     var topTwentyFive = [PlayerEntries]()
+    
     
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -86,7 +88,6 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.clear
     }
-    
 }
 
 class LeaderboardScene: SKScene {
@@ -105,7 +106,7 @@ class LeaderboardScene: SKScene {
     
     var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
-    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
+
     
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
@@ -166,6 +167,7 @@ class LeaderboardScene: SKScene {
         scrollView.contentSize = leaderboardTableView.bounds.size
         scrollView.addSubview(leaderboardTableView)
         self.scene?.view?.addSubview(scrollView)
+ 
     }
     
     func loadHighScores() {
@@ -199,29 +201,24 @@ class LeaderboardScene: SKScene {
         counterLabel.text = "\(count) out of"
         totalLabel.text = "\(total)"
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches {
-            let location = touch.location(in: self)
-            
-            if backToGameButton.contains(location) {
-                let scene = GameScene(size: size)
-                self.view?.presentScene(scene)
-                DispatchQueue.main.async(execute: {
-                    self.leaderboardTableView.removeFromSuperview()
-                    self.counterLabel.removeFromParent()
-                    self.totalLabel.removeFromParent()
-                })
-            }
-        }
-    }
-    
+ 
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
         let playableWidth = size.height / maxAspectRatio
         let playableMargin = (size.width - playableWidth) / 2.0
         playableRect = CGRect(x: playableMargin, y: 0, width: playableWidth, height: size.height)
         super.init(size: size)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            if backToGameButton.contains(location) {
+                print ("button pressed")
+                //let scene = GameScene(size: size)
+                //self.view?.presentScene(scene)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
