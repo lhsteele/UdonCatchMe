@@ -200,6 +200,22 @@ class LeaderboardScene: SKScene {
         totalLabel.text = "\(total)"
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            
+            if backToGameButton.contains(location) {
+                let scene = GameScene(size: size)
+                self.view?.presentScene(scene)
+                DispatchQueue.main.async(execute: {
+                    self.leaderboardTableView.removeFromSuperview()
+                    self.counterLabel.removeFromParent()
+                    self.totalLabel.removeFromParent()
+                })
+            }
+        }
+    }
+    
     override init(size: CGSize) {
         let maxAspectRatio: CGFloat = deviceHeight / deviceWidth
         let playableWidth = size.height / maxAspectRatio
