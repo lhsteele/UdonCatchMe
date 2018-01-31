@@ -23,7 +23,6 @@ struct PlayerEntries {
 }
 
 var tableData = [PlayerEntries]()
-let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
 
 class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSource, SKSceneDelegate {
     var userName = String()
@@ -107,10 +106,12 @@ class LeaderboardScene: SKScene {
     
     var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
-
+    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
     
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
+    
+    let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTap))
     
     override func didMove(to: SKView) {
         loadHighScores()
@@ -169,12 +170,12 @@ class LeaderboardScene: SKScene {
         scrollView.addSubview(leaderboardTableView)
         self.scene?.view?.addSubview(scrollView)
         
-        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTap))
         singleTapGestureRecognizer.numberOfTapsRequired = 1
         singleTapGestureRecognizer.isEnabled = true
         singleTapGestureRecognizer.cancelsTouchesInView = false
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)
     }
+
     
     func loadHighScores() {
         let ref: DatabaseReference!
@@ -217,14 +218,19 @@ class LeaderboardScene: SKScene {
     }
     
     func singleTap(sender: UITapGestureRecognizer) {
-        let scene = GameScene(size: size)
-        self.view?.presentScene(scene)
-        DispatchQueue.main.async(execute: {
-            self.leaderboardTableView.removeFromSuperview()
-            self.counterLabel.removeFromParent()
-            self.totalLabel.removeFromParent()
-        })
+        let location = singleTapGestureRecognizer.location(ofTouch: 1, in: self.scene?.view)
+        if location == backToGameButton.position {
+            let scene = GameScene(size: size)
+            self.view?.presentScene(scene)
+            DispatchQueue.main.async(execute: {
+                self.leaderboardTableView.removeFromSuperview()
+                self.counterLabel.removeFromParent()
+                self.totalLabel.removeFromParent()
+            })
+        }
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
