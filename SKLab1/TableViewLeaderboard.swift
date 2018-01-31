@@ -111,7 +111,7 @@ class LeaderboardScene: SKScene {
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()
     
-    let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTap))
+    
     
     override func didMove(to: SKView) {
         loadHighScores()
@@ -170,6 +170,7 @@ class LeaderboardScene: SKScene {
         scrollView.addSubview(leaderboardTableView)
         self.scene?.view?.addSubview(scrollView)
         
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTap))
         singleTapGestureRecognizer.numberOfTapsRequired = 1
         singleTapGestureRecognizer.isEnabled = true
         singleTapGestureRecognizer.cancelsTouchesInView = false
@@ -218,16 +219,18 @@ class LeaderboardScene: SKScene {
     }
     
     func singleTap(sender: UITapGestureRecognizer) {
-        let location = singleTapGestureRecognizer.location(ofTouch: 1, in: self.scene?.view)
-        if location == backToGameButton.position {
-            let scene = GameScene(size: size)
-            self.view?.presentScene(scene)
-            DispatchQueue.main.async(execute: {
-                self.leaderboardTableView.removeFromSuperview()
-                self.counterLabel.removeFromParent()
-                self.totalLabel.removeFromParent()
-            })
-        }
+        //let tapLocation = sender.location(in: sender.view)
+        //if backToGameButton.frame.contains(tapLocation) {
+            //print ("tapped")
+                let scene = GameScene(size: size)
+                self.view?.presentScene(scene)
+                DispatchQueue.main.async(execute: {
+                    self.leaderboardTableView.removeFromSuperview()
+                    self.counterLabel.removeFromParent()
+                    self.totalLabel.removeFromParent()
+                    self.scrollView.isUserInteractionEnabled = false
+                })
+        //}
     }
     
     
