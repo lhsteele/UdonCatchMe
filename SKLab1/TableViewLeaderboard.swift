@@ -174,7 +174,7 @@ class LeaderboardScene: SKScene {
         singleTapGestureRecognizer.numberOfTapsRequired = 1
         singleTapGestureRecognizer.isEnabled = true
         singleTapGestureRecognizer.cancelsTouchesInView = false
-        scrollView.addGestureRecognizer(singleTapGestureRecognizer)
+        self.view!.addGestureRecognizer(singleTapGestureRecognizer)
     }
 
     
@@ -219,9 +219,9 @@ class LeaderboardScene: SKScene {
     }
     
     func singleTap(sender: UITapGestureRecognizer) {
-        //let tapLocation = sender.location(in: sender.view)
-        //if backToGameButton.frame.contains(tapLocation) {
-            //print ("tapped")
+        var touchLocation = sender.location(in: sender.view)
+        touchLocation = self.convertPoint(fromView: touchLocation)
+            if backToGameButton.frame.contains(touchLocation) {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
                 DispatchQueue.main.async(execute: {
@@ -230,7 +230,7 @@ class LeaderboardScene: SKScene {
                     self.totalLabel.removeFromParent()
                     self.scrollView.isUserInteractionEnabled = false
                 })
-        //}
+            }
     }
     
     
