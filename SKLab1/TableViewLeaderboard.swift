@@ -124,6 +124,8 @@ class LeaderboardScene: SKScene {
             background = SKSpriteNode(imageNamed: "LeaderboardBackground6")
         } else if UIScreen.main.sizeType == .iphonePlus {
             background = SKSpriteNode(imageNamed: "LeaderboardBackgroundPlus")
+        } else if UIScreen.main.sizeType == .iphoneX {
+            background = SKSpriteNode(imageNamed: "LeaderboardBackgroundX")
         }
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
@@ -161,6 +163,8 @@ class LeaderboardScene: SKScene {
         } else if UIScreen.main.sizeType == .iphone6 {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 150, width: size.width / 1.25, height: 400)
         } else if UIScreen.main.sizeType == .iphonePlus {
+            leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
+        } else if UIScreen.main.sizeType == .iphoneX {
             leaderboardTableView.frame = CGRect(x: originX, y: (size.height / 2) - 175, width: size.width / 1.25, height: 465)
         }
         

@@ -54,7 +54,9 @@ class WelcomeScene: SKScene {
         } else if UIScreen.main.sizeType == .iphonePlus {
             background = SKSpriteNode(imageNamed: "WelcomeBackgroundPlus")
             print ("plus")
-        } 
+        } else if UIScreen.main.sizeType == .iphoneX {
+            background = SKSpriteNode(imageNamed: "WelcomeBackgroundX")
+        }
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -99,6 +101,7 @@ extension UIScreen {
         case iphone5 = 568
         case iphone6 = 667
         case iphonePlus = 736
+        case iphoneX = 812
     }
     
     var sizeType: SizeType {

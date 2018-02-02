@@ -29,7 +29,7 @@ class GameRulesScene: SKScene {
         addChild(background)
         
         if UIScreen.main.sizeType == .iphone4 {
-            gameRules = SKSpriteNode(imageNamed: "GameRules4")
+            gameRules = SKSpriteNode(imageNamed: "GameRules")
         } else if UIScreen.main.sizeType == .iphone5 {
             gameRules = SKSpriteNode(imageNamed: "GameRules")
         } else if UIScreen.main.sizeType == .iphone6 {
