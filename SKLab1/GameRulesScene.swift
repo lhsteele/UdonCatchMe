@@ -30,13 +30,15 @@ class GameRulesScene: SKScene {
         
         if UIScreen.main.sizeType == .iphone4 {
             gameRules = SKSpriteNode(imageNamed: "GameRules")
+            gameRules.setScale(0.75)
         } else if UIScreen.main.sizeType == .iphone5 {
             gameRules = SKSpriteNode(imageNamed: "GameRules")
-        } else if UIScreen.main.sizeType == .iphone6 {
+            gameRules.setScale(0.80)
+        } else {
             gameRules = SKSpriteNode(imageNamed: "GameRules")
-        } else if UIScreen.main.sizeType == .iphonePlus {
-            gameRules = SKSpriteNode(imageNamed: "GameRules")
-        }
+        } 
+        
+        
         gameRules.position = CGPoint(x: size.width/2 - 10, y: (size.height / 2) - 45)
         gameRules.zPosition = 0
         addChild(gameRules)
@@ -45,6 +47,7 @@ class GameRulesScene: SKScene {
         smallBackToGameButton.position = CGPoint(x: size.width/2, y: (gameRules.size.height - gameRules.size.height) + smallBackToGameButton.size.height * 2)
         smallBackToGameButton.zPosition = 1
         addChild(smallBackToGameButton)
+    
     }
     
     override init(size: CGSize) {
