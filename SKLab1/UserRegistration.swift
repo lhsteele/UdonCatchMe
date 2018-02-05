@@ -175,8 +175,8 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         let successAlertController = UIAlertController(title: "Congratulations!", message: messageToDisplay, preferredStyle: .alert)
         
         let viewLeaderboardAction = UIAlertAction(title: "View Leaderboard", style: .default) { (action: UIAlertAction!) in
-            //let scene = Leaderboard(size: self.size)
-            //self.view?.presentScene(scene)
+            let scene = LeaderboardScene(size: self.size)
+            self.view?.presentScene(scene)
             DispatchQueue.main.async(execute: {
                 self.usernameTextField.removeFromSuperview()
             })

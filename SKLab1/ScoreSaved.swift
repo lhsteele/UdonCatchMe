@@ -68,8 +68,8 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
                     self.usernameTextField.removeFromSuperview()
                     self.scoreSavedLabel.removeFromParent()
                 })
-                //let scene = Leaderboard(size: size)
-                //self.view?.presentScene(scene)
+                let scene = LeaderboardScene(size: size)
+                self.view?.presentScene(scene)
             }
 
         }

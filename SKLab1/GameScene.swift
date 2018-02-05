@@ -91,11 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bonusBokChoiNo = SKSpriteNode(imageNamed: "BigBokChoiNo")
     
     override func sceneDidLoad() {
-
         /*
         let defaults = UserDefaults.standard
-        //highScore = defaults.integer(forKey: scoreKey)
-        //defaults.removeObject(forKey: scoreKey)
+        highScore = defaults.integer(forKey: scoreKey)
+        defaults.removeObject(forKey: scoreKey)
         defaults.removeObject(forKey: usernameKey)
         */
     }
@@ -156,13 +155,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.gravity = CGVector.zero
         physicsWorld.contactDelegate = self
-        /*
-        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleTap))
-        singleTapGestureRecognizer.numberOfTapsRequired = 1
-        singleTapGestureRecognizer.isEnabled = true
-        singleTapGestureRecognizer.cancelsTouchesInView = false
-        view.addGestureRecognizer(singleTapGestureRecognizer)
-        */
     }
     
     override init(size: CGSize) {
@@ -545,7 +537,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.pauseTimer()
                     self.bonusVegMethodBool = true
                 },
-                SKAction.wait(forDuration: 7, withRange: 5),
+                SKAction.wait(forDuration: 8, withRange: 6),
                 SKAction.removeFromParent(),
                 SKAction.run {
                     self.unpauseTimer()
@@ -703,31 +695,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func changeBonusVegShowingBooleanToFalse() {
         bonusVegMethodBool = false
     }
-    /*
-    func singleTap(sender: UITapGestureRecognizer) {
-        isFingerOnPlayer = false
-        if sender == startButton {
-            run(SKAction.repeatForever(
-                SKAction.sequence([
-                    SKAction.run(addFood),
-                    SKAction.wait(forDuration: 1.0)
-                    ])
-            ))
-            run(SKAction.repeatForever(
-                SKAction.sequence([
-                    SKAction.wait(forDuration: 10),
-                    SKAction.run(methodOneOrTwo),
-                    SKAction.wait(forDuration: 10)
-                    ])
-            ))
-            self.restartTimer()
-            startButton.removeFromParent()
-            highScoreNode.removeFromParent()
-            gameRulesButton.removeFromParent()
-        } else if sender == gameRulesButton {
-            let scene = GameRulesScene(size: size)
-            self.view?.presentScene(scene)
-        }
-    }
-    */
+
 }

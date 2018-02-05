@@ -31,6 +31,7 @@ class GameOverScene: SKScene {
     let replayButton2 = SKSpriteNode(imageNamed: "Replay2")
     
     override func sceneDidLoad() {
+        print ("usernameKey\(String(describing: UserDefaults.standard.object(forKey: usernameKey)))")
         gameOverBackground.position = CGPoint(x: size.width/2, y: size.height/2)
         gameOverBackground.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         gameOverBackground.zPosition = -1
@@ -62,23 +63,21 @@ class GameOverScene: SKScene {
                 let scene = GameScene(size: size)
                 self.view?.presentScene(scene)
             } else if leaderboardButton.contains(location) {
-                let scene = LeaderboardScene(size: size)
-                self.view?.presentScene(scene)
-                /*
+                //let scene = LeaderboardScene(size: size)
+                //self.view?.presentScene(scene)
+                
                 if UserDefaults.standard.object(forKey: usernameKey) != nil {
                     if GameScene.gameWonBoolean == true && GameScene.itsADraw == false {
                         let scoreSavedScene = ScoreSaved(size: self.size)
                         self.view?.presentScene(scoreSavedScene)
                     } else if GameScene.gameWonBoolean == false || GameScene.itsADraw == false {
-                        let leaderboardScene = Leaderboard(size: self.size)
+                        let leaderboardScene = LeaderboardScene(size: self.size)
                         self.view?.presentScene(leaderboardScene)
                     }
                 } else {
                     let userRegistrationScene = UserRegistration(size: self.size)
                     self.view?.presentScene(userRegistrationScene)
                 }
-                
-                */
 
             }
         }
