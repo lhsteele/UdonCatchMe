@@ -83,6 +83,7 @@ class WelcomeScene: SKScene {
             } else if gameRulesButton.contains(location) {
                 let scene2 = GameRulesScene(size: size)
                 self.view?.presentScene(scene2)
+                self.gameRulesButton.removeAllActions()
             }
         }
     }
