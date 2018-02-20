@@ -354,7 +354,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 startButton.removeFromParent()
                 highScoreNode.removeFromParent()
                 gameRulesButton.removeFromParent()
-            } else if gameRulesButton.contains(location) {
+                gameRulesButton.removeAllActions()
+            } else if gameRulesButton.parent != nil && gameRulesButton.contains(location) {
                 let scene = GameRulesScene(size: size)
                 self.view?.presentScene(scene)
             }
