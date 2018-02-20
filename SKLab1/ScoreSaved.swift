@@ -94,7 +94,7 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
     func customize(textField: UITextField, placeholder: String, textFieldText: String?) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         textField.leftView = paddingView
-        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray])
         textField.textAlignment = .center
         textField.text = textFieldText
         textField.font = UIFont(name: "AvenirNext-Light", size: 20)

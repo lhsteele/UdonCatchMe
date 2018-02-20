@@ -222,7 +222,7 @@ class LeaderboardScene: SKScene {
         super.init(size: size)
     }
     
-    func singleTap(sender: UITapGestureRecognizer) {
+    @objc func singleTap(sender: UITapGestureRecognizer) {
         var touchLocation = sender.location(in: sender.view)
         touchLocation = self.convertPoint(fromView: touchLocation)
             if backToGameButton.frame.contains(touchLocation) {

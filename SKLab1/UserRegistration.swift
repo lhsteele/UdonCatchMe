@@ -129,7 +129,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.leftViewMode = UITextFieldViewMode.always
-        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName : UIColor.gray])
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray])
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.layer.borderColor = UIColor.black.cgColor
@@ -140,7 +140,7 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         textField.delegate = self
     }
     
-    func textFieldDidChange(textField: UITextField) {
+    @objc func textFieldDidChange(textField: UITextField) {
         if textField == self.usernameTextField {
             self.username = textField.text!
         }
