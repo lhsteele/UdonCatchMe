@@ -106,7 +106,7 @@ class LeaderboardScene: SKScene {
     
     var background: SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImage")
-    let backToGameButton = SKSpriteNode(imageNamed: "BackToGameButton")
+    let backToGameButton = SKSpriteNode(imageNamed: "BackButtonSm")
     
     var counterLabel = SKLabelNode()
     var totalLabel = SKLabelNode()

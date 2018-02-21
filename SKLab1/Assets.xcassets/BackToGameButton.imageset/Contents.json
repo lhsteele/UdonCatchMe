@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "BackToGame.png",
+      "filename" : "BackButtonSm.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BackToGame@2x.png",
+      "filename" : "BackButtonSm@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BackToGame@3x.png",
+      "filename" : "BackButtonSm@3x.png",
       "scale" : "3x"
     }
   ],

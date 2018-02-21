@@ -15,7 +15,7 @@ class GameRulesScene: SKScene {
     let background = SKSpriteNode(imageNamed: "GameOverBackground")
     let gameRulesTexture = SKTexture(imageNamed: "GameRules")
     var gameRules: SKSpriteNode! = nil
-    let smallBackToGameTexture = SKTexture(imageNamed: "BackToGameSmall")
+    let smallBackToGameTexture = SKTexture(imageNamed: "BackButtonSm")
     var smallBackToGameButton: SKSpriteNode! = nil
     
     var playableRect: CGRect
