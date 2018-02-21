@@ -38,11 +38,11 @@ class ScoreSaved: SKScene, UITextFieldDelegate {
         background.zPosition = -1
         addChild(background)
         
-        usernameSceneImage.position = CGPoint(x: size.width / 2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
+        usernameSceneImage.position = CGPoint(x: size.width / 2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height / 1.5)
         addChild(usernameSceneImage)
 
         leaderboardButton = SKSpriteNode(texture: leaderboardButtonTexture)
-        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2 - 20) - leaderboardButton.size.height)
+        leaderboardButton.position = CGPoint(x: size.width/2, y: (size.height/2) - leaderboardButton.size.height)
         addChild(leaderboardButton)
         
         scoreSavedLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + scoreSavedLabel.size.height * 2)

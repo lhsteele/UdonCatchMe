@@ -39,12 +39,15 @@ class UserRegistration: SKScene, UITextFieldDelegate {
         addChild(background)
         
         usernameSceneImage.position = CGPoint(x: size.width / 2, y: (deviceHeight - deviceHeight) + usernameSceneImage.size.height)
+        usernameSceneImage.zPosition = 0
         addChild(usernameSceneImage)
         
         backButtonSm.position = CGPoint(x: size.width/2 + backButtonSm.size.width/2, y: size.height/2 - backButtonSm.size.height * 1.5)
+        backButtonSm.zPosition = 1
         addChild(backButtonSm)
         
         submitButtonSm.position = CGPoint(x: size.width/2 - submitButtonSm.size.width/2, y: size.height/2 - submitButtonSm.size.height * 1.5)
+        submitButtonSm.zPosition = 2
         addChild(submitButtonSm)
         
         createUsernameLabel.position = CGPoint(x: size.width / 2, y: size.height / 2 + createUsernameLabel.size.height * 2)
