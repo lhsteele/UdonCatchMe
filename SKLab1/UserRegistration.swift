@@ -14,7 +14,7 @@ import FirebaseDatabase
 
 class UserRegistration: SKScene, UITextFieldDelegate {
     
-    let background = SKSpriteNode(imageNamed: "GameOverBackground")
+    var background : SKSpriteNode! = nil
     let usernameSceneImage = SKSpriteNode(imageNamed: "UsernameSceneImageLg")
     let createUsernameLabel = SKSpriteNode(imageNamed: "CreateUsernameLabel")
     let backButtonSm = SKSpriteNode(imageNamed: "BackButtonSm")
@@ -33,6 +33,19 @@ class UserRegistration: SKScene, UITextFieldDelegate {
     
     
     override func sceneDidLoad() {
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "GameOverBackgroundPlus")
+        } else if UIScreen.main.sizeType == .iphoneX {
+            background = SKSpriteNode(imageNamed: "GameOverBackgroundX")
+        }
+        
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.zPosition = -1

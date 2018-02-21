@@ -23,7 +23,7 @@ class GameOverScene: SKScene {
     let playerStatusLabel = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
     let scoreKey = "SKLab_Highscore"
     var usernameKey = "DBUsername"
-    var gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground")
+    var gameOverBackground : SKSpriteNode! = nil
     var playableRect: CGRect
     var deviceWidth = UIScreen.main.bounds.width
     var deviceHeight = UIScreen.main.bounds.height
@@ -31,7 +31,20 @@ class GameOverScene: SKScene {
     let replayButton2 = SKSpriteNode(imageNamed: "Replay2")
     
     override func sceneDidLoad() {
-        print ("usernameKey\(String(describing: UserDefaults.standard.object(forKey: usernameKey)))")
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackgroundPlus")
+        } else if UIScreen.main.sizeType == .iphoneX {
+            gameOverBackground = SKSpriteNode(imageNamed: "GameOverBackgroundX")
+        }
+        
+        
         gameOverBackground.position = CGPoint(x: size.width/2, y: size.height/2)
         gameOverBackground.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         gameOverBackground.zPosition = -1

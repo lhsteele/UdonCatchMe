@@ -15,7 +15,6 @@ class WelcomeScene: SKScene {
     var beginButton: SKSpriteNode! = nil
     let gameRulesTexture = SKTexture(imageNamed: "GameRulesButton")
     var gameRulesButton: SKSpriteNode! = nil
-    //var background = SKSpriteNode(imageNamed: "WelcomeBackground")
     var background: SKSpriteNode! = nil
     let gameInstructionsSpeechBubbleTexture = SKTexture(imageNamed: "GameInstructionsSpeechBubble")
     var speechBubble: SKSpriteNode! = nil

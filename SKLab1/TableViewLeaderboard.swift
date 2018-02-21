@@ -64,11 +64,11 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
-    
+    /*
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Your high score is: X"
     }
-    
+    */
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
@@ -79,6 +79,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         let label = UILabel(frame: CGRect(x: 10, y: 7, width: tableView.bounds.size.width, height: 15 ))
         label.textColor = UIColor.darkGray
         label.text = "Your high score is: \(highScore)"
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
         label.sizeToFit()
         headerView.addSubview(label)
         return headerView
@@ -109,10 +110,7 @@ class LeaderboardScene: SKScene {
     let backToGameButton = SKSpriteNode(imageNamed: "BackButtonSm")
     
     var counterLabel = SKLabelNode()
-    var totalLabel = SKLabelNode()
-    
-    
-    
+
     override func didMove(to: SKView) {
         loadHighScores()
         
@@ -143,11 +141,6 @@ class LeaderboardScene: SKScene {
         counterLabel.fontColor = SKColor.black
         counterLabel.fontSize = 15
         addChild(counterLabel)
-        
-        totalLabel.position = CGPoint(x: size.width - 50, y: (size.height - size.height) + 30)
-        totalLabel.fontColor = SKColor.black
-        totalLabel.fontSize = 15
-        addChild(totalLabel)
         
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
@@ -210,8 +203,7 @@ class LeaderboardScene: SKScene {
         count = topTwentyFive.count
         total = self.listOfEntries.count
         
-        counterLabel.text = "\(count) out of"
-        totalLabel.text = "\(total)"
+        counterLabel.text = "\(count) / \(total)"
     }
  
     override init(size: CGSize) {
@@ -231,7 +223,6 @@ class LeaderboardScene: SKScene {
                 DispatchQueue.main.async(execute: {
                     self.leaderboardTableView.removeFromSuperview()
                     self.counterLabel.removeFromParent()
-                    self.totalLabel.removeFromParent()
                     self.scrollView.isUserInteractionEnabled = false
                 })
             }

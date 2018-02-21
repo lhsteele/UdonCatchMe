@@ -12,7 +12,7 @@ import SpriteKit
 
 class GameRulesScene: SKScene {
     
-    let background = SKSpriteNode(imageNamed: "GameOverBackground")
+    var background : SKSpriteNode! = nil
     let gameRulesTexture = SKTexture(imageNamed: "GameRules")
     var gameRules: SKSpriteNode! = nil
     let smallBackToGameTexture = SKTexture(imageNamed: "BackButtonSm")
@@ -23,6 +23,19 @@ class GameRulesScene: SKScene {
     var deviceHeight = UIScreen.main.bounds.height
     
     override func sceneDidLoad() {
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "GameOverBackground6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "GameOverBackgroundPlus")
+        } else if UIScreen.main.sizeType == .iphoneX {
+            background = SKSpriteNode(imageNamed: "GameOverBackgroundX")
+        }
+        
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         background.zPosition = -1

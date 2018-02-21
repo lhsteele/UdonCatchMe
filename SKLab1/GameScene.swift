@@ -21,7 +21,7 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var player = SKSpriteNode(imageNamed: "UdonBowl")
-    var topLayerBackground = SKSpriteNode(imageNamed: "Background")
+    var topLayerBackground : SKSpriteNode! = nil
     var isFingerOnPlayer = false
     var touchedPlayerNode: SKNode!
     
@@ -103,6 +103,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
+        
+        if UIScreen.main.sizeType == .iphone4 {
+            background = SKSpriteNode(imageNamed: "Background4")
+        } else if UIScreen.main.sizeType == .iphone5 {
+            background = SKSpriteNode(imageNamed: "Background5s")
+        } else if UIScreen.main.sizeType == .iphone6 {
+            background = SKSpriteNode(imageNamed: "Background6")
+        } else if UIScreen.main.sizeType == .iphonePlus {
+            background = SKSpriteNode(imageNamed: "BackgroundPlus")
+        } else if UIScreen.main.sizeType == .iphoneX {
+            background = SKSpriteNode(imageNamed: "BackgroundX")
+        }
         
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
