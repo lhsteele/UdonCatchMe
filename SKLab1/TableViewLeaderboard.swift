@@ -178,7 +178,8 @@ class LeaderboardScene: SKScene {
     func loadHighScores() {
         let ref: DatabaseReference!
         ref = Database.database().reference().child("Users")
-        ref.observe(.value, with: { (snapshot) in
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
             let entries = snapshot.children
             for entry in entries {
                 if let pair = entry as? DataSnapshot {
@@ -195,7 +196,7 @@ class LeaderboardScene: SKScene {
             tableData = self.result
             self.leaderboardTableView.reloadData()
             self.populateTable()
-        })
+        }
     }
     
     func populateTable() {

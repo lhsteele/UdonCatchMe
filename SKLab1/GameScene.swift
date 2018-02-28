@@ -59,6 +59,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var mustRunBonusSqMethodBoolean = true
     var endingSprite: String = ""
     
+    var background: SKSpriteNode! = nil
+    
     let startButtonTexture = SKTexture(imageNamed: "StartButton")
     var startButton : SKSpriteNode! = nil
     
@@ -67,8 +69,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let timesUpLabelTexture = SKTexture(imageNamed: "TimesUpLabel")
     var timesUpLabel : SKSpriteNode! = nil
-    
-    var background = SKSpriteNode(imageNamed: "Background")
     
     static var currentScore = 0
     var highScoreNode = SKLabelNode(fontNamed: "AvenirNext-DemiBold")
