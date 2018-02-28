@@ -46,13 +46,24 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        /*
         if tableData.count < 25 {
             return tableData.count
         } else {
             return 25
         }
+        */
+        return 1
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        cell.column1.text = "1"
+        cell.column2.text = "2"
+        return cell
+    }
+    
+    /*
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
         let topTwentyFive = tableData.prefix(25)
@@ -64,7 +75,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         cell.textLabel?.textColor = UIColor.darkGray
         return cell
     }
-    /*
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Your high score is: X"
     }
@@ -89,6 +100,17 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         cell.backgroundColor = UIColor.clear
     }
     
+}
+
+class CustomTableViewCell: UITableViewCell {
+    var column1: UILabel!
+    var column2: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
 }
 
 class LeaderboardScene: SKScene {
@@ -145,7 +167,7 @@ class LeaderboardScene: SKScene {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         
-        leaderboardTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        leaderboardTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
         leaderboardTableView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
         
