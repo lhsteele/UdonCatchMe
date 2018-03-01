@@ -46,22 +46,32 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*
         if tableData.count < 25 {
             return tableData.count
         } else {
             return 25
         }
-        */
-        return 1
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
         cell.column1.frame = CGRect(x: 0, y: 0, width: (tableView.bounds.size.width / 2), height: 44)
         cell.column2.frame = CGRect(x: (tableView.bounds.size.width / 2), y: 0, width: (tableView.bounds.size.width / 2), height: 44)
-        cell.column1.text = "1"
-        cell.column2.text = "2"
+        cell.column2.textAlignment = .right
+        cell.column1.textColor = UIColor.darkGray
+        cell.column2.textColor = UIColor.darkGray
+        
+        //cell.column1.text = "1"
+        //cell.column2.text = "2"
+        
+        let topTwentyFive = tableData.prefix(25)
+        let entry = topTwentyFive[indexPath.row]
+        let player = entry.playerName
+        let score = entry.score
+        
+        cell.column1.text = player
+        cell.column2.text = "\(score)"
         return cell
     }
     
@@ -117,8 +127,8 @@ class CustomTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        column1.backgroundColor = UIColor.red
-        column2.backgroundColor = UIColor.blue
+        //column1.backgroundColor = UIColor.red
+        //column2.backgroundColor = UIColor.blue
         self.contentView.addSubview(column1)
         self.contentView.addSubview(column2)
     }
@@ -126,14 +136,6 @@ class CustomTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    /*
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        column1.frame = CGRect(x: 0, y: 0, width: (tableView.bounds.size.width / 2), height: 44)
-        //column2.frame = CGRect(x: leaderboardTableView.size.width / 2, y: 0, width: 30, height: 44)
-    }
-    */
 }
 
 class LeaderboardScene: SKScene {
