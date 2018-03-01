@@ -58,6 +58,8 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
+        cell.column1.frame = CGRect(x: 0, y: 0, width: (tableView.bounds.size.width / 2), height: 44)
+        cell.column2.frame = CGRect(x: (tableView.bounds.size.width / 2), y: 0, width: (tableView.bounds.size.width / 2), height: 44)
         cell.column1.text = "1"
         cell.column2.text = "2"
         return cell
@@ -103,14 +105,35 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
 }
 
 class CustomTableViewCell: UITableViewCell {
-    var column1: UILabel!
-    var column2: UILabel!
+    var column1 = UILabel()
+    var column2 = UILabel()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        column1.backgroundColor = UIColor.red
+        column2.backgroundColor = UIColor.blue
+        self.contentView.addSubview(column1)
+        self.contentView.addSubview(column2)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    /*
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        column1.frame = CGRect(x: 0, y: 0, width: (tableView.bounds.size.width / 2), height: 44)
+        //column2.frame = CGRect(x: leaderboardTableView.size.width / 2, y: 0, width: 30, height: 44)
+    }
+    */
 }
 
 class LeaderboardScene: SKScene {
@@ -167,6 +190,8 @@ class LeaderboardScene: SKScene {
         guard let view = self.view else {return}
         let originX = (size.width / 2) / 5
         
+        leaderboardTableView.estimatedRowHeight = 44
+        leaderboardTableView.rowHeight = UITableViewAutomaticDimension
         leaderboardTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
         leaderboardTableView.backgroundColor = UIColor(red: 247/255, green: 237/255, blue: 205/255, alpha: 1.0)
         
