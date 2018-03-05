@@ -91,7 +91,12 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Your high score is: X"
     }
+ 
     */
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+ 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let defaults = UserDefaults.standard
         let highScore = defaults.integer(forKey: scoreKey)
