@@ -12,8 +12,6 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    //let scoreKey = "SKLab_Highscore" 
-    
     var score = 0
 
     
@@ -37,7 +35,6 @@ class GameViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
     }
 
     override var prefersStatusBarHidden: Bool {

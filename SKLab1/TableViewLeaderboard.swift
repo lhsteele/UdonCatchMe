@@ -61,10 +61,7 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         cell.column2.textAlignment = .right
         cell.column1.textColor = UIColor.darkGray
         cell.column2.textColor = UIColor.darkGray
-        
-        //cell.column1.text = "1"
-        //cell.column2.text = "2"
-        
+
         let topTwentyFive = tableData.prefix(25)
         let entry = topTwentyFive[indexPath.row]
         let player = entry.playerName
@@ -75,24 +72,6 @@ class TableViewLeaderboard: UITableView, UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
-    /*
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")! as UITableViewCell
-        let topTwentyFive = tableData.prefix(25)
-        let entry = topTwentyFive[indexPath.row]
-        let player = entry.playerName
-        let score = entry.score
-        
-        cell.textLabel?.text = "\(player) : \(score)"
-        cell.textLabel?.textColor = UIColor.darkGray
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Your high score is: X"
-    }
- 
-    */
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -131,9 +110,7 @@ class CustomTableViewCell: UITableViewCell {
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        //column1.backgroundColor = UIColor.red
-        //column2.backgroundColor = UIColor.blue
+
         self.contentView.addSubview(column1)
         self.contentView.addSubview(column2)
     }

@@ -39,7 +39,6 @@ class WelcomeScene: SKScene {
     }
     
     override func sceneDidLoad() {
-        //background.size = self.frame.size
         
         if UIScreen.main.sizeType == .iphone4 {
             background = SKSpriteNode(imageNamed: "WelcomeBackground4")
@@ -105,7 +104,6 @@ extension UIScreen {
     }
     
     var sizeType: SizeType {
-        //let height = nativeBounds.height
         let height = UIScreen.main.bounds.height
         guard let sizeType = SizeType(rawValue: height) else { return .Unknown}
         return sizeType

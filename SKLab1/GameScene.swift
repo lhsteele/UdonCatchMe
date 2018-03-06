@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: scoreKey)
         defaults.removeObject(forKey: scoreKey)
-        defaults.removeObject(forKey: usernameKey)
+        //defaults.removeObject(forKey: usernameKey)
         */
     }
     
